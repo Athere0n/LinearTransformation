@@ -81,8 +81,8 @@ namespace LinearTransformation.Model {
                 position.Y = Math.Abs(coordinateSystemData.MinY) + Math.Abs(point.Y);
             }
 
-            double w = canvas.Width;
-            double h = canvas.Height;
+            double w = canvas.ActualWidth;
+            double h = canvas.ActualHeight;
 
             if (h == 0 || w == 0 || double.IsNaN(w) || double.IsNaN(h)) {
                 throw new Exception("Why is my canvas not working?");

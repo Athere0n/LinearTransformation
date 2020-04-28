@@ -27,7 +27,7 @@ namespace LinearTransformation.Components {
             this.MainLine.X2 = pos2.X;
             this.MainLine.Y1 = pos1.Y;
             this.MainLine.Y2 = pos2.Y;
-            this.BorderBrush = Brushes.MediumVioletRed;
+            this.BorderBrush = (isThick) ? Brushes.MediumVioletRed : Brushes.LightGray;
             this.BorderThickness = new Thickness((isThick) ? 5 : 1);
         }
 

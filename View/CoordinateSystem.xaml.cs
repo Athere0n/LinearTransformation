@@ -21,7 +21,10 @@ namespace LinearTransformation.View {
     public partial class CoordinateSystem: UserControl {
         public CoordinateSystem() {
             this.InitializeComponent();
-            this.DataContext = new CoordinateSystemVM(this.CoordinateCanvas);
+            var vm = new CoordinateSystemVM(this.CoordinateCanvas);
+            this.DataContext = vm;
+            this.Loaded += delegate { vm.Update(); };
+            this.CoordinateCanvas.SizeChanged += delegate { vm.Update(); };
         }
     }
 }
