@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace LinearTransformation.ViewModel {
     public class CoordinateSystemVM {
@@ -28,6 +29,12 @@ namespace LinearTransformation.ViewModel {
 
         private void InstantiateBackground() {
             this._backgroundLines = new List<BackgroundLine>();
+
+            this._canvas.Children.Add(new CanvasVector(this._canvas,
+                                                       Brushes.DarkOrchid,
+                                                       this.coordinateSystemData,
+                                                       new Vector(3, 3),
+                                                       new Vector(0, 0)));
 
             // Hexenwerk:
 

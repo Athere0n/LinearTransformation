@@ -172,8 +172,8 @@ namespace LinearTransformation.Model {
                 throw new Exception("Why is my canvas not working?");
             }
 
-            Size cellSize = new Size{
-                Width = w / coordinateSystemData.GetCellSize().Width,
+            Size cellSize = new Size {
+                Width  = w / coordinateSystemData.GetCellSize().Width,
                 Height = h / coordinateSystemData.GetCellSize().Height,
             };
 

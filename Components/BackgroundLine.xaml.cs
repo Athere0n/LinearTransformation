@@ -24,8 +24,8 @@ namespace LinearTransformation.Components {
             Vector pos1 = CoordinateConverter.FromCoordinateSystemPointToCanvasPoint(canvas, coordinateSystemData, position1);
             Vector pos2 = CoordinateConverter.FromCoordinateSystemPointToCanvasPoint(canvas, coordinateSystemData, position2);
             this.MainLine.X1 = pos1.X;
-            this.MainLine.X2 = pos2.X;
             this.MainLine.Y1 = pos1.Y;
+            this.MainLine.X2 = pos2.X;
             this.MainLine.Y2 = pos2.Y;
             this.BorderBrush = (isThick) ? Brushes.MediumVioletRed : Brushes.LightGray;
             this.BorderThickness = new Thickness((isThick) ? 5 : 1);
