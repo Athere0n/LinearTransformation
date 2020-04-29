@@ -10,6 +10,10 @@ namespace LinearTransformation.Model {
         public double MinX, MaxX, MinY, MaxY;
 
         public CoordinateSystemData(double minX, double maxX, double minY, double maxY) {
+            if (minX > maxX || minY > maxY) {
+                throw new Exception("Invalid boundaries");
+            }
+
             this.MinX = minX;
             this.MaxX = maxX;
             this.MinY = minY;

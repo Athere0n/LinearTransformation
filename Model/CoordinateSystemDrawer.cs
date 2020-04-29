@@ -24,7 +24,7 @@ namespace LinearTransformation.Model {
                                     _stepZ = -3;
 
         public static void Draw(Canvas canvas, CoordinateSystemData data, double unit = 1, double step = .5) {
-            CoordinateSystemDrawer.DrawBackgroundLines(canvas, data, unit, step);
+            CoordinateSystemDrawer.DrawBackgroundLines(canvas, data, step);
             CoordinateSystemDrawer.DrawAxisLabels(canvas, data, unit, step);
             CoordinateSystemDrawer.DrawAxisDirections(canvas, data, step);
         }
@@ -33,7 +33,7 @@ namespace LinearTransformation.Model {
             Size canvasSize = new Size(canvas.ActualWidth, canvas.ActualHeight);
 
             // Draw X-Axis Direction
-            if (data.MaxX > 0/* && 0 > data.MinX*/) {
+            if (data.MaxY > 0 && 0 > data.MinY) {
                 BackgroundLine top = new BackgroundLine(new Vector(data.MaxX, 0),
                                                          new Vector(data.MaxX - step * .5, step * .5),
                                                          CoordinateSystemDrawer._axisLineBrush,
@@ -75,7 +75,7 @@ namespace LinearTransformation.Model {
             }
 
             // Draw Y-Axis Direction
-            if (data.MaxY > 0 /*&& 0 > data.MinY*/) {
+            if (data.MaxX > 0 && 0 > data.MinX) {
                 // Draw Y axis direction
                 BackgroundLine left = new BackgroundLine(new Vector(0, data.MaxY),
                                                          new Vector(step * .5, data.MaxY - step * .5),
@@ -328,19 +328,16 @@ namespace LinearTransformation.Model {
             }
         }
 
-        private static void DrawBackgroundLines(Canvas canvas, CoordinateSystemData data, double unit, double step) {
+        private static void DrawBackgroundLines(Canvas canvas, CoordinateSystemData data, double step) {
             Size canvasSize = new Size(canvas.ActualWidth, canvas.ActualHeight);
 
             Brush axisLineBrush = CoordinateSystemDrawer._axisLineBrush,
-                  unitLineBrush = CoordinateSystemDrawer._unitLineBrush,
                   stepLineBrush = CoordinateSystemDrawer._stepLineBrush;
 
             double axisLineThickness = CoordinateSystemDrawer._axisLineThickness,
-                   unitLineThickness = CoordinateSystemDrawer._unitLineThickness,
                    stepLineThickness = CoordinateSystemDrawer._stepLineThickness;
 
             int axisZ = CoordinateSystemDrawer._axisZ,
-                unitZ = CoordinateSystemDrawer._unitZ,
                 stepZ = CoordinateSystemDrawer._stepZ;
 
             #region Vertical Lines
