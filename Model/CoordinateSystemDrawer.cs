@@ -170,12 +170,38 @@ namespace LinearTransformation.Model {
 
                 #region Text
                 double labelY;
+
                 // Decide whether to place text above or under
-                if (y >= data.MaxY) {
-                    // above
+                bool above;
+                if (data.MinY < 0 && 0 < data.MaxY) {
+                    above = false;
+                }
+
+                // case 2: 0 < Min < Max
+                else if (0 < data.MinY) {
+                    above = true;
+                }
+
+                // case 3: Min < Max < 0
+                else if (0 > data.MaxY) {
+                    above = false;
+                }
+
+                // case 4: (Min=0) < Max
+                else if (data.MinY == 0) {
+                    above = true;
+                }
+
+                // case 5: Min < (Max = 0)
+                else if (data.MaxY == 0) {
+                    above = false;
+                } else throw new Exception();
+
+                if (above) {
+                    // above axis
                     labelY = y + data.Step * .5;
                 } else {
-                    // under
+                    // under axis
                     labelY = y - data.Step * .5;
                 }
 
@@ -192,11 +218,11 @@ namespace LinearTransformation.Model {
                 // Calculate label dimensions
                 Size labelSize = CoordinateSystemDrawer.GetTextSize(label.Content.ToString(), label.FontSize);
 
-                if (y >= data.MaxY) {
-                    // above
-                    Canvas.SetTop(label, labelPosition.Y + labelSize.Height);
+                if (above) {
+                    // above axis
+                    Canvas.SetTop(label, labelPosition.Y - labelSize.Height);
                 } else {
-                    // under
+                    // under axis
                     Canvas.SetTop(label, labelPosition.Y);
                 }
 
@@ -262,8 +288,34 @@ namespace LinearTransformation.Model {
 
                 #region Text
                 double labelX;
-                // Decide whether to place text above or under
-                if (0 < data.MinX) {
+                // Decide whether to place text left or right
+                bool right;
+                if (data.MinX < 0 && 0 < data.MaxX) {
+                    right = false;
+                }
+
+                // case 2: 0 < Min < Max
+                else if (0 < data.MinX) {
+                    right = true;
+                }
+
+                // case 3: Min < Max < 0
+                else if (0 > data.MaxX) {
+                    right = false;
+                }
+
+                // case 4: (Min=0) < Max
+                else if (data.MinX == 0) {
+                    right = true;
+                }
+
+                // case 5: Min < (Max = 0)
+                else if (data.MaxX == 0) {
+                    right = false;
+                } else throw new Exception();
+
+
+                if (right) {
                     // right
                     labelX = x + data.Step * .5;
                 } else {
@@ -287,7 +339,7 @@ namespace LinearTransformation.Model {
 
                 Canvas.SetZIndex(label, int.MaxValue);
 
-                if (0 < data.MinX) {
+                if (right) {
                     // right
                     Canvas.SetLeft(label, labelPosition.X);
                 } else {

@@ -60,7 +60,7 @@ namespace LinearTransformation.Model {
 
             return new Size {
                 Width  = CoordinateSystemData.CalculateCellAmount(this.MinX, this.MaxX, this.Unit),
-                Height = CoordinateSystemData.CalculateCellAmount(this.MinY, this.MaxY, this.Unit), 
+                Height = CoordinateSystemData.CalculateCellAmount(this.MinY, this.MaxY, this.Unit), // TODO NOT GIVING THE INTENDED RESULT For NEGATIVE MINY MAXY
                 //Width = Math.Abs(this.MinX) + Math.Abs(this.MaxX),
                 //Height = Math.Abs(this.MinY) + Math.Abs(this.MaxY),
             };

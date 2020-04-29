@@ -8,9 +8,9 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Canvas MinWidth="1" MinHeight="1"
-                Margin="10"
+                Margin="100"
                 x:Name="CoordinateCanvas"
                 Background="#19374B"
-                ClipToBounds="True"/>
+                ClipToBounds="False"/>
     </Grid>
 </UserControl>

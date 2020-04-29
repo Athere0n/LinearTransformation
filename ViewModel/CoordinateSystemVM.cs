@@ -13,12 +13,9 @@ namespace LinearTransformation.ViewModel {
     public class CoordinateSystemVM {
         private CoordinateSystemData coordinateSystemData;
         private readonly Canvas _canvas;
-        //private List<BackgroundLine> _backgroundLines;
 
         public CoordinateSystemVM(Canvas canvas) {
             this._canvas = canvas;
-            //this.InstantiateViewSettings();
-            //this.InstantiateBackground();
         }
 
         public void Update() {
@@ -49,6 +46,11 @@ namespace LinearTransformation.ViewModel {
                                                        this.coordinateSystemData,
                                                        new Vector(-1, 1),
                                                        new Vector(0, 0)));
+            this._canvas.Children.Add(new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
+                                                       Brushes.DeepPink,
+                                                       this.coordinateSystemData,
+                                                       new Vector(1, 0),
+                                                       new Vector(0, 0)));
         }
 
         private void InstantiateBackground() {
@@ -57,12 +59,12 @@ namespace LinearTransformation.ViewModel {
 
         private void InstantiateViewSettings() {
             this.coordinateSystemData = new CoordinateSystemData {
-                MinX = -1,
-                MinY = -1,
-                MaxX =  1,
-                MaxY =  1,
+                MinX =  1,
+                MinY =  -4,
+                MaxX =  4,
+                MaxY =  -1,
                 Unit =  1,
-                Step = .1,
+                Step =  1,
             };
         }
 
