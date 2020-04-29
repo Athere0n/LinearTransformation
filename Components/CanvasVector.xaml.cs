@@ -58,11 +58,11 @@ namespace LinearTransformation.Components {
 
 
             Vector originOnCanvas = CoordinateConverter.FromCoordinateToPoint(this._canvasSize,
-                                                                                               this._coordinateSystemData,
-                                                                                               this._origin);
+                                                                              this._coordinateSystemData,
+                                                                              this._origin);
             Vector destinationOnCavnas = CoordinateConverter.FromCoordinateToPoint(this._canvasSize,
-                                                                                                    this._coordinateSystemData,
-                                                                                                    this._destination);
+                                                                                   this._coordinateSystemData,
+                                                                                   this._destination);
 
             this.MainLine.X1 = originOnCanvas.X;
             this.MainLine.Y1 = originOnCanvas.Y;

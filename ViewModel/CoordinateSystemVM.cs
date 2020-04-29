@@ -25,12 +25,10 @@ namespace LinearTransformation.ViewModel {
             this._canvas.Children.Clear();
             this.InstantiateViewSettings();
             this.InstantiateBackground();
+            this.DrawTestingVectors();
         }
 
-        private void InstantiateBackground() {
-            CoordinateSystemDrawer.Draw(this._canvas, this.coordinateSystemData);
-            //this._backgroundLines = new List<BackgroundLine>();
-
+        private void DrawTestingVectors() {
             this._canvas.Children.Add(new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
                                                        Brushes.DarkOrchid,
                                                        this.coordinateSystemData,
@@ -53,12 +51,18 @@ namespace LinearTransformation.ViewModel {
                                                        new Vector(0, 0)));
         }
 
+        private void InstantiateBackground() {
+            CoordinateSystemDrawer.Draw(this._canvas, this.coordinateSystemData);
+        }
+
         private void InstantiateViewSettings() {
             this.coordinateSystemData = new CoordinateSystemData {
-                MinX =  0,
+                MinX = -1,
                 MinY = -1,
-                MaxX =  5,
-                MaxY =  5,
+                MaxX =  1,
+                MaxY =  1,
+                Unit =  1,
+                Step = .1,
             };
         }
 

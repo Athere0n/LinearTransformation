@@ -23,22 +23,22 @@ namespace LinearTransformation.Model {
                                     _unitZ = -2,
                                     _stepZ = -3;
 
-        public static void Draw(Canvas canvas, CoordinateSystemData data, double unit = 1, double step = .5) {
-            CoordinateSystemDrawer.DrawBackgroundLines(canvas, data, step);
-            CoordinateSystemDrawer.DrawAxisLabels(canvas, data, unit, step);
-            CoordinateSystemDrawer.DrawAxisDirections(canvas, data, step);
+        public static void Draw(Canvas canvas, CoordinateSystemData data) {
+            CoordinateSystemDrawer.DrawBackgroundLines(canvas, data);
+            CoordinateSystemDrawer.DrawAxisLabels(canvas, data);
+            CoordinateSystemDrawer.DrawAxisDirections(canvas, data);
         }
 
-        private static void DrawAxisDirections(Canvas canvas, CoordinateSystemData data, double step) {
+        private static void DrawAxisDirections(Canvas canvas, CoordinateSystemData data) {
             Size canvasSize = new Size(canvas.ActualWidth, canvas.ActualHeight);
 
             // Draw X-Axis Direction
             if (data.MaxY > 0 && 0 > data.MinY) {
                 BackgroundLine top = new BackgroundLine(new Vector(data.MaxX, 0),
-                                                         new Vector(data.MaxX - step * .5, step * .5),
+                                                         new Vector(data.MaxX - data.Step * .5, data.Step * .5),
                                                          CoordinateSystemDrawer._axisLineBrush,
                                                          CoordinateSystemDrawer._axisLineThickness);
-                BackgroundLine bottom = new BackgroundLine(new Vector(data.MaxX - step * .5, -step * .5),
+                BackgroundLine bottom = new BackgroundLine(new Vector(data.MaxX - data.Step * .5, -data.Step * .5),
                                                           new Vector(data.MaxX, 0),
                                                           CoordinateSystemDrawer._axisLineBrush,
                                                           CoordinateSystemDrawer._axisLineThickness);
@@ -78,10 +78,10 @@ namespace LinearTransformation.Model {
             if (data.MaxX > 0 && 0 > data.MinX) {
                 // Draw Y axis direction
                 BackgroundLine left = new BackgroundLine(new Vector(0, data.MaxY),
-                                                         new Vector(step * .5, data.MaxY - step * .5),
+                                                         new Vector(data.Step * .5, data.MaxY - data.Step * .5),
                                                          CoordinateSystemDrawer._axisLineBrush,
                                                          CoordinateSystemDrawer._axisLineThickness);
-                BackgroundLine right = new BackgroundLine(new Vector(-step * .5, data.MaxY - step * .5),
+                BackgroundLine right = new BackgroundLine(new Vector(-data.Step * .5, data.MaxY - data.Step * .5),
                                                           new Vector(0, data.MaxY),
                                                           CoordinateSystemDrawer._axisLineBrush,
                                                           CoordinateSystemDrawer._axisLineThickness);
@@ -118,7 +118,7 @@ namespace LinearTransformation.Model {
             }
         }
 
-        private static void DrawXAxisLabels(Canvas canvas, CoordinateSystemData data, double unit, double step) {
+        private static void DrawXAxisLabels(Canvas canvas, CoordinateSystemData data) {
             Size canvasSize = new Size(canvas.ActualWidth, canvas.ActualHeight);
 
             double y;
@@ -138,17 +138,17 @@ namespace LinearTransformation.Model {
 
 
             double x = data.MinX;
-            if (data.MinX % unit != 0)
-                x = CoordinateConverter.Round(x, unit);
+            if (data.MinX % data.Unit != 0)
+                x = CoordinateConverter.Round(x, data.Unit);
 
             while (x < data.MaxX) {
                 if (x <= data.MinX || x == 0) {
-                    x += unit;
+                    x += data.Unit;
                     continue;
                 }
 
-                BackgroundLine temp = new BackgroundLine(new Vector(x, y + (-step * .5)),
-                                                         new Vector(x, y + ( step * .5)),
+                BackgroundLine temp = new BackgroundLine(new Vector(x, y + (-data.Step * .5)),
+                                                         new Vector(x, y + ( data.Step * .5)),
                                                          CoordinateSystemDrawer._unitLineBrush,
                                                          CoordinateSystemDrawer._unitLineThickness);
 
@@ -173,10 +173,10 @@ namespace LinearTransformation.Model {
                 // Decide whether to place text above or under
                 if (y >= data.MaxY) {
                     // above
-                    labelY = y + step * .5;
+                    labelY = y + data.Step * .5;
                 } else {
                     // under
-                    labelY = y - step * .5;
+                    labelY = y - data.Step * .5;
                 }
 
                 Label label = new Label {
@@ -207,11 +207,11 @@ namespace LinearTransformation.Model {
                 #endregion
 
 
-                x += unit;
+                x += data.Unit;
             }
         }
 
-        private static void DrawYAxisLabels(Canvas canvas, CoordinateSystemData data, double unit, double step) {
+        private static void DrawYAxisLabels(Canvas canvas, CoordinateSystemData data) {
             Size canvasSize = new Size(canvas.ActualWidth, canvas.ActualHeight);
 
             double x;
@@ -230,17 +230,17 @@ namespace LinearTransformation.Model {
             }
 
             double y = data.MinY;
-            if (data.MinY % unit != 0)
-                y = CoordinateConverter.Round(y, unit);
+            if (data.MinY % data.Unit != 0)
+                y = CoordinateConverter.Round(y, data.Unit);
 
             while (y < data.MaxY) {
                 if (y <= data.MinY || y == 0) {
-                    y += unit;
+                    y += data.Unit;
                     continue;
                 }
 
-                BackgroundLine temp = new BackgroundLine(new Vector((-step * .5) + x, y),
-                                                         new Vector(( step * .5) + x, y),
+                BackgroundLine temp = new BackgroundLine(new Vector((-data.Step * .5) + x, y),
+                                                         new Vector(( data.Step * .5) + x, y),
                                                          CoordinateSystemDrawer._unitLineBrush,
                                                          CoordinateSystemDrawer._unitLineThickness);
 
@@ -265,10 +265,10 @@ namespace LinearTransformation.Model {
                 // Decide whether to place text above or under
                 if (0 < data.MinX) {
                     // right
-                    labelX = x + step * .5;
+                    labelX = x + data.Step * .5;
                 } else {
                     // left
-                    labelX = x - step * .5;
+                    labelX = x - data.Step * .5;
                 }
 
                 Label label = new Label {
@@ -298,7 +298,7 @@ namespace LinearTransformation.Model {
                 canvas.Children.Add(label);
                 #endregion
 
-                y += unit;
+                y += data.Unit;
             }
 
         }
@@ -315,9 +315,9 @@ namespace LinearTransformation.Model {
             return new Size(label.ActualWidth, label.ActualHeight);
         }
 
-        private static void DrawAxisLabels(Canvas canvas, CoordinateSystemData data, double unit, double step) {
-            CoordinateSystemDrawer.DrawXAxisLabels(canvas, data, unit, step);
-            CoordinateSystemDrawer.DrawYAxisLabels(canvas, data, unit, step);
+        private static void DrawAxisLabels(Canvas canvas, CoordinateSystemData data) {
+            CoordinateSystemDrawer.DrawXAxisLabels(canvas, data);
+            CoordinateSystemDrawer.DrawYAxisLabels(canvas, data);
         }
 
         public static void ClearCanvas(Canvas canvas) {
@@ -328,33 +328,27 @@ namespace LinearTransformation.Model {
             }
         }
 
-        private static void DrawBackgroundLines(Canvas canvas, CoordinateSystemData data, double step) {
+        private static void DrawBackgroundLines(Canvas canvas, CoordinateSystemData data) {
+            CoordinateSystemDrawer.DrawVerticalBackgroundLines(canvas, data);
+            CoordinateSystemDrawer.DrawHorizontalBackgroundLines(canvas, data);
+        }
+
+        private static void DrawVerticalBackgroundLines(Canvas canvas, CoordinateSystemData data) {
             Size canvasSize = new Size(canvas.ActualWidth, canvas.ActualHeight);
-
-            Brush axisLineBrush = CoordinateSystemDrawer._axisLineBrush,
-                  stepLineBrush = CoordinateSystemDrawer._stepLineBrush;
-
-            double axisLineThickness = CoordinateSystemDrawer._axisLineThickness,
-                   stepLineThickness = CoordinateSystemDrawer._stepLineThickness;
-
-            int axisZ = CoordinateSystemDrawer._axisZ,
-                stepZ = CoordinateSystemDrawer._stepZ;
-
-            #region Vertical Lines
             double x = data.MinX;
-            if (data.MinX % step != 0)
-                x = CoordinateConverter.Round(x, step);
+            if (data.MinX % data.Step != 0)
+                x = CoordinateConverter.Round(x, data.Step);
 
             while (x < data.MaxX) {
                 if (x <= data.MinX) {
-                    x += step;
+                    x += data.Step;
                     continue;
                 }
 
                 BackgroundLine temp = new BackgroundLine(new Vector(x, data.MinY),
                                                          new Vector(x, data.MaxY),
-                                                         (x == 0) ? axisLineBrush : stepLineBrush,
-                                                         (x == 0) ? axisLineThickness : stepLineThickness);
+                                                         (x == 0) ? CoordinateSystemDrawer._axisLineBrush : CoordinateSystemDrawer._stepLineBrush,
+                                                         (x == 0) ? CoordinateSystemDrawer._axisLineThickness : CoordinateSystemDrawer._stepLineThickness);
 
                 Vector pos1 = CoordinateConverter.FromCoordinateToPoint(canvasSize, data, temp.Pos1);
                 Vector pos2 = CoordinateConverter.FromCoordinateToPoint(canvasSize, data, temp.Pos2);
@@ -368,22 +362,25 @@ namespace LinearTransformation.Model {
                     StrokeThickness = temp.LineThickness,
                 };
 
-                Canvas.SetZIndex(line, (x == 0) ? axisZ : stepZ);
+                Canvas.SetZIndex(line, (x == 0) ? CoordinateSystemDrawer._axisZ : CoordinateSystemDrawer._stepZ);
 
                 canvas.Children.Add(line);
 
-                x += step;
+                x += data.Step;
             }
-            #endregion
+        }
+
+        private static void DrawHorizontalBackgroundLines(Canvas canvas, CoordinateSystemData data) {
+            Size canvasSize = new Size(canvas.ActualWidth, canvas.ActualHeight);
 
             #region Horizontal Lines
             double y = data.MinY;
-            if (data.MinY % step != 0)
-                y = CoordinateConverter.Round(y, step);
+            if (data.MinY % data.Step != 0)
+                y = CoordinateConverter.Round(y, data.Step);
 
             while (y < data.MaxY) {
                 if (y <= data.MinY) {
-                    y += step;
+                    y += data.Step;
                     continue;
                 }
 
@@ -394,8 +391,8 @@ namespace LinearTransformation.Model {
                                                          //data,
                                                          new Vector(data.MinX, y),
                                                          new Vector(data.MaxX, y),
-                                                         (y == 0) ? axisLineBrush : stepLineBrush,
-                                                         (y == 0) ? axisLineThickness : stepLineThickness);
+                                                         (y == 0) ? CoordinateSystemDrawer._axisLineBrush : CoordinateSystemDrawer._stepLineBrush,
+                                                         (y == 0) ? CoordinateSystemDrawer._axisLineThickness : CoordinateSystemDrawer._stepLineThickness);
 
                 Vector pos1 = CoordinateConverter.FromCoordinateToPoint(canvasSize, data, temp.Pos1);
                 Vector pos2 = CoordinateConverter.FromCoordinateToPoint(canvasSize, data, temp.Pos2);
@@ -409,17 +406,12 @@ namespace LinearTransformation.Model {
                     StrokeThickness = temp.LineThickness,
                 };
 
-                Canvas.SetZIndex(line, (y == 0) ? axisZ : stepZ);
+                Canvas.SetZIndex(line, (y == 0) ? CoordinateSystemDrawer._axisZ : CoordinateSystemDrawer._stepZ);
 
                 canvas.Children.Add(line);
 
-                y += step;
+                y += data.Step;
             }
-            #endregion
-
-            #region axis labeling
-
-
             #endregion
         }
     }
