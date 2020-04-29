@@ -8,14 +8,15 @@ using System.Windows.Controls;
 
 namespace LinearTransformation.Model {
     public static class CoordinateConverter {
-        public static Vector FromCanvasPointToCoordinateSystemPoint(Canvas canvas, CoordinateSystemData coordinateSystemData, Vector point) {
-            double w = canvas.Width;
-            double h = canvas.Height;
+        public static Vector FromPointToCoordinate(Size canvasSize, CoordinateSystemData coordinateSystemData, Vector point) {
+            double w = canvasSize.Width;
+            double h = canvasSize.Height;
 
             throw new NotImplementedException();
 
         }
-        private static double CalculateX(double min, double max, double coordinate) {
+
+        private static double CalculatePointX(double min, double max, double coordinate) {
             // case 1: Min < 0 < Max
             if (min < 0 && 0 < max) {
                 if (coordinate == 0) {
@@ -89,7 +90,7 @@ namespace LinearTransformation.Model {
             throw new Exception("invalid range");
         }
 
-        private static double CalculateY(double min, double max, double coordinate) {
+        private static double CalculatePointY(double min, double max, double coordinate) {
             // case 1: Min < 0 < Max
             if (min < 0 && 0 < max) {
                 if (coordinate == 0) {
@@ -164,9 +165,9 @@ namespace LinearTransformation.Model {
             throw new Exception("invalid range");
         }
 
-        public static Vector FromCoordinateSystemPointToCanvasPoint(Canvas canvas, CoordinateSystemData coordinateSystemData, Vector coordinate) {
-            double w = canvas.ActualWidth;
-            double h = canvas.ActualHeight;
+        public static Vector FromCoordinateToPoint(Size canvasSize, CoordinateSystemData coordinateSystemData, Vector coordinate) {
+            double w = canvasSize.Width;
+            double h = canvasSize.Height;
 
             if (h == 0 || w == 0 || double.IsNaN(w) || double.IsNaN(h)) {
                 throw new Exception("Why is my canvas not working?");
@@ -177,88 +178,39 @@ namespace LinearTransformation.Model {
                 Height = h / coordinateSystemData.GetCellSize().Height,
             };
 
-            return new Vector(CalculateX(coordinateSystemData.MinX, coordinateSystemData.MaxX, coordinate.X) * cellSize.Width,
-                              CalculateY(coordinateSystemData.MinY, coordinateSystemData.MaxY, coordinate.Y) * cellSize.Height);
-            #region
-            //if (point.X > 0) {
-            //    double x = point.X + Math.Abs(coordinateSystemData.MinX) + 1; // +1 because of y = 0
-            //    if (point.Y > 0) {
-            //        // Quadrant 1 (oben rechts)
-            //        return new Vector(x, Math.Abs(coordinateSystemData.MaxY) - point.Y);
-            //    } else if (point.Y < 0) {
-            //        // Quadrant 4 (unten rechts)
-            //        return new Vector(x, point.Y + Math.Abs(coordinateSystemData.MinY) + 1); // +1 because of y = 0
-            //    } else {
-            //        // ON Y == 0
-            //        return new Vector(x, Math.Abs(coordinateSystemData.MinY + 1)); // +1 because of y = 0
-            //    }
-            //} else if (point.X < 0) {
-            //    double x = Math.Abs(coordinateSystemData.MinX) + point.X;
-            //    if (point.Y > 0) {
-            //        // Quadrant 2 (oben links) (-x|+y)
-            //        return new Vector(x, Math.Abs(coordinateSystemData.MaxY) - point.Y);
-            //    } else if (point.Y < 0) {
-            //        // Quadrant 3 (unten links)
-            //        return new Vector(x, point.Y + Math.Abs(coordinateSystemData.MinY) + 1); // +1 because of y = 0
-            //    } else {
-            //        return new Vector(x, Math.Abs(coordinateSystemData.MinY + 1)); // +1 because of y = 0
-            //    }
-            //} else {
-            //    // x == 0
-            //    double x = Math.Abs(coordinateSystemData.MinX) + 1;
-            //    if (point.Y > 0) {
-            //        // Quadrant 2 (oben links) (-x|+y)
-            //        return new Vector(x, Math.Abs(coordinateSystemData.MaxY) - point.Y);
-            //    } else if (point.Y < 0) {
-            //        // Quadrant 3 (unten links)
-            //        return new Vector(x, point.Y + Math.Abs(coordinateSystemData.MinY) + 1); // +1 because of y = 0
-            //    } else {
-            //        return new Vector(x, Math.Abs(coordinateSystemData.MinY + 1)); // +1 because of y = 0
-            //    }
-            //}
-            #endregion
-            /*
-            // TODO: ANPASSEN FÜR ALLE SONDERFÄLLE
+            return new Vector(CalculatePointX(coordinateSystemData.MinX, coordinateSystemData.MaxX, coordinate.X) * cellSize.Width,
+                              CalculatePointY(coordinateSystemData.MinY, coordinateSystemData.MaxY, coordinate.Y) * cellSize.Height);
+        }
 
-            // Zusammengefasst:
-            Vector position = new Vector();
-            if (point.X < 0) {
-                position.X = point.X + Math.Abs(coordinateSystemData.MinX);
-                if (coordinateSystemData.MinX > 0) {
-                    position.X = point.X - Math.Abs(coordinateSystemData.MinX) - 1;
-                }
-            } else {
-                position.X = point.X + Math.Abs(coordinateSystemData.MinX);
-                if (coordinateSystemData.MinX > 0) {
-                    // Add 1 to compensate for x = 0
-                    position.X++;
-                }
+        public static double Round(double value, double step) {
+            // TODO: adjust this algorithm
+
+            if (((double) ((int) (value / step))) == value / step)
+                return value;
+            
+            double a = RoundUp(value, step) - value;
+            double b = value - RoundDown(value, step);
+
+            if (b < a) {
+                Console.WriteLine("rounded " + value + " down");
+                return RoundDown(value, step);
             }
-            if (point.Y > 0) {
-                position.Y = Math.Abs(coordinateSystemData.MinY) - point.Y;
-                if (coordinateSystemData.MaxY < 0) {
+            //if (a < b)
+            Console.WriteLine("rounded " + value + " up");
+            return RoundUp(value, step);
+            //throw new Exception("aaa");
+        }
 
-                }
-            } else {
-                position.Y = Math.Abs(coordinateSystemData.MinY) + Math.Abs(point.Y);
-            }
+        public static double RoundUp(double value, double step) {
 
-            double w = canvas.ActualWidth;
-            double h = canvas.ActualHeight;
+            if (((double) ((int) (value / step))) == value / step)
+                return value;
+            
+            return (step - value % step) + value;
+        }
 
-            if (h == 0 || w == 0 || double.IsNaN(w) || double.IsNaN(h)) {
-                throw new Exception("Why is my canvas not working?");
-            }
-
-            Size cellSize = new Size{
-                Width = w / coordinateSystemData.GetCellSize().Width,
-                Height = h / coordinateSystemData.GetCellSize().Height,
-            };
-
-            position.X *= cellSize.Width;
-            position.Y *= cellSize.Height;
-
-            return position;*/
+        public static double RoundDown(double value, double step) {
+            return value - value % step;
         }
     }
 }

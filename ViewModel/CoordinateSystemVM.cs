@@ -13,7 +13,7 @@ namespace LinearTransformation.ViewModel {
     public class CoordinateSystemVM {
         private CoordinateSystemData coordinateSystemData;
         private readonly Canvas _canvas;
-        private List<BackgroundLine> _backgroundLines;
+        //private List<BackgroundLine> _backgroundLines;
 
         public CoordinateSystemVM(Canvas canvas) {
             this._canvas = canvas;
@@ -28,39 +28,29 @@ namespace LinearTransformation.ViewModel {
         }
 
         private void InstantiateBackground() {
-            this._backgroundLines = new List<BackgroundLine>();
+            CoordinateSystemDrawer.Draw(this._canvas, this.coordinateSystemData);
+            //this._backgroundLines = new List<BackgroundLine>();
 
-            this._canvas.Children.Add(new CanvasVector(this._canvas,
+            this._canvas.Children.Add(new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
                                                        Brushes.DarkOrchid,
                                                        this.coordinateSystemData,
-                                                       new Vector(3, 3),
+                                                       new Vector(2, 2),
                                                        new Vector(0, 0)));
-
-            // Hexenwerk:
-
-            this._backgroundLines.Add(new BackgroundLine(this._canvas,
-                                                         this.coordinateSystemData,
-                                                         new Vector(0, this.coordinateSystemData.MinY),
-                                                         new Vector(0, this.coordinateSystemData.MaxY),
-                                                         true));
-
-            //for (double x = this.coordinateSystemData.MinX; x <= this.coordinateSystemData.MaxX; x++) {
-            //    this._backgroundLines.Add(new BackgroundLine(this._canvas,
-            //                                                 this.coordinateSystemData,
-            //                                                 new Vector(x, this.coordinateSystemData.MinY),
-            //                                                 new Vector(x, this.coordinateSystemData.MaxY),
-            //                                                 (x == 0)));
-            //}
-
-            //for (double y = this.coordinateSystemData.MinY; y < this.coordinateSystemData.MaxY; y++) {
-            //    this._backgroundLines.Add(new BackgroundLine(this._canvas,
-            //                                                 this.coordinateSystemData,
-            //                                                 new Vector(this.coordinateSystemData.MinX, y),
-            //                                                 new Vector(this.coordinateSystemData.MaxX, y),
-            //                                                 (y == 0)));
-            //}
-
-            this._backgroundLines.ForEach(x => this._canvas.Children.Add(x));
+            this._canvas.Children.Add(new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
+                                                       Brushes.DarkSalmon,
+                                                       this.coordinateSystemData,
+                                                       new Vector(-3, -1),
+                                                       new Vector(0, 0)));
+            this._canvas.Children.Add(new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
+                                                       Brushes.LimeGreen,
+                                                       this.coordinateSystemData,
+                                                       new Vector(5, -2),
+                                                       new Vector(0, 0)));
+            this._canvas.Children.Add(new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
+                                                       Brushes.Red,
+                                                       this.coordinateSystemData,
+                                                       new Vector(-1, 1),
+                                                       new Vector(0, 0)));
         }
 
         private void InstantiateViewSettings() {

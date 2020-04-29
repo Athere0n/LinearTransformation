@@ -20,18 +20,18 @@ namespace LinearTransformation.Components {
     /// </summary>
     public partial class CanvasVector: UserControl {
 
-        private Canvas _canvas;
-        private double _degrees;
-        private Vector _destination;
-        private Vector _origin;
-        private double _arrowHeadLength;
+        private Size _canvasSize;
+        private readonly double _degrees;
+        private readonly Vector _destination;
+        private readonly Vector _origin;
+        private readonly double _arrowHeadLength;
 
         public CoordinateSystemData _coordinateSystemData { get; }
 
-        public CanvasVector(Canvas canvas, Brush brush,
+        public CanvasVector(Size canvasSize, Brush brush,
                             CoordinateSystemData coordinateSystemData,
                             Vector destination, Vector origin,
-                            double degrees = 45, double arrowHeadLength = 10) {
+                            double degrees = 45, double arrowHeadLength = 15) {
 
             this.InitializeComponent();
             
@@ -41,24 +41,26 @@ namespace LinearTransformation.Components {
             this._degrees = degrees;
             this._arrowHeadLength = arrowHeadLength;
 
-            this._canvas = canvas;
+            this._canvasSize = canvasSize;
             this.MainLine.Stroke = brush;
-            this.MainLine.StrokeThickness = 1;
+            this.MainLine.StrokeThickness = 5;
 
             this.DirectionalLine1.Stroke = brush;
-            this.DirectionalLine1.StrokeThickness = 1;
+            this.DirectionalLine1.StrokeThickness = 5;
 
             this.DirectionalLine2.Stroke = brush;
-            this.DirectionalLine2.StrokeThickness = 1;
+            this.DirectionalLine2.StrokeThickness = 5;
 
             this.UpdateCoordinates();
         }
 
         private void UpdateCoordinates() {
-            Vector originOnCanvas = CoordinateConverter.FromCoordinateSystemPointToCanvasPoint(this._canvas,
+
+
+            Vector originOnCanvas = CoordinateConverter.FromCoordinateToPoint(this._canvasSize,
                                                                                                this._coordinateSystemData,
                                                                                                this._origin);
-            Vector destinationOnCavnas = CoordinateConverter.FromCoordinateSystemPointToCanvasPoint(this._canvas,
+            Vector destinationOnCavnas = CoordinateConverter.FromCoordinateToPoint(this._canvasSize,
                                                                                                     this._coordinateSystemData,
                                                                                                     this._destination);
 
