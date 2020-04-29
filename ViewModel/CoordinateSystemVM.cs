@@ -55,10 +55,10 @@ namespace LinearTransformation.ViewModel {
 
         private void InstantiateViewSettings() {
             this.coordinateSystemData = new CoordinateSystemData {
-                MinX = -4,
-                MinY = -4,
-                MaxX =  4,
-                MaxY =  4,
+                MinX = -5,
+                MinY = -5,
+                MaxX =  5,
+                MaxY =  5,
             };
         }
 

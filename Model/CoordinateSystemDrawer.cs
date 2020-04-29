@@ -32,10 +32,8 @@ namespace LinearTransformation.Model {
         private static void DrawAxisDirections(Canvas canvas, CoordinateSystemData data, double step) {
             Size canvasSize = new Size(canvas.ActualWidth, canvas.ActualHeight);
 
-            // TODO: ADJUST FOR WHEN AXIS IS NOT DISPLAYED ON 0
-
             // Draw X-Axis Direction
-            if (data.MaxX > 0 && 0 > data.MinX) {
+            if (data.MaxX > 0/* && 0 > data.MinX*/) {
                 BackgroundLine top = new BackgroundLine(new Vector(data.MaxX, 0),
                                                          new Vector(data.MaxX - step * .5, step * .5),
                                                          CoordinateSystemDrawer._axisLineBrush,
@@ -77,7 +75,7 @@ namespace LinearTransformation.Model {
             }
 
             // Draw Y-Axis Direction
-            if (data.MaxY > 0 && 0 > data.MinY) {
+            if (data.MaxY > 0 /*&& 0 > data.MinY*/) {
                 // Draw Y axis direction
                 BackgroundLine left = new BackgroundLine(new Vector(0, data.MaxY),
                                                          new Vector(step * .5, data.MaxY - step * .5),
@@ -170,6 +168,45 @@ namespace LinearTransformation.Model {
 
                 canvas.Children.Add(line);
 
+                #region Text
+                double labelY;
+                // Decide whether to place text above or under
+                if (y >= data.MaxY) {
+                    // above
+                    labelY = y + step * .5;
+                } else {
+                    // under
+                    labelY = y - step * .5;
+                }
+
+                Label label = new Label {
+                    Content = $"{x}",
+                    Foreground = _unitLineBrush,
+                    FontSize = 20,
+                };
+
+                Vector labelPosition = CoordinateConverter.FromCoordinateToPoint(canvasSize,
+                                                                                 data,
+                                                                                 new Vector(x,
+                                                                                            labelY));
+                // Calculate label dimensions
+                Size labelSize = CoordinateSystemDrawer.GetTextSize(label.Content.ToString(), label.FontSize);
+
+                if (y >= data.MaxY) {
+                    // above
+                    Canvas.SetTop(label, labelPosition.Y + labelSize.Height);
+                } else {
+                    // under
+                    Canvas.SetTop(label, labelPosition.Y);
+                }
+
+                Canvas.SetLeft(label, labelPosition.X - labelSize.Width * .5);
+
+                Canvas.SetZIndex(label, int.MaxValue);
+                canvas.Children.Add(label);
+                #endregion
+
+
                 x += unit;
             }
         }
@@ -178,7 +215,7 @@ namespace LinearTransformation.Model {
             Size canvasSize = new Size(canvas.ActualWidth, canvas.ActualHeight);
 
             double x;
-            
+
             // Is the Y axis visible?
             if (data.MinX < 0 && 0 < data.MaxX) {
                 x = 0;
@@ -223,9 +260,59 @@ namespace LinearTransformation.Model {
 
                 canvas.Children.Add(line);
 
+                #region Text
+                double labelX;
+                // Decide whether to place text above or under
+                if (0 < data.MinX) {
+                    // right
+                    labelX = x + step * .5;
+                } else {
+                    // left
+                    labelX = x - step * .5;
+                }
+
+                Label label = new Label {
+                    Content = $"{y}",
+                    Foreground = _unitLineBrush,
+                    FontSize = 20,
+                };
+
+                Vector labelPosition = CoordinateConverter.FromCoordinateToPoint(canvasSize,
+                                                                                 data,
+                                                                                 new Vector(labelX,
+                                                                                            y));
+
+                // Calculate label dimensions
+                Size labelSize = CoordinateSystemDrawer.GetTextSize(label.Content.ToString(), label.FontSize);
+
+                Canvas.SetZIndex(label, int.MaxValue);
+
+                if (0 < data.MinX) {
+                    // right
+                    Canvas.SetLeft(label, labelPosition.X);
+                } else {
+                    // left
+                    Canvas.SetLeft(label, labelPosition.X - labelSize.Width);
+                }
+                Canvas.SetTop(label, labelPosition.Y - labelSize.Height * .5);
+                canvas.Children.Add(label);
+                #endregion
+
                 y += unit;
             }
 
+        }
+
+        private static Size GetTextSize(string text, double fontSize) {
+            Label label = new Label {
+                Content = text,
+                FontSize = fontSize,
+            };
+
+            label.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            label.Arrange(new Rect(label.DesiredSize));
+
+            return new Size(label.ActualWidth, label.ActualHeight);
         }
 
         private static void DrawAxisLabels(Canvas canvas, CoordinateSystemData data, double unit, double step) {
