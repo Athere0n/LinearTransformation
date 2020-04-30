@@ -7,23 +7,103 @@ using System.Windows;
 
 namespace LinearTransformation.Model {
     public struct CoordinateSystemData {
-        public double MinX, MaxX, MinY, MaxY, UnitX, UnitY, StepX, StepY;
+        private double _minX;
+        private double _maxX;
+        private double _minY;
+        private double _maxY;
+        private double _unitX;
+        private double _unitY;
+        private double _stepX;
+        private double _stepY;
+
+        public double MinX {
+            get => this._minX;
+            set {
+                if (value >= this.MaxX)
+                    throw new Exception("Invalid range");
+                this._minX = value;
+            }
+        }
+        public double MaxX {
+            get => this._maxX;
+            set {
+                if (value <= this.MinX)
+                    throw new Exception("Invalid range");
+                this._maxX = value;
+            }
+        }
+        public double MinY {
+            get => this._minY;
+            set {
+                if (value >= this.MaxY)
+                    throw new Exception("Invalid range");
+                this._minY = value;
+            }
+        }
+        public double MaxY {
+            get => this._maxY;
+            set {
+                if (value <= this.MinY)
+                    throw new Exception("Invalid range");
+                this._maxY = value;
+            }
+        }
+        public double UnitX {
+            get => this._unitX;
+            set {
+                if (value <= 0)
+                    throw new Exception("Value can not be smaller than 0");
+                this._unitX = value;
+            }
+        }
+        public double UnitY {
+            get => this._unitY;
+            set {
+                if (value <= 0)
+                    throw new Exception("Value can not be smaller than 0");
+                this._unitY = value;
+            }
+        }
+        public double StepX {
+            get => this._stepX;
+            set {
+                if (value < 0)
+                    throw new Exception("Value can not be smaller than 0");
+                this._stepX = value;
+            }
+        }
+        public double StepY {
+            get => this._stepY;
+            set {
+                if (value < 0)
+                    throw new Exception("Value can not be smaller than 0");
+                this._stepY = value;
+            }
+        }
 
         public CoordinateSystemData(double minX, double maxX, double minY, double maxY,
                                     double unit, double step) {
 
-            if (minX > maxX || minY > maxY) {
+            if (minX > maxX || minY > maxY || minX == maxX || minY == maxY) {
                 throw new Exception("Invalid boundaries");
             }
 
-            this.MinX = minX;
-            this.MaxX = maxX;
-            this.MinY = minY;
-            this.MaxY = maxY;
-            this.UnitX = unit;
-            this.UnitY = unit;
-            this.StepX = step;
-            this.StepY = step;
+            if (unit <= 0) {
+                throw new Exception("Unit can not be smaller than or equal to 0");
+            }
+
+            if (step < 0) {
+                throw new Exception("Step can not be smaller than 0");
+            }
+
+            this._minX  = minX;
+            this._maxX  = maxX;
+            this._minY  = minY;
+            this._maxY  = maxY;
+            this._unitX = unit;
+            this._unitY = unit;
+            this._stepX = step;
+            this._stepY = step;
         }
 
         public CoordinateSystemData(double minX, double maxX,
@@ -31,18 +111,26 @@ namespace LinearTransformation.Model {
                                     double unitX, double unitY,
                                     double stepX, double stepY) {
 
-            if (minX > maxX || minY > maxY) {
+            if (minX > maxX || minY > maxY || minX == maxX || minY == maxY) {
                 throw new Exception("Invalid boundaries");
             }
 
-            this.MinX = minX;
-            this.MaxX = maxX;
-            this.MinY = minY;
-            this.MaxY = maxY;
-            this.UnitX = unitX;
-            this.UnitY = unitY;
-            this.StepX = stepX;
-            this.StepY = stepY;
+            if (unitX <= 0 || unitY <= 0) {
+                throw new Exception("Unit can not be smaller than or equal to 0");
+            }
+
+            if (stepX < 0 || stepY < 0) {
+                throw new Exception("Step can not be smaller than 0");
+            }
+
+            this._minX = minX;
+            this._maxX = maxX;
+            this._minY = minY;
+            this._maxY = maxY;
+            this._unitX = unitX;
+            this._unitY = unitY;
+            this._stepX = stepX;
+            this._stepY = stepY;
         }
 
         private static double CalculateCellAmount(double min, double max, double unit) {

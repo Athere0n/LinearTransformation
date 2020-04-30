@@ -186,25 +186,25 @@ namespace LinearTransformation.ViewModel {
 
         private void InstantiateViewSettings() {
 
+            this._data = new CoordinateSystemData {
+                MinX  = -3,
+                MaxX  =  3,
+                MinY  = -3,
+                MaxY  =  3,
+                UnitX =  1,
+                UnitY =  1,
+                StepX = .5,
+                StepY = .5,
+            };
+
             //this._data = new CoordinateSystemData(
-            //    minX: -3,
-            //    minY: -3,
-            //    maxX:  3,
-            //    maxY:  3,
+            //    minX: -4,
+            //    minY: -4,
+            //    maxX:  4,
+            //    maxY:  4,
             //    unit:  1,
             //    step: .5
             //);
-
-            this._data = new CoordinateSystemData(
-                minX: -3,
-                minY: -6,
-                maxX:  3,
-                maxY:  6,
-                unitX: 1,
-                unitY: 2,
-                stepX: 1,
-                stepY: 2
-            );
         }
 
     }
