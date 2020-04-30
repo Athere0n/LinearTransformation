@@ -40,7 +40,7 @@ namespace LinearTransformation.Model {
             Size canvasSize = new Size(canvas.ActualWidth, canvas.ActualHeight);
             double x = data.MinX;
             if (data.MinX % data.Step != 0)
-                x = CoordinateConverter.Round(x, data.Step);
+                x = Utility.Round(x, data.Step);
 
             while (x < data.MaxX) {
                 if (x <= data.MinX) {
@@ -78,7 +78,7 @@ namespace LinearTransformation.Model {
             #region Horizontal Lines
             double y = data.MinY;
             if (data.MinY % data.Step != 0)
-                y = CoordinateConverter.Round(y, data.Step);
+                y = Utility.Round(y, data.Step);
 
             while (y < data.MaxY) {
                 if (y <= data.MinY) {
@@ -146,7 +146,7 @@ namespace LinearTransformation.Model {
 
             double x = data.MinX;
             if (data.MinX % data.Unit != 0)
-                x = CoordinateConverter.Round(x, data.Unit);
+                x = Utility.Round(x, data.Unit);
 
             while (x < data.MaxX) {
                 if (x <= data.MinX || x == 0) {
@@ -263,7 +263,7 @@ namespace LinearTransformation.Model {
 
             double y = data.MinY;
             if (data.MinY % data.Unit != 0)
-                y = CoordinateConverter.Round(y, data.Unit);
+                y = Utility.Round(y, data.Unit);
 
             while (y < data.MaxY) {
                 if (y <= data.MinY || y == 0) {
