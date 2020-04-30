@@ -11,7 +11,8 @@
                 Margin="100"
                 x:Name="CoordinateCanvas"
                 Background="#19374B"
-                ClipToBounds="False"/>
+                ClipToBounds="False"
+                KeyDown="CoordinateCanvas_KeyDown"/>
         <!--TODO: REVERT CHANGES HERE-->
     </Grid>
 </UserControl>

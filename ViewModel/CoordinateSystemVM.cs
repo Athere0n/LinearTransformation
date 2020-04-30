@@ -7,30 +7,143 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace LinearTransformation.ViewModel {
     public class CoordinateSystemVM {
-        private CoordinateSystemData _data;
         private readonly Canvas _canvas;
+        private CoordinateSystemData _data;
+
+        private bool _isDragging;
+        private Vector _mouseLocationWithinCanvas;
+
+        private void Control_MouseLeftButtonDown(object sender, MouseEventArgs e) {
+            this._isDragging = true;
+            Point m = e.GetPosition(this._canvas);
+            this._mouseLocationWithinCanvas = new Vector(m.X, m.Y);
+            this._canvas.CaptureMouse();
+        }
+        private void Control_MouseLeftButtonUp(object sender, MouseEventArgs e) {
+            this._isDragging = false;
+            this._canvas.ReleaseMouseCapture();
+        }
+        private void Control_MouseMove(object sender, MouseEventArgs e) {
+            if (this._isDragging) {
+                Size canvasSize = new Size(this._canvas.ActualWidth, this._canvas.ActualHeight);
+
+                Point p = e.GetPosition(this._canvas);
+                Vector m = new Vector(p.X, p.Y);
+
+                Vector toMousePosition = CoordinateConverter.FromPointToCoordinate(canvasSize,
+                                                                                   this._data,
+                                                                                   m);
+
+                Vector fromMousePosition = CoordinateConverter.FromPointToCoordinate(canvasSize,
+                                                                                   this._data,
+                                                                                   this._mouseLocationWithinCanvas);
+
+                double scrollspeed = this._data.Unit;
+                Vector distance = (fromMousePosition - toMousePosition) * scrollspeed;
+
+
+                this._data.MinX += distance.X;
+                this._data.MaxX += distance.X;
+                this._data.MinY += distance.Y;
+                this._data.MaxY += distance.Y;
+
+                this._mouseLocationWithinCanvas = m;
+
+                this.Update();
+            }
+        }
+
+        public void Control_KeyboardMove(object sender, KeyEventArgs e) {
+            Key key = (Key) e.Key;
+
+            bool canvasNeedsRedraw = false;
+
+            double distance = (this._data.Step == 0) ? this._data.Unit
+                                                     : this._data.Step;
+
+            if (key == Key.Up && !Keyboard.IsKeyDown(Key.Down)) {
+                this._data.MinY += distance;
+                this._data.MaxY += distance;
+                canvasNeedsRedraw = true;
+            }
+
+            if (key == Key.Down && !Keyboard.IsKeyDown(Key.Up)) {
+                this._data.MinY -= distance;
+                this._data.MaxY -= distance;
+                canvasNeedsRedraw = true;
+            }
+
+            if (key == Key.Left && !Keyboard.IsKeyDown(Key.Right)) {
+                this._data.MinX -= distance;
+                this._data.MaxX -= distance;
+                canvasNeedsRedraw = true;
+            }
+
+            if (key == Key.Right && !Keyboard.IsKeyDown(Key.Left)) {
+                this._data.MinX += distance;
+                this._data.MaxX += distance;
+                canvasNeedsRedraw = true;
+            }
+
+            if (canvasNeedsRedraw) {
+                this.Update();
+            }
+        }
 
         public CoordinateSystemVM(Canvas canvas) {
             this._canvas = canvas;
+            this.InstantiateViewSettings();
+
+            // Adding mouse movement
+            this._canvas.MouseLeftButtonDown += new MouseButtonEventHandler(this.Control_MouseLeftButtonDown);
+            this._canvas.MouseLeftButtonUp += new MouseButtonEventHandler(this.Control_MouseLeftButtonUp);
+            this._canvas.MouseMove += new MouseEventHandler(this.Control_MouseMove);
+
+            // Adding keyboard movement
+            this._canvas.KeyDown += new KeyEventHandler(this.Control_KeyboardMove);
+
+            // Adding scroll wheel zoom
+            this._canvas.MouseWheel += new MouseWheelEventHandler(this.Control_MouseWheel);
+        }
+
+        private void Control_MouseWheel(object sender, MouseWheelEventArgs e) {
+            double distance = (this._data.Step == 0) ? this._data.Unit
+                                                     : this._data.Step;
+
+            if (e.Delta > 0) {
+                // Zoom in
+                this._data.MinX *= .9;
+                this._data.MaxX *= .9;
+                this._data.MinY *= .9;
+                this._data.MaxY *= .9;
+                this.Update();
+            } else if (e.Delta < 0) {
+                // Zoom out
+                this._data.MinX *= 1.1;
+                this._data.MaxX *= 1.1;
+                this._data.MinY *= 1.1;
+                this._data.MaxY *= 1.1;
+                this.Update();
+            }
         }
 
         public void Update() {
             this._canvas.Children.Clear();
-            this.InstantiateViewSettings();
             this.InstantiateBackground();
             this.DrawTestingVectors();
 
-            Size canvasSize = new Size(this._canvas.ActualWidth, this._canvas.ActualHeight);
-            Vector coordinate = CoordinateConverter.FromCoordinateToPoint(canvasSize,
-                                                                          this._data,
-                                                                          new Vector(1.4, 1.2));
-            Vector point = CoordinateConverter.FromPointToCoordinate(canvasSize,
-                                                                     this._data,
-                                                                     coordinate);
+            //Size canvasSize = new Size(this._canvas.ActualWidth, this._canvas.ActualHeight);
+            //Vector coordinate = CoordinateConverter.FromCoordinateToPoint(canvasSize,
+            //                                                              this._data,
+            //                                                              new Vector(1.4, 1.2));
+            //Vector point = CoordinateConverter.FromPointToCoordinate(canvasSize,
+            //                                                         this._data,
+            //                                                         coordinate);
 
         }
 
@@ -68,13 +181,22 @@ namespace LinearTransformation.ViewModel {
 
         private void InstantiateViewSettings() {
             this._data = new CoordinateSystemData {
-                MinX = -2,
-                MinY = -2,
-                MaxX =  2,
-                MaxY =  2,
-                Unit =  1,
-                Step =  0,
+                MinX = -3,
+                MinY = -3,
+                MaxX = 3,
+                MaxY = 3,
+                Unit = 1,
+                Step = .5,
             };
+            
+            //this._data = new CoordinateSystemData (
+            //    minX : -3,
+            //    minY : -3,
+            //    maxX :  3,
+            //    maxY :  3,
+            //    unit :  1,
+            //    step : .5
+            //);
         }
 
     }

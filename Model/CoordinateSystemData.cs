@@ -7,20 +7,56 @@ using System.Windows;
 
 namespace LinearTransformation.Model {
     public struct CoordinateSystemData {
-        public double MinX, MaxX, MinY, MaxY, Unit, Step;
+        public double MinX, MaxX, MinY, MaxY, Unit, Step, PossibleAmountOfCells;
 
-        public CoordinateSystemData(double minX, double maxX, double minY, double maxY, double Unit, double step) {
+        public CoordinateSystemData(double minX, double maxX, double minY, double maxY,
+                                    double unit, double step,
+                                    double possibleAmountOfCells = double.PositiveInfinity) {
+
             if (minX > maxX || minY > maxY) {
                 throw new Exception("Invalid boundaries");
             }
-            
+
             this.MinX = minX;
             this.MaxX = maxX;
             this.MinY = minY;
             this.MaxY = maxY;
-            this.Unit = Unit;
+            this.Unit = unit;
             this.Step = step;
+
+            this.PossibleAmountOfCells = possibleAmountOfCells;
         }
+
+        //public CoordinateSystemData(double minX, double maxX, double minY, double maxY,
+        //                    double unit, double step,
+        //                    double possibleAmountOfCells = double.PositiveInfinity) {
+
+        //    if (minX > maxX || minY > maxY) {
+        //        throw new Exception("Invalid boundaries");
+        //    }
+
+        //    this.MinX = minX;
+        //    this.MaxX = maxX;
+        //    this.MinY = minY;
+        //    this.MaxY = maxY;
+        //    this.Unit = unit;
+        //    this.Step = step;
+
+        //    this.PossibleAmountOfCells = possibleAmountOfCells;
+        //}
+
+        public void SetUnitAndStepDynamically() {
+            // TODO: Add user property to enable or disable this feature
+            if (double.IsInfinity(this.PossibleAmountOfCells)) {
+                // just do whatever
+            } else {
+
+            }
+        }
+
+        //private static double CalculateUnit () {
+
+        //}
 
         private static double CalculateCellAmount(double min, double max, double unit) {
             // Calculate the amount of units which fit into the given range
@@ -59,7 +95,7 @@ namespace LinearTransformation.Model {
         public Size GetCellSize() {
             // Returns the cell size while considering the value for one unit
             return new Size {
-                Width  = CoordinateSystemData.CalculateCellAmount(this.MinX, this.MaxX, this.Unit),
+                Width = CoordinateSystemData.CalculateCellAmount(this.MinX, this.MaxX, this.Unit),
                 Height = CoordinateSystemData.CalculateCellAmount(this.MinY, this.MaxY, this.Unit),
             };
         }
