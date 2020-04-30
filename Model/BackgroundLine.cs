@@ -12,12 +12,7 @@ namespace LinearTransformation.Model {
         public readonly Brush LineBrush;
         public readonly double LineThickness;
 
-        //private readonly CoordinateSystemData _coordinateSystemData;
-        //private readonly Size _canvasSize;
-
-        public BackgroundLine(/*Size canvasSize, CoordinateSystemData coordinateSystemData, */Vector pos1, Vector pos2, Brush brush, double thickness) {
-            //this._canvasSize = canvasSize;
-            //this._coordinateSystemData = coordinateSystemData;
+        public BackgroundLine(Vector pos1, Vector pos2, Brush brush, double thickness) {
             this.Pos1 = pos1;
             this.Pos2 = pos2;
             this.LineBrush = brush;

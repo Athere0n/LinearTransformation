@@ -176,7 +176,6 @@ namespace LinearTransformation.Model {
                 }
             }
 
-            // TODO: CHECK THIS OUT - THIS ALGORITHM USES -MAX INSTEAD OF MAX !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             // case 3: Min < Max < 0
             if (0 > max) {
                 #region Example
@@ -200,6 +199,13 @@ namespace LinearTransformation.Model {
 
             // case 4: (Min=0) < Max
             if (min == 0) {
+                #region Example
+                // Min = 0 | Max = 3
+                // Coordinate
+                // ... -4 -3 -2 -1 [ 0  1  2  3]  4 ...
+                // Corresponding Canvas coordinate:
+                // ...  7  6  5  4 [ 3  2  1  0] -1 ...
+                #endregion
                 if (coordinate == 0) {
                     // Ursprung
                     return max;
@@ -214,6 +220,13 @@ namespace LinearTransformation.Model {
 
             // case 5: Min < (Max = 0)
             if (max == 0) {
+                #region Example
+                // Min = -3 | Max = 0
+                // Coordinate
+                // ... -4 [-3 -2 -1  0]  1  2  3  4 ...
+                // Corresponding Canvas coordinate:
+                // ...  4 [ 3  2  1  0] -1 -2 -3 -4 ...
+                #endregion
                 if (coordinate == 0) {
                     // Ursprung
                     return max;
@@ -230,6 +243,8 @@ namespace LinearTransformation.Model {
         }
 
         public static Vector FromCoordinateToPoint(Size canvasSize, CoordinateSystemData data, Vector coordinate) {
+            // Converts a Coordinate into a Point on a canvas considering the canvas size
+
             double w = canvasSize.Width;
             double h = canvasSize.Height;
 
@@ -237,6 +252,7 @@ namespace LinearTransformation.Model {
                 throw new Exception("Invalid canvas size");
             }
 
+            // Calculate the size of a single (unit) cell while considering the canvas size
             Size cellSize = new Size {
                 Width  = w / data.GetCellSize().Width,
                 Height = h / data.GetCellSize().Height,

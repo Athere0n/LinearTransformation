@@ -64,7 +64,7 @@ namespace LinearTransformation.ViewModel {
                 MaxX =  2,
                 MaxY =  2,
                 Unit =  1,
-                Step = .47, // Bug when step < .47 --> no x or y axis
+                Step =  0,
             };
         }
 

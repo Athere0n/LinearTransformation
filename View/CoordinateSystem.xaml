@@ -12,5 +12,6 @@
                 x:Name="CoordinateCanvas"
                 Background="#19374B"
                 ClipToBounds="False"/>
+        <!--TODO: REVERT CHANGES HERE-->
     </Grid>
 </UserControl>

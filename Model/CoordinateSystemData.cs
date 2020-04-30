@@ -23,6 +23,8 @@ namespace LinearTransformation.Model {
         }
 
         private static double CalculateCellAmount(double min, double max, double unit) {
+            // Calculate the amount of units which fit into the given range
+
             // Variable used to adjusting the cell amount based on the unit value
             double temp = ((unit < 1) ? (1 / unit * .5) : 1);
 
@@ -55,9 +57,10 @@ namespace LinearTransformation.Model {
         }
 
         public Size GetCellSize() {
+            // Returns the cell size while considering the value for one unit
             return new Size {
                 Width  = CoordinateSystemData.CalculateCellAmount(this.MinX, this.MaxX, this.Unit),
-                Height = CoordinateSystemData.CalculateCellAmount(this.MinY, this.MaxY, this.Unit), // TODO: NOT GIVING THE INTENDED RESULT For NEGATIVE MINY MAXY
+                Height = CoordinateSystemData.CalculateCellAmount(this.MinY, this.MaxY, this.Unit),
             };
         }
     }
