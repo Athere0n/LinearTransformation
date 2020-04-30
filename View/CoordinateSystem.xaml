@@ -12,6 +12,7 @@
                 x:Name="CoordinateCanvas"
                 Background="#19374B"
                 ClipToBounds="False"
+                KeyDown="CoordinateCanvas_KeyDown"
                 />
         <!--TODO: REVERT CHANGES HERE-->
     </Grid>
