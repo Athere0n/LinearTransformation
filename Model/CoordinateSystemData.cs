@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace LinearTransformation.Model {
     public struct CoordinateSystemData {
-        public double MinX, MaxX, MinY, MaxY, Unit, Step, PossibleAmountOfCells;
+        public double MinX, MaxX, MinY, MaxY, UnitX, UnitY, StepX, StepY, PossibleAmountOfCells;
 
         public CoordinateSystemData(double minX, double maxX, double minY, double maxY,
                                     double unit, double step,
@@ -21,29 +21,35 @@ namespace LinearTransformation.Model {
             this.MaxX = maxX;
             this.MinY = minY;
             this.MaxY = maxY;
-            this.Unit = unit;
-            this.Step = step;
+            this.UnitX = unit;
+            this.UnitY = unit;
+            this.StepX = step;
+            this.StepY = step;
 
             this.PossibleAmountOfCells = possibleAmountOfCells;
         }
 
-        //public CoordinateSystemData(double minX, double maxX, double minY, double maxY,
-        //                    double unit, double step,
-        //                    double possibleAmountOfCells = double.PositiveInfinity) {
+        public CoordinateSystemData(double minX, double maxX,
+                                    double minY, double maxY,
+                                    double unitX, double unitY,
+                                    double stepX, double stepY,
+                                    double possibleAmountOfCells = double.PositiveInfinity) {
 
-        //    if (minX > maxX || minY > maxY) {
-        //        throw new Exception("Invalid boundaries");
-        //    }
+            if (minX > maxX || minY > maxY) {
+                throw new Exception("Invalid boundaries");
+            }
 
-        //    this.MinX = minX;
-        //    this.MaxX = maxX;
-        //    this.MinY = minY;
-        //    this.MaxY = maxY;
-        //    this.Unit = unit;
-        //    this.Step = step;
+            this.MinX = minX;
+            this.MaxX = maxX;
+            this.MinY = minY;
+            this.MaxY = maxY;
+            this.UnitX = unitX;
+            this.UnitY = unitY;
+            this.StepX = stepX;
+            this.StepY = stepY;
 
-        //    this.PossibleAmountOfCells = possibleAmountOfCells;
-        //}
+            this.PossibleAmountOfCells = possibleAmountOfCells;
+        }
 
         public void SetUnitAndStepDynamically() {
             // TODO: Add user property to enable or disable this feature
@@ -95,8 +101,8 @@ namespace LinearTransformation.Model {
         public Size GetCellSize() {
             // Returns the cell size while considering the value for one unit
             return new Size {
-                Width = CoordinateSystemData.CalculateCellAmount(this.MinX, this.MaxX, this.Unit),
-                Height = CoordinateSystemData.CalculateCellAmount(this.MinY, this.MaxY, this.Unit),
+                Width = CoordinateSystemData.CalculateCellAmount(this.MinX, this.MaxX, this.UnitX),
+                Height = CoordinateSystemData.CalculateCellAmount(this.MinY, this.MaxY, this.UnitY),
             };
         }
     }

@@ -43,7 +43,7 @@ namespace LinearTransformation.ViewModel {
                                                                                    this._data,
                                                                                    this._mouseLocationWithinCanvas);
 
-                double scrollspeed = this._data.Unit;
+                double scrollspeed = (this._data.UnitX + this._data.UnitY) / 2;
                 Vector distance = (fromMousePosition - toMousePosition) * scrollspeed;
 
 
@@ -63,28 +63,34 @@ namespace LinearTransformation.ViewModel {
 
             bool canvasNeedsRedraw = false;
 
-            double distance = (this._data.Step == 0) ? this._data.Unit
-                                                     : this._data.Step;
 
             if (key == Key.Up && !Keyboard.IsKeyDown(Key.Down)) {
+                double distance = (this._data.StepY == 0) ? this._data.UnitY
+                                                          : this._data.StepY;
                 this._data.MinY += distance;
                 this._data.MaxY += distance;
                 canvasNeedsRedraw = true;
             }
 
             if (key == Key.Down && !Keyboard.IsKeyDown(Key.Up)) {
+                double distance = (this._data.StepY == 0) ? this._data.UnitY
+                                                          : this._data.StepY;
                 this._data.MinY -= distance;
                 this._data.MaxY -= distance;
                 canvasNeedsRedraw = true;
             }
 
             if (key == Key.Left && !Keyboard.IsKeyDown(Key.Right)) {
+                double distance = (this._data.StepY == 0) ? this._data.UnitY
+                                                          : this._data.StepY;
                 this._data.MinX -= distance;
                 this._data.MaxX -= distance;
                 canvasNeedsRedraw = true;
             }
 
             if (key == Key.Right && !Keyboard.IsKeyDown(Key.Left)) {
+                double distance = (this._data.StepY == 0) ? this._data.UnitY
+                                                          : this._data.StepY;
                 this._data.MinX += distance;
                 this._data.MaxX += distance;
                 canvasNeedsRedraw = true;
@@ -112,9 +118,6 @@ namespace LinearTransformation.ViewModel {
         }
 
         private void Control_MouseWheel(object sender, MouseWheelEventArgs e) {
-            double distance = (this._data.Step == 0) ? this._data.Unit
-                                                     : this._data.Step;
-
             if (e.Delta > 0) {
                 // Zoom in
                 this._data.MinX *= .9;
@@ -180,23 +183,26 @@ namespace LinearTransformation.ViewModel {
         }
 
         private void InstantiateViewSettings() {
-            this._data = new CoordinateSystemData {
-                MinX = -3,
-                MinY = -3,
-                MaxX = 3,
-                MaxY = 3,
-                Unit = 1,
-                Step = .5,
-            };
-            
-            //this._data = new CoordinateSystemData (
-            //    minX : -3,
-            //    minY : -3,
-            //    maxX :  3,
-            //    maxY :  3,
-            //    unit :  1,
-            //    step : .5
-            //);
+
+            this._data = new CoordinateSystemData(
+                minX: -3,
+                minY: -3,
+                maxX:  3,
+                maxY:  3,
+                unit:  1,
+                step: .5
+            );
+
+            this._data = new CoordinateSystemData(
+                minX:  -3,
+                minY:  -6,
+                maxX:   3,
+                maxY:   6,
+                unitX:  1,
+                unitY:  2,
+                stepX: 1,
+                stepY: 2
+            );
         }
 
     }
