@@ -111,7 +111,7 @@ namespace LinearTransformation.ViewModel {
             this._canvas.MouseMove += new MouseEventHandler(this.Control_MouseMove);
 
             // Adding keyboard movement
-            this._canvas.KeyDown += new KeyEventHandler(this.Control_KeyboardMove);
+            //this._canvas.KeyDown += new KeyEventHandler(this.Control_KeyboardMove);
 
             // Adding scroll wheel zoom
             this._canvas.MouseWheel += new MouseWheelEventHandler(this.Control_MouseWheel);
@@ -124,6 +124,7 @@ namespace LinearTransformation.ViewModel {
                 this._data.MaxX *= .9;
                 this._data.MinY *= .9;
                 this._data.MaxY *= .9;
+                this._data.SetUnitAndStepDynamically(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight));
                 this.Update();
             } else if (e.Delta < 0) {
                 // Zoom out
@@ -131,6 +132,7 @@ namespace LinearTransformation.ViewModel {
                 this._data.MaxX *= 1.1;
                 this._data.MinY *= 1.1;
                 this._data.MaxY *= 1.1;
+                this._data.SetUnitAndStepDynamically(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight));
                 this.Update();
             }
         }
@@ -184,22 +186,22 @@ namespace LinearTransformation.ViewModel {
 
         private void InstantiateViewSettings() {
 
-            this._data = new CoordinateSystemData(
-                minX: -3,
-                minY: -3,
-                maxX:  3,
-                maxY:  3,
-                unit:  1,
-                step: .5
-            );
+            //this._data = new CoordinateSystemData(
+            //    minX: -3,
+            //    minY: -3,
+            //    maxX:  3,
+            //    maxY:  3,
+            //    unit:  1,
+            //    step: .5
+            //);
 
             this._data = new CoordinateSystemData(
-                minX:  -3,
-                minY:  -6,
-                maxX:   3,
-                maxY:   6,
-                unitX:  1,
-                unitY:  2,
+                minX: -3,
+                minY: -6,
+                maxX:  3,
+                maxY:  6,
+                unitX: 1,
+                unitY: 2,
                 stepX: 1,
                 stepY: 2
             );

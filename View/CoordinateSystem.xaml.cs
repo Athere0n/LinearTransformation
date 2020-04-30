@@ -28,7 +28,7 @@ namespace LinearTransformation.View {
             this._vm = new CoordinateSystemVM(this.CoordinateCanvas);
             this.DataContext = this._vm;
 
-            this.Loaded += delegate { this._vm.Update(); };
+            this.Loaded                       += delegate { this._vm.Update(); };
             this.CoordinateCanvas.SizeChanged += delegate { this._vm.Update(); };
         }
 
