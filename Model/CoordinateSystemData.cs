@@ -39,10 +39,9 @@ namespace LinearTransformation.Model {
             // case 3: Min < Max < 0
             if (0 > max) {
                 return (Math.Abs(min) - Math.Abs(max)) * temp;
-
             }
 
-            // case 4: (Min=0) < Max
+            // case 4: (Min = 0) < Max
             if (min == 0) {
                 return max * temp;
             }
@@ -56,13 +55,9 @@ namespace LinearTransformation.Model {
         }
 
         public Size GetCellSize() {
-            // TODO: MAYBE ADD 1 DEPENDING ON WHETHER 0 is visible
-
             return new Size {
                 Width  = CoordinateSystemData.CalculateCellAmount(this.MinX, this.MaxX, this.Unit),
-                Height = CoordinateSystemData.CalculateCellAmount(this.MinY, this.MaxY, this.Unit), // TODO NOT GIVING THE INTENDED RESULT For NEGATIVE MINY MAXY
-                //Width = Math.Abs(this.MinX) + Math.Abs(this.MaxX),
-                //Height = Math.Abs(this.MinY) + Math.Abs(this.MaxY),
+                Height = CoordinateSystemData.CalculateCellAmount(this.MinY, this.MaxY, this.Unit), // TODO: NOT GIVING THE INTENDED RESULT For NEGATIVE MINY MAXY
             };
         }
     }

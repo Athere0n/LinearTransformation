@@ -6,8 +6,11 @@
              xmlns:local="clr-namespace:LinearTransformation.Components"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    
+
     <Grid ContextMenuOpening="Grid_ContextMenuOpening">
+        <Grid.ToolTip>
+            <ToolTip x:Name="VectorToolTip"/>
+        </Grid.ToolTip>
         <Grid.ContextMenu>
             <ContextMenu Name="ConnectionContextMenu">
 

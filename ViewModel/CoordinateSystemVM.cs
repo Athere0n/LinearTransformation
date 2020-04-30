@@ -59,12 +59,12 @@ namespace LinearTransformation.ViewModel {
 
         private void InstantiateViewSettings() {
             this.coordinateSystemData = new CoordinateSystemData {
-                MinX =  1,
-                MinY =  -4,
-                MaxX =  4,
-                MaxY =  -1,
+                MinX = -2,
+                MinY = -2,
+                MaxX =  2,
+                MaxY =  2,
                 Unit =  1,
-                Step =  1,
+                Step = .47, // Bug when step < .47 --> no x or y axis
             };
         }
 

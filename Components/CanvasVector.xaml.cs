@@ -1,7 +1,9 @@
 ﻿using LinearTransformation.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,11 +22,13 @@ namespace LinearTransformation.Components {
     /// </summary>
     public partial class CanvasVector: UserControl {
 
-        private Size _canvasSize;
+        private readonly Size _canvasSize;
         private readonly double _degrees;
         private readonly Vector _destination;
         private readonly Vector _origin;
         private readonly double _arrowHeadLength;
+
+        public double Y { get => this._destination.Y; }
 
         public CoordinateSystemData _coordinateSystemData { get; }
 
@@ -34,7 +38,7 @@ namespace LinearTransformation.Components {
                             double degrees = 45, double arrowHeadLength = 15) {
 
             this.InitializeComponent();
-            
+
             this._coordinateSystemData = coordinateSystemData;
             this._destination = destination;
             this._origin = origin;
@@ -56,7 +60,6 @@ namespace LinearTransformation.Components {
 
         private void UpdateCoordinates() {
 
-
             Vector originOnCanvas = CoordinateConverter.FromCoordinateToPoint(this._canvasSize,
                                                                               this._coordinateSystemData,
                                                                               this._origin);
@@ -70,6 +73,12 @@ namespace LinearTransformation.Components {
             this.MainLine.Y2 = destinationOnCavnas.Y;
 
             this.UpdateArrowCoordinates();
+
+            this.UpdateToolTip();
+        }
+
+        private void UpdateToolTip() {
+            this.VectorToolTip.Content = $"X: {this._destination.X}\nY: {this._destination.Y}";
         }
 
         private void UpdateArrowCoordinates() {
