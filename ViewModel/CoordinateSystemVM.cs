@@ -57,7 +57,6 @@ namespace LinearTransformation.ViewModel {
                 this.Update();
             }
         }
-
         public void Control_KeyboardMove(object sender, KeyEventArgs e) {
             Key key = (Key) e.Key;
 
@@ -100,23 +99,6 @@ namespace LinearTransformation.ViewModel {
                 this.Update();
             }
         }
-
-        public CoordinateSystemVM(Canvas canvas) {
-            this._canvas = canvas;
-            this.InstantiateViewSettings();
-
-            // Adding mouse movement
-            this._canvas.MouseLeftButtonDown += new MouseButtonEventHandler(this.Control_MouseLeftButtonDown);
-            this._canvas.MouseLeftButtonUp += new MouseButtonEventHandler(this.Control_MouseLeftButtonUp);
-            this._canvas.MouseMove += new MouseEventHandler(this.Control_MouseMove);
-
-            // Adding keyboard movement
-            this._canvas.KeyDown += new KeyEventHandler(this.Control_KeyboardMove);
-
-            // Adding scroll wheel zoom
-            this._canvas.MouseWheel += new MouseWheelEventHandler(this.Control_MouseWheel);
-        }
-
         private void Control_MouseWheel(object sender, MouseWheelEventArgs e) {
             if (e.Delta > 0) {
                 // Zoom in
@@ -135,6 +117,22 @@ namespace LinearTransformation.ViewModel {
                 this._data.SetUnitAndStepDynamically(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight));
                 this.Update();
             }
+        }
+
+        public CoordinateSystemVM(Canvas canvas) {
+            this._canvas = canvas;
+            this.InstantiateViewSettings();
+
+            // Adding mouse movement
+            this._canvas.MouseLeftButtonDown += new MouseButtonEventHandler(this.Control_MouseLeftButtonDown);
+            this._canvas.MouseLeftButtonUp += new MouseButtonEventHandler(this.Control_MouseLeftButtonUp);
+            this._canvas.MouseMove += new MouseEventHandler(this.Control_MouseMove);
+
+            // Adding keyboard movement
+            this._canvas.KeyDown += new KeyEventHandler(this.Control_KeyboardMove);
+
+            // Adding scroll wheel zoom
+            this._canvas.MouseWheel += new MouseWheelEventHandler(this.Control_MouseWheel);
         }
 
         public void Update() {

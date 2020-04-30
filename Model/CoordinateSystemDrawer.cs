@@ -361,9 +361,9 @@ namespace LinearTransformation.Model {
                     right = true;
                     labelX = x + data.StepX * .5;
                     labelPosition = CoordinateConverter.FromCoordinateToPoint(canvasSize,
-                                                                                 data,
-                                                                                 new Vector(labelX,
-                                                                                            y));
+                                                                              data,
+                                                                              new Vector(labelX,
+                                                                                         y));
                 }
 
 
