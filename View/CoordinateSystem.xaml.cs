@@ -23,17 +23,13 @@ namespace LinearTransformation.View {
 
         public CoordinateSystem() {
             this.InitializeComponent();
-            this.PreviewKeyDown += new KeyEventHandler(this.CoordinateCanvas_KeyDown);
-
+            
             this._vm = new CoordinateSystemVM(this.CoordinateCanvas);
             this.DataContext = this._vm;
 
             this.Loaded                       += delegate { this._vm.Update(); };
             this.CoordinateCanvas.SizeChanged += delegate { this._vm.Update(); };
-        }
-
-        private void CoordinateCanvas_KeyDown(object sender, KeyEventArgs e) {
-            this._vm.Control_KeyboardMove(sender, e);
+            this.CoordinateCanvas.Loaded      += delegate { Keyboard.Focus(this.CoordinateCanvas); };
         }
     }
 }

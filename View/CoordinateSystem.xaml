@@ -8,11 +8,11 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Canvas MinWidth="1" MinHeight="1"
-                Margin="20"
+                Margin="100"
                 x:Name="CoordinateCanvas"
                 Background="#19374B"
                 ClipToBounds="False"
-                KeyDown="CoordinateCanvas_KeyDown"
+                Focusable="True"
                 />
         <!--TODO: REVERT CHANGES HERE-->
     </Grid>

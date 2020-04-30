@@ -111,7 +111,7 @@ namespace LinearTransformation.ViewModel {
             this._canvas.MouseMove += new MouseEventHandler(this.Control_MouseMove);
 
             // Adding keyboard movement
-            //this._canvas.KeyDown += new KeyEventHandler(this.Control_KeyboardMove);
+            this._canvas.KeyDown += new KeyEventHandler(this.Control_KeyboardMove);
 
             // Adding scroll wheel zoom
             this._canvas.MouseWheel += new MouseWheelEventHandler(this.Control_MouseWheel);

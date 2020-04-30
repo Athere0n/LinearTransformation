@@ -178,7 +178,7 @@ namespace LinearTransformation.Model {
                 #region Text
                 double labelY;
 
-                // Decide whether to place text above or under
+                #region Decide whether to place text above or under
                 bool above;
                 if (data.MinY < 0 && 0 < data.MaxY) {
                     above = false;
@@ -203,6 +203,8 @@ namespace LinearTransformation.Model {
                 else if (data.MaxY == 0) {
                     above = false;
                 } else throw new Exception();
+                #endregion
+
 
                 if (above) {
                     // above axis
@@ -217,13 +219,24 @@ namespace LinearTransformation.Model {
                     Foreground = _unitLineBrush,
                     FontSize = 20,
                 };
+                // Calculate label dimensions
+                Size labelSize = Utility.GetTextSize(label.Content.ToString(), label.FontSize);
 
                 Vector labelPosition = CoordinateConverter.FromCoordinateToPoint(canvasSize,
                                                                                  data,
                                                                                  new Vector(x,
                                                                                             labelY));
-                // Calculate label dimensions
-                Size labelSize = Utility.GetTextSize(label.Content.ToString(), label.FontSize);
+
+                // Consider the text size
+                double checkY = labelPosition.Y + labelSize.Height;
+                if (checkY > canvasSize.Height) {
+                    above = true;
+                    labelY = y + data.StepY * .5;
+                    labelPosition = CoordinateConverter.FromCoordinateToPoint(canvasSize,
+                                                                                 data,
+                                                                                 new Vector(x,
+                                                                                            labelY));
+                }
 
                 if (above) {
                     // above axis
@@ -294,7 +307,7 @@ namespace LinearTransformation.Model {
 
                 #region Text
                 double labelX;
-                // Decide whether to place text left or right
+                #region Decide whether to place text left or right
                 bool right;
                 if (data.MinX < 0 && 0 < data.MaxX) {
                     right = false;
@@ -319,7 +332,7 @@ namespace LinearTransformation.Model {
                 else if (data.MaxX == 0) {
                     right = false;
                 } else throw new Exception();
-
+                #endregion
 
                 if (right) {
                     // right
@@ -334,14 +347,25 @@ namespace LinearTransformation.Model {
                     Foreground = _unitLineBrush,
                     FontSize = 20,
                 };
+                // Calculate label dimensions
+                Size labelSize = Utility.GetTextSize(label.Content.ToString(), label.FontSize);
 
                 Vector labelPosition = CoordinateConverter.FromCoordinateToPoint(canvasSize,
                                                                                  data,
                                                                                  new Vector(labelX,
                                                                                             y));
 
-                // Calculate label dimensions
-                Size labelSize = Utility.GetTextSize(label.Content.ToString(), label.FontSize);
+                // Consider the text size
+                double checkX = labelPosition.X - labelSize.Width;
+                if (checkX < 0) {
+                    right = true;
+                    labelX = x + data.StepX * .5;
+                    labelPosition = CoordinateConverter.FromCoordinateToPoint(canvasSize,
+                                                                                 data,
+                                                                                 new Vector(labelX,
+                                                                                            y));
+                }
+
 
                 Canvas.SetZIndex(label, int.MaxValue);
 
