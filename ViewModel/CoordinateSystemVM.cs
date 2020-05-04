@@ -15,7 +15,7 @@ namespace LinearTransformation.ViewModel {
         public List<CanvasVector> Vectors { get; set; }
 
         private readonly Canvas _canvas;
-        private CoordinateSystemData _data;
+        public CoordinateSystemData _data;
 
         // movement Variables
         private bool _isDragging;
@@ -61,6 +61,15 @@ namespace LinearTransformation.ViewModel {
                 this.Update();
             }
         }
+
+        public CanvasVector AddVector(double x, double y, Brush b) {
+            CanvasVector canvasVector = new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
+                                              b, this._data, new Vector(x, y), new Vector(0, 0));
+            this.Vectors.Add(canvasVector);
+            this.Update();
+            return canvasVector;
+        }
+
         public void Control_KeyboardMove(object sender, KeyEventArgs e) {
             Key key = (Key) e.Key;
 
@@ -160,7 +169,10 @@ namespace LinearTransformation.ViewModel {
             this._canvas = canvas;
             this._data = data;
             this.AddMovementFunctionality();
-            this.Vectors = vectors;
+            if (vectors == null)
+                this.Vectors = new List<CanvasVector>();
+            else
+                this.Vectors = vectors;
         }
 
         private void AddMovementFunctionality() {
@@ -179,7 +191,7 @@ namespace LinearTransformation.ViewModel {
         public void Update() {
             this._canvas.Children.Clear();
             this.InstantiateBackground();
-            this.DrawTestingVectors();
+            this.InstantiateVectors();
 
             //Size canvasSize = new Size(this._canvas.ActualWidth, this._canvas.ActualHeight);
             //Vector coordinate = CoordinateConverter.FromCoordinateToPoint(canvasSize,
@@ -191,8 +203,13 @@ namespace LinearTransformation.ViewModel {
 
         }
 
-        private void DrawTestingVectors() {
-            this.Vectors.ForEach(x => this._canvas.Children.Add(x));
+        private void InstantiateVectors() {
+            foreach (CanvasVector vector in this.Vectors) {
+                vector.CanvasSize = new Size(this._canvas.ActualWidth, this._canvas.ActualHeight);
+                vector.Data = this._data;
+                vector.UpdateCoordinates();
+                this._canvas.Children.Add(vector);
+            }
         }
 
         private void InstantiateBackground() {

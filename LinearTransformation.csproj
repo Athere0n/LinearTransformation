@@ -78,6 +78,9 @@
     <Compile Include="Components\CanvasVector.xaml.cs">
       <DependentUpon>CanvasVector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\VectorListItem.xaml.cs">
+      <DependentUpon>VectorListItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\BackgroundLine.cs" />
     <Compile Include="Model\CoordinateConverter.cs" />
     <Compile Include="Model\CoordinateSystemData.cs" />
@@ -91,6 +94,10 @@
       <DependentUpon>MainControl.xaml</DependentUpon>
     </Compile>
     <Page Include="Components\CanvasVector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\VectorListItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

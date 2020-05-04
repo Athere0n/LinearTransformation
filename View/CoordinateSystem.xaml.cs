@@ -21,7 +21,7 @@ namespace LinearTransformation.View {
     /// Interaction logic for CoordinateSystem.xaml
     /// </summary>
     public partial class CoordinateSystem: UserControl {
-        private readonly CoordinateSystemVM _vm;
+        public readonly CoordinateSystemVM _vm;
 
         public CoordinateSystem() {
             this.InitializeComponent();
@@ -43,6 +43,15 @@ namespace LinearTransformation.View {
             this.Loaded += delegate { this._vm.Update(); };
             this.CoordinateCanvas.SizeChanged += delegate { this._vm.Update(); };
             this.CoordinateCanvas.Loaded += delegate { Keyboard.Focus(this.CoordinateCanvas); };
+        }
+
+        public CanvasVector AddVector(double x, double y, Brush b) {
+            return this._vm.AddVector(x, y, b);
+        }
+
+        public void DeleteVector(CanvasVector canvasVector) {
+            this.CoordinateCanvas.Children.Remove(canvasVector);
+            this._vm.Vectors.Remove(canvasVector);
         }
     }
 }
