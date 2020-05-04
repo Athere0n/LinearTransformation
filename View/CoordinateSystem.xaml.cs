@@ -1,4 +1,6 @@
-﻿using LinearTransformation.ViewModel;
+﻿using LinearTransformation.Components;
+using LinearTransformation.Model;
+using LinearTransformation.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +32,17 @@ namespace LinearTransformation.View {
             this.Loaded                       += delegate { this._vm.Update(); };
             this.CoordinateCanvas.SizeChanged += delegate { this._vm.Update(); };
             this.CoordinateCanvas.Loaded      += delegate { Keyboard.Focus(this.CoordinateCanvas); };
+        }
+
+        public CoordinateSystem(CoordinateSystemData data, List<CanvasVector> vectors = null) {
+            this.InitializeComponent();
+
+            this._vm = new CoordinateSystemVM(this.CoordinateCanvas, data, vectors);
+            this.DataContext = this._vm;
+
+            this.Loaded += delegate { this._vm.Update(); };
+            this.CoordinateCanvas.SizeChanged += delegate { this._vm.Update(); };
+            this.CoordinateCanvas.Loaded += delegate { Keyboard.Focus(this.CoordinateCanvas); };
         }
     }
 }

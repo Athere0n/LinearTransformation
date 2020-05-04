@@ -12,11 +12,15 @@ using System.Windows.Media;
 
 namespace LinearTransformation.ViewModel {
     public class CoordinateSystemVM {
+        public List<CanvasVector> Vectors { get; set; }
+
         private readonly Canvas _canvas;
         private CoordinateSystemData _data;
 
+        // movement Variables
         private bool _isDragging;
         private Vector _mouseLocationWithinCanvas;
+
 
         private void Control_MouseLeftButtonDown(object sender, MouseEventArgs e) {
             this._isDragging = true;
@@ -122,7 +126,44 @@ namespace LinearTransformation.ViewModel {
         public CoordinateSystemVM(Canvas canvas) {
             this._canvas = canvas;
             this.InstantiateViewSettings();
+            this.AddMovementFunctionality();
+            this.Vectors = new List<CanvasVector> {
+                //new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
+                //                 Brushes.DarkOrchid,
+                //                 this._data,
+                //                 new Vector( 2,  2),
+                //                 new Vector( 0,  0)),
+                //new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
+                //                 Brushes.DarkSalmon,
+                //                 this._data,
+                //                 new Vector(-3, -1),
+                //                 new Vector( 0,  0)),
+                //new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
+                //                 Brushes.LimeGreen,
+                //                 this._data,
+                //                 new Vector( 5, -2),
+                //                 new Vector( 0,  0)),
+                //new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
+                //                 Brushes.Red,
+                //                 this._data,
+                //                 new Vector(-1, 1),
+                //                 new Vector( 0, 0)),
+                //new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
+                //                 Brushes.DeepPink,
+                //                 this._data,
+                //                 new Vector( 1, 0),
+                //                 new Vector( 0, 0)),
+            };
+        }
 
+        public CoordinateSystemVM(Canvas canvas, CoordinateSystemData data, List<CanvasVector> vectors) {
+            this._canvas = canvas;
+            this._data = data;
+            this.AddMovementFunctionality();
+            this.Vectors = vectors;
+        }
+
+        private void AddMovementFunctionality() {
             // Adding mouse movement
             this._canvas.MouseLeftButtonDown += new MouseButtonEventHandler(this.Control_MouseLeftButtonDown);
             this._canvas.MouseLeftButtonUp += new MouseButtonEventHandler(this.Control_MouseLeftButtonUp);
@@ -151,31 +192,7 @@ namespace LinearTransformation.ViewModel {
         }
 
         private void DrawTestingVectors() {
-            this._canvas.Children.Add(new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
-                                                       Brushes.DarkOrchid,
-                                                       this._data,
-                                                       new Vector(2, 2),
-                                                       new Vector(0, 0)));
-            this._canvas.Children.Add(new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
-                                                       Brushes.DarkSalmon,
-                                                       this._data,
-                                                       new Vector(-3, -1),
-                                                       new Vector(0, 0)));
-            this._canvas.Children.Add(new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
-                                                       Brushes.LimeGreen,
-                                                       this._data,
-                                                       new Vector(5, -2),
-                                                       new Vector(0, 0)));
-            this._canvas.Children.Add(new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
-                                                       Brushes.Red,
-                                                       this._data,
-                                                       new Vector(-1, 1),
-                                                       new Vector(0, 0)));
-            this._canvas.Children.Add(new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
-                                                       Brushes.DeepPink,
-                                                       this._data,
-                                                       new Vector(1, 0),
-                                                       new Vector(0, 0)));
+            this.Vectors.ForEach(x => this._canvas.Children.Add(x));
         }
 
         private void InstantiateBackground() {
@@ -185,12 +202,12 @@ namespace LinearTransformation.ViewModel {
         private void InstantiateViewSettings() {
 
             this._data = new CoordinateSystemData {
-                MinX  = -3,
-                MaxX  =  3,
-                MinY  = -3,
-                MaxY  =  3,
-                UnitX =  1,
-                UnitY =  1,
+                MinX = -3,
+                MaxX = 3,
+                MinY = -3,
+                MaxY = 3,
+                UnitX = 1,
+                UnitY = 1,
                 StepX = .5,
                 StepY = .5,
             };

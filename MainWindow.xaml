@@ -6,7 +6,10 @@
         xmlns:local="clr-namespace:LinearTransformation"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid Background="Black">
-        <ContentControl Content="{Binding ShownView}"/>
+    <Grid>
+        <ContentControl Grid.Column="0"
+                        Grid.Row="1"
+                        Background="Black" 
+                        Content="{Binding ShownView}"/>
     </Grid>
 </Window>

@@ -24,11 +24,13 @@ namespace LinearTransformation.Components {
 
         private readonly Size _canvasSize;
         private readonly double _degrees;
-        private readonly Vector _destination;
-        private readonly Vector _origin;
         private readonly double _arrowHeadLength;
+        private readonly Vector _origin;
+        private Vector _destination;
 
-        public double Y { get => this._destination.Y; }
+        public readonly Brush VectorBrush;
+        public double X { get => this._destination.X; set { this._destination.X = value; } }
+        public double Y { get => this._destination.Y; set { this._destination.Y = value; } }
 
         public CoordinateSystemData _coordinateSystemData { get; }
 
