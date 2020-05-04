@@ -175,9 +175,17 @@ namespace LinearTransformation.Model {
             };
         }
 
-        internal void SetUnitAndStepDynamically(Size size) {
+        internal void SetUnitAndStepDynamically(Size canvasSize) {
             // TODO: Implement this
-            //throw new NotImplementedException();
+
+            // UnitX
+
+
+            // UnitY
+
+            // Step
+            //this.StepX = this.UnitX * .5;
+            //this.StepY = this.UnitY * .5;
         }
     }
 }

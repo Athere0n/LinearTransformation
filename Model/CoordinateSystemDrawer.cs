@@ -13,7 +13,7 @@ namespace LinearTransformation.Model {
 
         #region temporary variables
         // TODO: MOVE THESE TO PROJECT PROPERTIES
-        private static readonly Brush _axisLineBrush = Brushes.White,
+        private static  Brush _axisLineBrush = Brushes.White,
                                       _unitLineBrush = Brushes.LightGray,
                                       _stepLineBrush = Brushes.LightSlateGray;
 
@@ -454,6 +454,16 @@ namespace LinearTransformation.Model {
                 if (data.StepY == 0)
                     data.StepY = data.UnitY * .5;
 
+                // Consider possibility of drawing arrowhead OVER other axis
+                if (data.MaxX > 0 && (data.MaxX - data.StepX * .5) < 0)
+                    return;
+
+                // Consider overlapping of both arrowheads
+                // wenn hier der größte y wert gößer ist als beim ydir der kleinste ywert
+                if (data.StepY * .5 > (data.MaxY - data.StepY * .5) &&
+                    (data.MaxX - data.StepX * .5) < data.StepX * .5)
+                    return;
+
                 BackgroundLine top    = new BackgroundLine(new Vector(data.MaxX, 0),
                                                            new Vector(data.MaxX - data.StepX * .5, data.StepY * .5),
                                                            CoordinateSystemDrawer._axisLineBrush,
@@ -466,6 +476,10 @@ namespace LinearTransformation.Model {
                 Vector topPos1 = CoordinateConverter.FromCoordinateToPoint(canvasSize, data, top.Pos1);
                 Vector topPos2 = CoordinateConverter.FromCoordinateToPoint(canvasSize, data, top.Pos2);
 
+                // Consider canvas and arrow head size
+                if (0 > topPos2.Y)
+                    return;
+
                 Line topLine = new Line {
                     X1              = topPos1.X,
                     Y1              = topPos1.Y,
@@ -474,9 +488,6 @@ namespace LinearTransformation.Model {
                     Stroke          = top.LineBrush,
                     StrokeThickness = top.LineThickness,
                 };
-
-                Canvas.SetZIndex(topLine, CoordinateSystemDrawer._unitZ);
-                canvas.Children.Add(topLine);
 
                 Vector bottomPos1 = CoordinateConverter.FromCoordinateToPoint(canvasSize, data, bottom.Pos1);
                 Vector bottomPos2 = CoordinateConverter.FromCoordinateToPoint(canvasSize, data, bottom.Pos2);
@@ -490,6 +501,13 @@ namespace LinearTransformation.Model {
                     StrokeThickness = bottom.LineThickness,
                 };
 
+                // Consider canvas and arrow head size
+                if (canvasSize.Height < bottomPos1.Y)
+                    return;
+                
+                // Drawing it
+                Canvas.SetZIndex(topLine, CoordinateSystemDrawer._unitZ);
+                canvas.Children.Add(topLine);
                 Canvas.SetZIndex(bottomLine, CoordinateSystemDrawer._axisZ);
                 canvas.Children.Add(bottomLine);
             }
@@ -504,32 +522,30 @@ namespace LinearTransformation.Model {
                 if (data.StepY == 0)
                     data.StepY = data.UnitY * .5;
 
-                BackgroundLine left = new BackgroundLine(new Vector(0, data.MaxY),
-                                                         new Vector(data.StepX * .5, data.MaxY - data.StepY * .5),
-                                                         CoordinateSystemDrawer._axisLineBrush,
-                                                         CoordinateSystemDrawer._axisLineThickness);
-                BackgroundLine right = new BackgroundLine(new Vector(-data.StepX * .5, data.MaxY - data.StepY * .5),
+                // Consider possibility of drawing arrowhead OVER other axis
+                if (data.MaxY > 0 && (data.MaxY - data.StepY * .5) < 0)
+                    return;
+
+                // Consider overlapping of both arrowheads
+                if (data.StepY * .5 > (data.MaxY - data.StepY * .5) &&
+                    (data.MaxX - data.StepX * .5) < data.StepX * .5)
+                    return;
+
+                BackgroundLine right = new BackgroundLine(new Vector(0, data.MaxY),
+                                                          new Vector(data.StepX * .5, data.MaxY - data.StepY * .5),
+                                                          CoordinateSystemDrawer._axisLineBrush,
+                                                          CoordinateSystemDrawer._axisLineThickness);
+                BackgroundLine left  = new BackgroundLine(new Vector(-data.StepX * .5, data.MaxY - data.StepY * .5),
                                                           new Vector(0, data.MaxY),
                                                           CoordinateSystemDrawer._axisLineBrush,
                                                           CoordinateSystemDrawer._axisLineThickness);
 
-                Vector leftPos1 = CoordinateConverter.FromCoordinateToPoint(canvasSize, data, left.Pos1);
-                Vector leftPos2 = CoordinateConverter.FromCoordinateToPoint(canvasSize, data, left.Pos2);
-
-                Line leftLine = new Line {
-                    X1              = leftPos1.X,
-                    Y1              = leftPos1.Y,
-                    X2              = leftPos2.X,
-                    Y2              = leftPos2.Y,
-                    Stroke          = left.LineBrush,
-                    StrokeThickness = left.LineThickness,
-                };
-
-                Canvas.SetZIndex(leftLine, CoordinateSystemDrawer._unitZ);
-                canvas.Children.Add(leftLine);
-
                 Vector rightPos1 = CoordinateConverter.FromCoordinateToPoint(canvasSize, data, right.Pos1);
                 Vector rightPos2 = CoordinateConverter.FromCoordinateToPoint(canvasSize, data, right.Pos2);
+
+                //Consider canvas and arrow head size
+                if (canvasSize.Width < rightPos2.X)
+                    return;
 
                 Line rightLine = new Line {
                     X1              = rightPos1.X,
@@ -540,8 +556,28 @@ namespace LinearTransformation.Model {
                     StrokeThickness = right.LineThickness,
                 };
 
+
+                Vector leftPos1 = CoordinateConverter.FromCoordinateToPoint(canvasSize, data, left.Pos1);
+                Vector leftPos2 = CoordinateConverter.FromCoordinateToPoint(canvasSize, data, left.Pos2);
+
+                //Consider canvas and arrow head size
+                if (0 > leftPos1.X)
+                    return;
+
+                Line leftLine = new Line {
+                    X1              = leftPos1.X,
+                    Y1              = leftPos1.Y,
+                    X2              = leftPos2.X,
+                    Y2              = leftPos2.Y,
+                    Stroke          = left.LineBrush,
+                    StrokeThickness = left.LineThickness,
+                };
+
+
                 Canvas.SetZIndex(rightLine, CoordinateSystemDrawer._unitZ);
                 canvas.Children.Add(rightLine);
+                Canvas.SetZIndex(leftLine, CoordinateSystemDrawer._unitZ);
+                canvas.Children.Add(leftLine);
             }
 
         }
