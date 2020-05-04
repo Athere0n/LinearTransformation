@@ -13,7 +13,7 @@ namespace LinearTransformation.Model {
 
         #region temporary variables
         // TODO: MOVE THESE TO PROJECT PROPERTIES
-        private static  Brush _axisLineBrush = Brushes.White,
+        private static readonly Brush _axisLineBrush = Brushes.White,
                                       _unitLineBrush = Brushes.LightGray,
                                       _stepLineBrush = Brushes.LightSlateGray;
 
