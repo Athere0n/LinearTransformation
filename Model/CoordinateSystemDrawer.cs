@@ -407,7 +407,7 @@ namespace LinearTransformation.Model {
                 Line axisLine = new Line {
                     X1 = pos1.X,
                     Y1 = pos1.Y,
-                    X2 = pos2.X,
+                    X2 = pos2.X - 3,
                     Y2 = pos2.Y,
                     Stroke = axis.LineBrush,
                     StrokeThickness = axis.LineThickness,
@@ -481,9 +481,9 @@ namespace LinearTransformation.Model {
                     return;
 
                 Line topLine = new Line {
-                    X1              = topPos1.X,
+                    X1              = topPos1.X - 2,
                     Y1              = topPos1.Y,
-                    X2              = topPos2.X,
+                    X2              = topPos2.X - 2,
                     Y2              = topPos2.Y,
                     Stroke          = top.LineBrush,
                     StrokeThickness = top.LineThickness,
@@ -493,9 +493,9 @@ namespace LinearTransformation.Model {
                 Vector bottomPos2 = CoordinateConverter.FromCoordinateToPoint(canvasSize, data, bottom.Pos2);
 
                 Line bottomLine = new Line {
-                    X1              = bottomPos1.X,
+                    X1              = bottomPos1.X - 2,
                     Y1              = bottomPos1.Y,
-                    X2              = bottomPos2.X,
+                    X2              = bottomPos2.X - 2,
                     Y2              = bottomPos2.Y,
                     Stroke          = bottom.LineBrush,
                     StrokeThickness = bottom.LineThickness,

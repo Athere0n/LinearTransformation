@@ -159,7 +159,6 @@
                         <Label Foreground="White" Content="Vectors"/>
                     </Border>
                 </GroupBox.Header>
-                <!--TODO-->
                 <ListView Background="DarkSlateGray" ItemsSource="{Binding Vectors}"></ListView>
             </GroupBox>
         </Grid>

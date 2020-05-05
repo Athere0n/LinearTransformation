@@ -77,6 +77,8 @@ namespace LinearTransformation.ViewModel {
                                                           : this._data.StepY;
                 this._data.MinY += distance;
                 this._data.MaxY += distance;
+                this._dynamicData.MinY += distance;
+                this._dynamicData.MaxY += distance;
                 canvasNeedsRedraw = true;
             }
 
@@ -85,6 +87,8 @@ namespace LinearTransformation.ViewModel {
                                                           : this._data.StepY;
                 this._data.MinY -= distance;
                 this._data.MaxY -= distance;
+                this._dynamicData.MinY -= distance;
+                this._dynamicData.MaxY -= distance;
                 canvasNeedsRedraw = true;
             }
 
@@ -93,6 +97,8 @@ namespace LinearTransformation.ViewModel {
                                                           : this._data.StepY;
                 this._data.MinX -= distance;
                 this._data.MaxX -= distance;
+                this._dynamicData.MinX -= distance;
+                this._dynamicData.MaxX -= distance;
                 canvasNeedsRedraw = true;
             }
 
@@ -101,6 +107,8 @@ namespace LinearTransformation.ViewModel {
                                                           : this._data.StepY;
                 this._data.MinX += distance;
                 this._data.MaxX += distance;
+                this._dynamicData.MinX += distance;
+                this._dynamicData.MaxX += distance;
                 canvasNeedsRedraw = true;
             }
 
@@ -144,6 +152,7 @@ namespace LinearTransformation.ViewModel {
             this._mainControlVM = mainControlVM;
             this._canvas = canvas;
             this._data = data;
+            this._dynamicData = data;
             this.AddMovementFunctionality();
             if (vectors == null) {
                 this.Vectors = new List<CanvasVector>();
@@ -168,21 +177,19 @@ namespace LinearTransformation.ViewModel {
         public void Update() {
             bool showStaticGrid = (bool) this._mainControlVM._mainControl.ToggleButton_StaticGrid.IsChecked;
             bool showVectors = (bool) this._mainControlVM._mainControl.ToggleButton_Vectors.IsChecked;
-
             bool showDynamicGrid = (bool) this._mainControlVM._mainControl.ToggleButton_DynamicGrid.IsChecked;
-
-
 
 
             this._canvas.Children.Clear();
 
             if (showStaticGrid)
                 CoordinateSystemDrawer.Draw(this._canvas, this._data);
-            if (showVectors)
-                this.InstantiateVectors(this._data, this.Vectors);
-
             if (showDynamicGrid)
                 CoordinateSystemDrawer.Draw(this._canvas, this._dynamicData);
+            if (showVectors)
+                this.InstantiateVectors(this._dynamicData, this.Vectors);
+
+
         }
 
         public CanvasVector AddVector(double x, double y, Brush b) {

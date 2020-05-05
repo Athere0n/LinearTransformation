@@ -78,15 +78,15 @@ namespace LinearTransformation.ViewModel {
         public void Button_Click_Transform(object sender, RoutedEventArgs e) {
 
             // IHat
-            if (double.TryParse(this._mainControl.InputIHatX.Text, out double ix))
+            if (!double.TryParse(this._mainControl.InputIHatX.Text, out double ix))
                 throw new Exception("Invalid Value");
-            if (double.TryParse(this._mainControl.InputIHatY.Text, out double iy))
+            if (!double.TryParse(this._mainControl.InputIHatY.Text, out double iy))
                 throw new Exception("Invalid Value");
 
             //JHat
-            if (double.TryParse(this._mainControl.InputJHatX.Text, out double jx))
+            if (!double.TryParse(this._mainControl.InputJHatX.Text, out double jx))
                 throw new Exception("Invalid Value");
-            if (double.TryParse(this._mainControl.InputJHatY.Text, out double jy))
+            if (!double.TryParse(this._mainControl.InputJHatY.Text, out double jy))
                 throw new Exception("Invalid Value");
 
             Vector iHat = new Vector(ix, iy);
