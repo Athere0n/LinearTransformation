@@ -87,6 +87,7 @@
     <Compile Include="Model\CoordinateSystemDrawer.cs" />
     <Compile Include="Model\Utility.cs" />
     <Compile Include="ViewModel\CoordinateSystemVM.cs" />
+    <Compile Include="ViewModel\MainControlVM.cs" />
     <Compile Include="View\CoordinateSystem.xaml.cs">
       <DependentUpon>CoordinateSystem.xaml</DependentUpon>
     </Compile>

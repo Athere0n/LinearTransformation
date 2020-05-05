@@ -1,4 +1,5 @@
 ﻿using LinearTransformation.View;
+using LinearTransformation.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,13 +21,13 @@ namespace LinearTransformation.Components {
     /// </summary>
     public partial class VectorListItem: UserControl {
 
-        private MainControl _mainControl;
+        private readonly MainControlVM _mainControlVM;
         public CanvasVector _canvasVector;
 
-        public VectorListItem(MainControl mainControl, CanvasVector canvasVector) {
+        public VectorListItem(MainControlVM mainControlVM, CanvasVector canvasVector) {
             this.InitializeComponent();
 
-            this._mainControl = mainControl;
+            this._mainControlVM = mainControlVM;
             this._canvasVector = canvasVector;
 
             this.InputVectorColour.Background = this._canvasVector.VectorBrush;
@@ -87,8 +88,8 @@ namespace LinearTransformation.Components {
 
         private void Button_Click_DeleteVector(object sender, RoutedEventArgs e) {
             // Delete CanvasVector from MainControl List and order a redraw
-            this._mainControl.Vectors.Remove(this);
-            this._mainControl.DeleteVector(this._canvasVector);
+            this._mainControlVM.Vectors.Remove(this);
+            this._mainControlVM.DeleteVector(this._canvasVector);
         }
     }
 }

@@ -21,37 +21,38 @@ namespace LinearTransformation.View {
     /// Interaction logic for CoordinateSystem.xaml
     /// </summary>
     public partial class CoordinateSystem: UserControl {
-        public readonly CoordinateSystemVM _vm;
+        public readonly CoordinateSystemVM _coordinateSystemVM;
+        public readonly MainControlVM _mainControlVM;
 
-        public CoordinateSystem() {
+        //public CoordinateSystem() {
+        //    this.InitializeComponent();
+
+        //    this._coordinateSystemVM = new CoordinateSystemVM(this._mainControlVM, this.CoordinateCanvas);
+        //    this.DataContext = this._coordinateSystemVM;
+
+        //    this.Loaded += delegate { this._coordinateSystemVM.Update(); };
+        //    this.CoordinateCanvas.SizeChanged += delegate { this._coordinateSystemVM.Update(); };
+        //    this.CoordinateCanvas.Loaded += delegate { Keyboard.Focus(this.CoordinateCanvas); };
+        //}
+
+        public CoordinateSystem(MainControlVM mainControlVM, CoordinateSystemData data, List<CanvasVector> vectors = null) {
             this.InitializeComponent();
-            
-            this._vm = new CoordinateSystemVM(this.CoordinateCanvas);
-            this.DataContext = this._vm;
 
-            this.Loaded                       += delegate { this._vm.Update(); };
-            this.CoordinateCanvas.SizeChanged += delegate { this._vm.Update(); };
-            this.CoordinateCanvas.Loaded      += delegate { Keyboard.Focus(this.CoordinateCanvas); };
-        }
+            this._mainControlVM = mainControlVM;
+            this._coordinateSystemVM = new CoordinateSystemVM(this._mainControlVM, this.CoordinateCanvas, data, vectors);
+            this.DataContext = this._coordinateSystemVM;
 
-        public CoordinateSystem(CoordinateSystemData data, List<CanvasVector> vectors = null) {
-            this.InitializeComponent();
-
-            this._vm = new CoordinateSystemVM(this.CoordinateCanvas, data, vectors);
-            this.DataContext = this._vm;
-
-            this.Loaded += delegate { this._vm.Update(); };
-            this.CoordinateCanvas.SizeChanged += delegate { this._vm.Update(); };
+            this.Loaded += delegate { this._coordinateSystemVM.Update(); };
+            this.CoordinateCanvas.SizeChanged += delegate { this._coordinateSystemVM.Update(); };
             this.CoordinateCanvas.Loaded += delegate { Keyboard.Focus(this.CoordinateCanvas); };
         }
 
         public CanvasVector AddVector(double x, double y, Brush b) {
-            return this._vm.AddVector(x, y, b);
+            return this._coordinateSystemVM.AddVector(x, y, b);
         }
 
         public void DeleteVector(CanvasVector canvasVector) {
-            this.CoordinateCanvas.Children.Remove(canvasVector);
-            this._vm.Vectors.Remove(canvasVector);
+            this._coordinateSystemVM.DeleteVector(canvasVector);
         }
     }
 }
