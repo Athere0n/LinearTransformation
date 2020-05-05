@@ -38,7 +38,7 @@ namespace LinearTransformation {
         public MainWindow() {
             this.InitializeComponent();
             this.DataContext = this;
-            this._shownView = new CoordinateSystem();
+            this._shownView = new MainControl();
         }
     }
 }

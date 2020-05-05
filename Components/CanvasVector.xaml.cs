@@ -22,15 +22,17 @@ namespace LinearTransformation.Components {
     /// </summary>
     public partial class CanvasVector: UserControl {
 
-        private readonly Size _canvasSize;
+        public Size CanvasSize;
         private readonly double _degrees;
-        private readonly Vector _destination;
-        private readonly Vector _origin;
         private readonly double _arrowHeadLength;
+        private readonly Vector _origin;
+        private Vector _destination;
 
-        public double Y { get => this._destination.Y; }
+        public Brush VectorBrush;
+        public double X { get => this._destination.X; set { this._destination.X = value; } }
+        public double Y { get => this._destination.Y; set { this._destination.Y = value; } }
 
-        public CoordinateSystemData _coordinateSystemData { get; }
+        public CoordinateSystemData Data { get; set; }
 
         public CanvasVector(Size canvasSize, Brush brush,
                             CoordinateSystemData coordinateSystemData,
@@ -39,32 +41,34 @@ namespace LinearTransformation.Components {
 
             this.InitializeComponent();
 
-            this._coordinateSystemData = coordinateSystemData;
+            this.VectorBrush = brush;
+
+            this.Data = coordinateSystemData;
             this._destination = destination;
             this._origin = origin;
             this._degrees = degrees;
             this._arrowHeadLength = arrowHeadLength;
 
-            this._canvasSize = canvasSize;
-            this.MainLine.Stroke = brush;
+            this.CanvasSize = canvasSize;
+            this.MainLine.Stroke = this.VectorBrush;
             this.MainLine.StrokeThickness = 5;
 
-            this.DirectionalLine1.Stroke = brush;
+            this.DirectionalLine1.Stroke = this.VectorBrush;
             this.DirectionalLine1.StrokeThickness = 5;
 
-            this.DirectionalLine2.Stroke = brush;
+            this.DirectionalLine2.Stroke = this.VectorBrush;
             this.DirectionalLine2.StrokeThickness = 5;
 
             this.UpdateCoordinates();
         }
 
-        private void UpdateCoordinates() {
+        public void UpdateCoordinates() {
 
-            Vector originOnCanvas = CoordinateConverter.FromCoordinateToPoint(this._canvasSize,
-                                                                              this._coordinateSystemData,
+            Vector originOnCanvas = CoordinateConverter.FromCoordinateToPoint(this.CanvasSize,
+                                                                              this.Data,
                                                                               this._origin);
-            Vector destinationOnCavnas = CoordinateConverter.FromCoordinateToPoint(this._canvasSize,
-                                                                                   this._coordinateSystemData,
+            Vector destinationOnCavnas = CoordinateConverter.FromCoordinateToPoint(this.CanvasSize,
+                                                                                   this.Data,
                                                                                    this._destination);
 
             this.MainLine.X1 = originOnCanvas.X;
@@ -75,6 +79,14 @@ namespace LinearTransformation.Components {
             this.UpdateArrowCoordinates();
 
             this.UpdateToolTip();
+        }
+
+        public void UpdateBrush() {
+            this.MainLine.Stroke = this.VectorBrush;
+
+            this.DirectionalLine1.Stroke = this.VectorBrush;
+
+            this.DirectionalLine2.Stroke = this.VectorBrush;
         }
 
         private void UpdateToolTip() {

@@ -12,11 +12,16 @@ using System.Windows.Media;
 
 namespace LinearTransformation.ViewModel {
     public class CoordinateSystemVM {
-        private readonly Canvas _canvas;
-        private CoordinateSystemData _data;
+        public List<CanvasVector> Vectors { get; set; }
 
+        private readonly MainControlVM _mainControlVM;
+        private readonly Canvas _canvas;
+        public CoordinateSystemData _data;
+
+        // movement Variables
         private bool _isDragging;
         private Vector _mouseLocationWithinCanvas;
+
 
         private void Control_MouseLeftButtonDown(object sender, MouseEventArgs e) {
             this._isDragging = true;
@@ -54,9 +59,20 @@ namespace LinearTransformation.ViewModel {
 
                 this._mouseLocationWithinCanvas = m;
 
+                this._mainControlVM.UpdateWindowSettings(this._data);
+
                 this.Update();
             }
         }
+
+        public CanvasVector AddVector(double x, double y, Brush b) {
+            CanvasVector canvasVector = new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
+                                              b, this._data, new Vector(x, y), new Vector(0, 0));
+            this.Vectors.Add(canvasVector);
+            this.Update();
+            return canvasVector;
+        }
+
         public void Control_KeyboardMove(object sender, KeyEventArgs e) {
             Key key = (Key) e.Key;
 
@@ -96,6 +112,7 @@ namespace LinearTransformation.ViewModel {
             }
 
             if (canvasNeedsRedraw) {
+                this._mainControlVM.UpdateWindowSettings(this._data);
                 this.Update();
             }
         }
@@ -107,6 +124,7 @@ namespace LinearTransformation.ViewModel {
                 this._data.MinY *= .9;
                 this._data.MaxY *= .9;
                 this._data.SetUnitAndStepDynamically(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight));
+                this._mainControlVM.UpdateWindowSettings(this._data);
                 this.Update();
             } else if (e.Delta < 0) {
                 // Zoom out
@@ -115,14 +133,31 @@ namespace LinearTransformation.ViewModel {
                 this._data.MinY *= 1.1;
                 this._data.MaxY *= 1.1;
                 this._data.SetUnitAndStepDynamically(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight));
+                this._mainControlVM.UpdateWindowSettings(this._data);
                 this.Update();
             }
         }
 
-        public CoordinateSystemVM(Canvas canvas) {
+        public CoordinateSystemVM(MainControlVM mainControlVM, Canvas canvas) {
+            this._mainControlVM = mainControlVM;
             this._canvas = canvas;
             this.InstantiateViewSettings();
+            this.AddMovementFunctionality();
+            this.Vectors = new List<CanvasVector> {};
+        }
 
+        public CoordinateSystemVM(MainControlVM mainControlVM, Canvas canvas, CoordinateSystemData data, List<CanvasVector> vectors) {
+            this._mainControlVM = mainControlVM;
+            this._canvas = canvas;
+            this._data = data;
+            this.AddMovementFunctionality();
+            if (vectors == null)
+                this.Vectors = new List<CanvasVector>();
+            else
+                this.Vectors = vectors;
+        }
+
+        private void AddMovementFunctionality() {
             // Adding mouse movement
             this._canvas.MouseLeftButtonDown += new MouseButtonEventHandler(this.Control_MouseLeftButtonDown);
             this._canvas.MouseLeftButtonUp += new MouseButtonEventHandler(this.Control_MouseLeftButtonUp);
@@ -136,46 +171,33 @@ namespace LinearTransformation.ViewModel {
         }
 
         public void Update() {
+
+            bool showDynamicGrid = (bool) this._mainControlVM._mainControl.ToggleButton_DynamicGrid.IsChecked;
+            bool showStaticGrid = (bool) this._mainControlVM._mainControl.ToggleButton_StaticGrid.IsChecked;
+            bool showVectors = (bool) this._mainControlVM._mainControl.ToggleButton_Vectors.IsChecked;
+
+
+
             this._canvas.Children.Clear();
-            this.InstantiateBackground();
-            this.DrawTestingVectors();
-
-            //Size canvasSize = new Size(this._canvas.ActualWidth, this._canvas.ActualHeight);
-            //Vector coordinate = CoordinateConverter.FromCoordinateToPoint(canvasSize,
-            //                                                              this._data,
-            //                                                              new Vector(1.4, 1.2));
-            //Vector point = CoordinateConverter.FromPointToCoordinate(canvasSize,
-            //                                                         this._data,
-            //                                                         coordinate);
-
+            
+            if (showStaticGrid)
+                this.InstantiateBackground();
+            if (showVectors)
+                this.InstantiateVectors();
         }
 
-        private void DrawTestingVectors() {
-            this._canvas.Children.Add(new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
-                                                       Brushes.DarkOrchid,
-                                                       this._data,
-                                                       new Vector(2, 2),
-                                                       new Vector(0, 0)));
-            this._canvas.Children.Add(new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
-                                                       Brushes.DarkSalmon,
-                                                       this._data,
-                                                       new Vector(-3, -1),
-                                                       new Vector(0, 0)));
-            this._canvas.Children.Add(new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
-                                                       Brushes.LimeGreen,
-                                                       this._data,
-                                                       new Vector(5, -2),
-                                                       new Vector(0, 0)));
-            this._canvas.Children.Add(new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
-                                                       Brushes.Red,
-                                                       this._data,
-                                                       new Vector(-1, 1),
-                                                       new Vector(0, 0)));
-            this._canvas.Children.Add(new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
-                                                       Brushes.DeepPink,
-                                                       this._data,
-                                                       new Vector(1, 0),
-                                                       new Vector(0, 0)));
+        public void DeleteVector(CanvasVector canvasVector) {
+            this._canvas.Children.Remove(canvasVector);
+            this.Vectors.Remove(canvasVector);
+        }
+
+        private void InstantiateVectors() {
+            foreach (CanvasVector vector in this.Vectors) {
+                vector.CanvasSize = new Size(this._canvas.ActualWidth, this._canvas.ActualHeight);
+                vector.Data = this._data;
+                vector.UpdateCoordinates();
+                this._canvas.Children.Add(vector);
+            }
         }
 
         private void InstantiateBackground() {
@@ -185,12 +207,12 @@ namespace LinearTransformation.ViewModel {
         private void InstantiateViewSettings() {
 
             this._data = new CoordinateSystemData {
-                MinX  = -3,
-                MaxX  =  3,
-                MinY  = -3,
-                MaxY  =  3,
-                UnitX =  1,
-                UnitY =  1,
+                MinX = -3,
+                MaxX = 3,
+                MinY = -3,
+                MaxY = 3,
+                UnitX = 1,
+                UnitY = 1,
                 StepX = .5,
                 StepY = .5,
             };
