@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Animation;
 
 namespace LinearTransformation.Model {
     public struct CoordinateSystemData {
@@ -15,6 +16,9 @@ namespace LinearTransformation.Model {
         private double _unitY;
         private double _stepX;
         private double _stepY;
+
+        public Vector IHat;
+        public Vector JHat;
 
         public double MinX {
             get => this._minX;
@@ -81,7 +85,8 @@ namespace LinearTransformation.Model {
             }
         }
 
-        public CoordinateSystemData(double minX, double maxX, double minY, double maxY,
+        public CoordinateSystemData(double minX, double maxX,
+                                    double minY, double maxY,
                                     double unit, double step) {
 
             if (minX > maxX || minY > maxY || minX == maxX || minY == maxY) {
@@ -104,6 +109,9 @@ namespace LinearTransformation.Model {
             this._unitY = unit;
             this._stepX = step;
             this._stepY = step;
+
+            this.IHat = new Vector(1, 0);
+            this.JHat = new Vector(0, 1);
         }
 
         public CoordinateSystemData(double minX, double maxX,
@@ -131,6 +139,9 @@ namespace LinearTransformation.Model {
             this._unitY = unitY;
             this._stepX = stepX;
             this._stepY = stepY;
+
+            this.IHat = new Vector(1, 0);
+            this.JHat = new Vector(0, 1);
         }
 
         private static double CalculateCellAmount(double min, double max, double unit) {

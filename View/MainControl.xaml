@@ -62,19 +62,19 @@
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <!--îx label-->
                             <Label VerticalAlignment="Center" Foreground="White" Content="&#xCE;x:"/>
-                            <TextBox x:Name="InputIHatX" VerticalAlignment="Center" Width="100"/>
+                            <TextBox Text="1" x:Name="InputIHatX" VerticalAlignment="Center" Width="100"/>
                             <!--Îy label-->
                             <Label VerticalAlignment="Center" Foreground="White" Content="&#xCE;y:"/>
-                            <TextBox x:Name="InputIHatY" VerticalAlignment="Center" Width="100"/>
+                            <TextBox Text="0" x:Name="InputIHatY" VerticalAlignment="Center" Width="100"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <!--^jx label-->
                             <Label VerticalAlignment="Center" Foreground="White" Content="&#x135;x:"/>
-                            <TextBox x:Name="InputJHatX" VerticalAlignment="Center" Width="100"/>
+                            <TextBox Text="0" x:Name="InputJHatX" VerticalAlignment="Center" Width="100"/>
                             <!--^jy label-->
                             <Label VerticalAlignment="Center" Foreground="White" Content="&#x135;y:"/>
-                            <TextBox x:Name="InputJHatY" VerticalAlignment="Center" Width="100"/>
+                            <TextBox Text="1" x:Name="InputJHatY" VerticalAlignment="Center" Width="100"/>
                         </StackPanel>
 
                     </StackPanel>

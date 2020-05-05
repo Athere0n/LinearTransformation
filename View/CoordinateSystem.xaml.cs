@@ -42,9 +42,9 @@ namespace LinearTransformation.View {
             this._coordinateSystemVM = new CoordinateSystemVM(this._mainControlVM, this.CoordinateCanvas, data, vectors);
             this.DataContext = this._coordinateSystemVM;
 
-            this.Loaded += delegate { this._coordinateSystemVM.Update(); };
+            this.Loaded                       += delegate { this._coordinateSystemVM.Update(); };
             this.CoordinateCanvas.SizeChanged += delegate { this._coordinateSystemVM.Update(); };
-            this.CoordinateCanvas.Loaded += delegate { Keyboard.Focus(this.CoordinateCanvas); };
+            this.CoordinateCanvas.Loaded      += delegate { Keyboard.Focus(this.CoordinateCanvas); };
         }
 
         public CanvasVector AddVector(double x, double y, Brush b) {

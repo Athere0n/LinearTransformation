@@ -17,6 +17,7 @@ namespace LinearTransformation.ViewModel {
         private readonly MainControlVM _mainControlVM;
         private readonly Canvas _canvas;
         public CoordinateSystemData _data;
+        public CoordinateSystemData _dynamicData;
 
         // movement Variables
         private bool _isDragging;
@@ -65,14 +66,6 @@ namespace LinearTransformation.ViewModel {
             }
         }
 
-        public CanvasVector AddVector(double x, double y, Brush b) {
-            CanvasVector canvasVector = new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
-                                              b, this._data, new Vector(x, y), new Vector(0, 0));
-            this.Vectors.Add(canvasVector);
-            this.Update();
-            return canvasVector;
-        }
-
         public void Control_KeyboardMove(object sender, KeyEventArgs e) {
             Key key = (Key) e.Key;
 
@@ -116,6 +109,7 @@ namespace LinearTransformation.ViewModel {
                 this.Update();
             }
         }
+
         private void Control_MouseWheel(object sender, MouseWheelEventArgs e) {
             if (e.Delta > 0) {
                 // Zoom in
@@ -143,7 +137,7 @@ namespace LinearTransformation.ViewModel {
             this._canvas = canvas;
             this.InstantiateViewSettings();
             this.AddMovementFunctionality();
-            this.Vectors = new List<CanvasVector> {};
+            this.Vectors = new List<CanvasVector>();
         }
 
         public CoordinateSystemVM(MainControlVM mainControlVM, Canvas canvas, CoordinateSystemData data, List<CanvasVector> vectors) {
@@ -151,10 +145,11 @@ namespace LinearTransformation.ViewModel {
             this._canvas = canvas;
             this._data = data;
             this.AddMovementFunctionality();
-            if (vectors == null)
+            if (vectors == null) {
                 this.Vectors = new List<CanvasVector>();
-            else
+            } else {
                 this.Vectors = vectors;
+            }
         }
 
         private void AddMovementFunctionality() {
@@ -171,19 +166,31 @@ namespace LinearTransformation.ViewModel {
         }
 
         public void Update() {
-
-            bool showDynamicGrid = (bool) this._mainControlVM._mainControl.ToggleButton_DynamicGrid.IsChecked;
             bool showStaticGrid = (bool) this._mainControlVM._mainControl.ToggleButton_StaticGrid.IsChecked;
             bool showVectors = (bool) this._mainControlVM._mainControl.ToggleButton_Vectors.IsChecked;
+
+            bool showDynamicGrid = (bool) this._mainControlVM._mainControl.ToggleButton_DynamicGrid.IsChecked;
+
 
 
 
             this._canvas.Children.Clear();
-            
+
             if (showStaticGrid)
-                this.InstantiateBackground();
+                CoordinateSystemDrawer.Draw(this._canvas, this._data);
             if (showVectors)
-                this.InstantiateVectors();
+                this.InstantiateVectors(this._data, this.Vectors);
+
+            if (showDynamicGrid)
+                CoordinateSystemDrawer.Draw(this._canvas, this._dynamicData);
+        }
+
+        public CanvasVector AddVector(double x, double y, Brush b) {
+            CanvasVector canvasVector = new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
+                                              b, this._data, new Vector(x, y), new Vector(0, 0));
+            this.Vectors.Add(canvasVector);
+            this.Update();
+            return canvasVector;
         }
 
         public void DeleteVector(CanvasVector canvasVector) {
@@ -191,17 +198,22 @@ namespace LinearTransformation.ViewModel {
             this.Vectors.Remove(canvasVector);
         }
 
-        private void InstantiateVectors() {
-            foreach (CanvasVector vector in this.Vectors) {
+        public void NewTransformation(Vector iHat, Vector jHat) {
+            this._dynamicData = this._data;
+            this._dynamicData.IHat = iHat;
+            this._dynamicData.JHat = jHat;
+
+            // Start the transformation
+            this.Update();
+        }
+
+        private void InstantiateVectors(CoordinateSystemData data, List<CanvasVector> vectors) {
+            foreach (CanvasVector vector in vectors) {
                 vector.CanvasSize = new Size(this._canvas.ActualWidth, this._canvas.ActualHeight);
-                vector.Data = this._data;
+                vector.Data = data;
                 vector.UpdateCoordinates();
                 this._canvas.Children.Add(vector);
             }
-        }
-
-        private void InstantiateBackground() {
-            CoordinateSystemDrawer.Draw(this._canvas, this._data);
         }
 
         private void InstantiateViewSettings() {

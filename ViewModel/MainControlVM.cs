@@ -65,10 +65,10 @@ namespace LinearTransformation.ViewModel {
         }
 
         internal void UpdateWindowSettings(CoordinateSystemData data) {
-            this._mainControl.InputMinX.Text = $"{data.MinX}";
-            this._mainControl.InputMaxX.Text = $"{data.MaxX}";
-            this._mainControl.InputMinY.Text = $"{data.MinY}";
-            this._mainControl.InputMaxY.Text = $"{data.MaxY}";
+            this._mainControl.InputMinX.Text  = $"{data.MinX}";
+            this._mainControl.InputMaxX.Text  = $"{data.MaxX}";
+            this._mainControl.InputMinY.Text  = $"{data.MinY}";
+            this._mainControl.InputMaxY.Text  = $"{data.MaxY}";
             this._mainControl.InputUnitX.Text = $"{data.UnitX}";
             this._mainControl.InputUnitY.Text = $"{data.UnitY}";
             this._mainControl.InputStepX.Text = $"{data.StepY}";
@@ -76,7 +76,24 @@ namespace LinearTransformation.ViewModel {
         }
 
         public void Button_Click_Transform(object sender, RoutedEventArgs e) {
-            throw new NotImplementedException();
+
+            // IHat
+            if (double.TryParse(this._mainControl.InputIHatX.Text, out double ix))
+                throw new Exception("Invalid Value");
+            if (double.TryParse(this._mainControl.InputIHatY.Text, out double iy))
+                throw new Exception("Invalid Value");
+
+            //JHat
+            if (double.TryParse(this._mainControl.InputJHatX.Text, out double jx))
+                throw new Exception("Invalid Value");
+            if (double.TryParse(this._mainControl.InputJHatY.Text, out double jy))
+                throw new Exception("Invalid Value");
+
+            Vector iHat = new Vector(ix, iy);
+            Vector jHat = new Vector(jx, jy);
+
+            ((CoordinateSystem) this.CoordinateSystemControl)._coordinateSystemVM.NewTransformation(iHat, jHat);
+
         }
 
         public void ToggleButtons_StateChanged(object sender, RoutedEventArgs e) {

@@ -25,8 +25,8 @@ namespace LinearTransformation.Components {
         public Size CanvasSize;
         private readonly double _degrees;
         private readonly double _arrowHeadLength;
-        private readonly Vector _origin;
-        private Vector _destination;
+        public readonly Vector _origin;
+        public Vector _destination;
 
         public Brush VectorBrush;
         public double X { get => this._destination.X; set { this._destination.X = value; } }
@@ -70,6 +70,10 @@ namespace LinearTransformation.Components {
             Vector destinationOnCavnas = CoordinateConverter.FromCoordinateToPoint(this.CanvasSize,
                                                                                    this.Data,
                                                                                    this._destination);
+
+            if (double.IsNaN(   originOnCanvas.X)) {
+                int a = 6;
+            }
 
             this.MainLine.X1 = originOnCanvas.X;
             this.MainLine.Y1 = originOnCanvas.Y;
