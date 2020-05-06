@@ -3,12 +3,14 @@ using LinearTransformation.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace LinearTransformation.ViewModel {
     public class CoordinateSystemVM {
@@ -217,13 +219,68 @@ namespace LinearTransformation.ViewModel {
         }
 
         public void NewTransformation(Vector iHat, Vector jHat) {
-            this._dynamicData = this._data;
-            this._dynamicData.IHat = iHat;
-            this._dynamicData.JHat = jHat;
+            //this._dynamicData = this._data;
+            //this._dynamicData.IHat = iHat;
+            //this._dynamicData.JHat = jHat;
 
             // Start the transformation
-            this.Update();
+            this.StartAnimation(iHat, jHat, 5);
+            //this.Update();
         }
+
+        private double MoveTowards(double from, double to, double step) {
+            if (from < to)
+                return from + step;
+
+            if (from > to)
+                return from - step;
+
+            return from;
+
+        }
+
+        private Task StartAnimation(Vector iHat, Vector jHat, int duration, int fps = 60) {
+            return Task.Run(() => Application.Current.Dispatcher.Invoke(async () => {
+                //this._dynamicData.IHat.X
+                double iHatStepX = /*Math.Abs*/(iHat.X - this._dynamicData.IHat.X ) / duration / fps;
+                double iHatStepY = /*Math.Abs*/(iHat.Y - this._dynamicData.IHat.Y ) / duration / fps;
+                double jHatStepX = /*Math.Abs*/(jHat.X - this._dynamicData.JHat.X ) / duration / fps;
+                double jHatStepY = /*Math.Abs*/(jHat.Y - this._dynamicData.JHat.Y ) / duration / fps;
+
+
+                //while (iHat != this._dynamicData.IHat && jHat != this._dynamicData.JHat) {
+                for (int i = 0; i < (duration * 1000) - (1000 / fps); i += (1000) / fps) {
+                    // Set iHat and jHat accordingly
+                    this._dynamicData.IHat.X = this._dynamicData.IHat.X + iHatStepX /*this.MoveTowards(iHat.X, this._dynamicData.IHat.X, iHatStepX)*/;
+                    this._dynamicData.IHat.Y = this._dynamicData.IHat.Y + iHatStepY /*this.MoveTowards(iHat.Y, this._dynamicData.IHat.Y, iHatStepY)*/;
+                    this._dynamicData.JHat.X = this._dynamicData.JHat.X + jHatStepX /*this.MoveTowards(jHat.X, this._dynamicData.JHat.X, jHatStepX)*/;
+                    this._dynamicData.JHat.Y = this._dynamicData.JHat.Y + jHatStepY /*this.MoveTowards(jHat.Y, this._dynamicData.JHat.Y, jHatStepY)*/;
+
+                    // Wait
+                    await Task.Delay((1000 / fps));
+                    // Update UI
+                    this.Update();
+                    Application.Current.Dispatcher.Invoke(delegate { }, System.Windows.Threading.DispatcherPriority.Render);
+
+                }
+
+                // Just set them directly afterwards to compensate for small differences
+                this._dynamicData.IHat = iHat;
+                this._dynamicData.JHat = jHat;
+
+
+                // Wait
+                //await Task.Delay((1000 / fps));
+
+                // Update UI
+                this.Update();
+                Application.Current.Dispatcher.Invoke(delegate { }, System.Windows.Threading.DispatcherPriority.Render);
+
+                var b = this._dynamicData;
+                int a = 15;
+            }));
+        }
+
 
         private void InstantiateVectors(CoordinateSystemData data, List<CanvasVector> vectors) {
             foreach (CanvasVector vector in vectors) {
