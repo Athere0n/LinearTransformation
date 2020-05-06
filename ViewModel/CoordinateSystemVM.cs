@@ -58,6 +58,11 @@ namespace LinearTransformation.ViewModel {
                 this._data.MinY += distance.Y;
                 this._data.MaxY += distance.Y;
 
+                this._dynamicData.MinX += distance.X;
+                this._dynamicData.MaxX += distance.X;
+                this._dynamicData.MinY += distance.Y;
+                this._dynamicData.MaxY += distance.Y;
+
                 this._mouseLocationWithinCanvas = m;
 
                 this._mainControlVM.UpdateWindowSettings(this._data);
@@ -65,7 +70,35 @@ namespace LinearTransformation.ViewModel {
                 this.Update();
             }
         }
-
+        private void Control_MouseWheel(object sender, MouseWheelEventArgs e) {
+            if (e.Delta > 0) {
+                // Zoom in
+                this._data.MinX *= .9;
+                this._data.MaxX *= .9;
+                this._data.MinY *= .9;
+                this._data.MaxY *= .9;
+                this._dynamicData.MinX *= .9;
+                this._dynamicData.MaxX *= .9;
+                this._dynamicData.MinY *= .9;
+                this._dynamicData.MaxY *= .9;
+                this._data.SetUnitAndStepDynamically(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight));
+                this._mainControlVM.UpdateWindowSettings(this._data);
+                this.Update();
+            } else if (e.Delta < 0) {
+                // Zoom out
+                this._data.MinX *= 1.1;
+                this._data.MaxX *= 1.1;
+                this._data.MinY *= 1.1;
+                this._data.MaxY *= 1.1;
+                this._dynamicData.MinX *= 1.1;
+                this._dynamicData.MaxX *= 1.1;
+                this._dynamicData.MinY *= 1.1;
+                this._dynamicData.MaxY *= 1.1;
+                this._data.SetUnitAndStepDynamically(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight));
+                this._mainControlVM.UpdateWindowSettings(this._data);
+                this.Update();
+            }
+        }
         public void Control_KeyboardMove(object sender, KeyEventArgs e) {
             Key key = (Key) e.Key;
 
@@ -113,28 +146,6 @@ namespace LinearTransformation.ViewModel {
             }
 
             if (canvasNeedsRedraw) {
-                this._mainControlVM.UpdateWindowSettings(this._data);
-                this.Update();
-            }
-        }
-
-        private void Control_MouseWheel(object sender, MouseWheelEventArgs e) {
-            if (e.Delta > 0) {
-                // Zoom in
-                this._data.MinX *= .9;
-                this._data.MaxX *= .9;
-                this._data.MinY *= .9;
-                this._data.MaxY *= .9;
-                this._data.SetUnitAndStepDynamically(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight));
-                this._mainControlVM.UpdateWindowSettings(this._data);
-                this.Update();
-            } else if (e.Delta < 0) {
-                // Zoom out
-                this._data.MinX *= 1.1;
-                this._data.MaxX *= 1.1;
-                this._data.MinY *= 1.1;
-                this._data.MaxY *= 1.1;
-                this._data.SetUnitAndStepDynamically(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight));
                 this._mainControlVM.UpdateWindowSettings(this._data);
                 this.Update();
             }

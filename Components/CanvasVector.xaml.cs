@@ -71,10 +71,6 @@ namespace LinearTransformation.Components {
                                                                                    this.Data,
                                                                                    this._destination);
 
-            if (double.IsNaN(   originOnCanvas.X)) {
-                int a = 6;
-            }
-
             this.MainLine.X1 = originOnCanvas.X;
             this.MainLine.Y1 = originOnCanvas.Y;
             this.MainLine.X2 = destinationOnCavnas.X;

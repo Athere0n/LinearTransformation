@@ -145,6 +145,10 @@ namespace LinearTransformation.ViewModel {
 
             var temp = (CoordinateSystem) this.CoordinateSystemControl;
             temp._coordinateSystemVM._data = new CoordinateSystemData(minX, maxX, minY, maxY, unitX, unitY, stepX, stepY);
+            temp._coordinateSystemVM._dynamicData = new CoordinateSystemData(minX, maxX, minY, maxY, unitX, unitY, stepX, stepY) { 
+                IHat = temp._coordinateSystemVM._dynamicData.IHat,
+                JHat = temp._coordinateSystemVM._dynamicData.JHat,
+            };
             temp._coordinateSystemVM.Update();
 
         }
