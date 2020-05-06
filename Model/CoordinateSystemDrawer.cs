@@ -407,7 +407,7 @@ namespace LinearTransformation.Model {
                 Line axisLine = new Line {
                     X1 = pos1.X,
                     Y1 = pos1.Y,
-                    X2 = pos2.X - 3,
+                    X2 = pos2.X - 2,
                     Y2 = pos2.Y,
                     Stroke = axis.LineBrush,
                     StrokeThickness = axis.LineThickness,
@@ -434,7 +434,7 @@ namespace LinearTransformation.Model {
                     X1 = pos1.X,
                     Y1 = pos1.Y,
                     X2 = pos2.X,
-                    Y2 = pos2.Y,
+                    Y2 = pos2.Y + 2,
                     Stroke = axis.LineBrush,
                     StrokeThickness = axis.LineThickness,
                 };
@@ -549,9 +549,9 @@ namespace LinearTransformation.Model {
 
                 Line rightLine = new Line {
                     X1              = rightPos1.X,
-                    Y1              = rightPos1.Y,
+                    Y1              = rightPos1.Y + 2,
                     X2              = rightPos2.X,
-                    Y2              = rightPos2.Y,
+                    Y2              = rightPos2.Y + 2,
                     Stroke          = right.LineBrush,
                     StrokeThickness = right.LineThickness,
                 };
@@ -566,9 +566,9 @@ namespace LinearTransformation.Model {
 
                 Line leftLine = new Line {
                     X1              = leftPos1.X,
-                    Y1              = leftPos1.Y,
+                    Y1              = leftPos1.Y + 2,
                     X2              = leftPos2.X,
-                    Y2              = leftPos2.Y,
+                    Y2              = leftPos2.Y + 2,
                     Stroke          = left.LineBrush,
                     StrokeThickness = left.LineThickness,
                 };

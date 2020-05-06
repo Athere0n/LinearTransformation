@@ -275,9 +275,6 @@ namespace LinearTransformation.ViewModel {
                 // Update UI
                 this.Update();
                 Application.Current.Dispatcher.Invoke(delegate { }, System.Windows.Threading.DispatcherPriority.Render);
-
-                var b = this._dynamicData;
-                int a = 15;
             }));
         }
 
