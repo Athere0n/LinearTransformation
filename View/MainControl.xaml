@@ -9,12 +9,12 @@
 
     <Grid Background="DarkSlateGray">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="320"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         <!--add new stuff-->
@@ -25,15 +25,16 @@
             </Grid.RowDefinitions>
 
             <!--new vector-->
-            <GroupBox Grid.Row="0">
+            <GroupBox Grid.Row="0" Margin="5 0 5 0" BorderBrush="White" BorderThickness="1" >
                 <GroupBox.Header>
-                    <Border BorderBrush="White" BorderThickness="1" Background="Black">
-                        <Label Foreground="White"  Content="New Vector"/>
-                    </Border>
+                        <Label Foreground="White" FontWeight="Bold" FontSize="14" FontFamily="Courier New" Content="New Vector"/>
+                    <!--Border BorderBrush="White" BorderThickness="1" Background="Black">
+                    </Border-->
                 </GroupBox.Header>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                
+                <StackPanel Background="Chocolate" Orientation="Horizontal" HorizontalAlignment="Stretch">
                     <!--x label-->
-                    <Label VerticalAlignment="Center" Foreground="White" Content="x:"/>
+                    <Label FontFamily="Courier New" VerticalAlignment="Center" Foreground="White" Content="x:"/>
                     <TextBox x:Name="InputVectorX" VerticalAlignment="Center" Width="100"/>
                     <!--y label-->
                     <Label VerticalAlignment="Center" Foreground="White" Content="y:"/>
@@ -61,19 +62,19 @@
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <!--îx label-->
-                            <Label VerticalAlignment="Center" Foreground="White" Content="&#xCE;x:"/>
+                            <Label  VerticalAlignment="Center" Foreground="White" Content="&#xEE;x:"/>
                             <TextBox x:Name="InputIHatX" VerticalAlignment="Center" Width="100"/>
                             <!--Îy label-->
-                            <Label VerticalAlignment="Center" Foreground="White" Content="&#xCE;y:"/>
+                            <Label FontFamily="Courier New" VerticalAlignment="Center" Foreground="White" Content="&#xEE;y:"/>
                             <TextBox x:Name="InputIHatY" VerticalAlignment="Center" Width="100"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <!--^jx label-->
-                            <Label VerticalAlignment="Center" Foreground="White" Content="&#x135;x:"/>
+                            <Label  VerticalAlignment="Center" Foreground="White" Content="&#x135;x:"/>
                             <TextBox x:Name="InputJHatX" VerticalAlignment="Center" Width="100"/>
                             <!--^jy label-->
-                            <Label VerticalAlignment="Center" Foreground="White" Content="&#x135;y:"/>
+                            <Label FontFamily="Consolas" VerticalAlignment="Center" Foreground="White" Content="&#x135;y:"/>
                             <TextBox x:Name="InputJHatY" VerticalAlignment="Center" Width="100"/>
                         </StackPanel>
 
@@ -160,7 +161,7 @@
                     </Border>
                 </GroupBox.Header>
                 <!--TODO-->
-                <ListView Background="DarkSlateGray" ItemsSource="{Binding Vectors}"></ListView>
+                <ListView Background="DarkSlateBlue" ItemsSource="{Binding Vectors}"></ListView>
             </GroupBox>
         </Grid>
 

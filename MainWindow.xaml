@@ -5,11 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LinearTransformation"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="680" Width="800">
+   
     <Grid>
         <ContentControl Grid.Column="0"
                         Grid.Row="1"
-                        Background="Black" 
                         Content="{Binding ShownView}"/>
     </Grid>
+    
+    <!--Colors used:
+        Steam Blau: #19374B
+    
+    -->
+    
+    
 </Window>
