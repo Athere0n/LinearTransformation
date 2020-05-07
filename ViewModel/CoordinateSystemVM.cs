@@ -224,57 +224,58 @@ namespace LinearTransformation.ViewModel {
             //this._dynamicData.JHat = jHat;
 
             // Start the transformation
-            this.StartAnimation(iHat, jHat, 5);
+            this.StartAnimation(/*this._data.IHat + */iHat, /*this._data.JHat + */jHat, 5);
             //this.Update();
-        }
-
-        private double MoveTowards(double from, double to, double step) {
-            if (from < to)
-                return from + step;
-
-            if (from > to)
-                return from - step;
-
-            return from;
-
         }
 
         private Task StartAnimation(Vector iHat, Vector jHat, int duration, int fps = 60) {
             return Task.Run(() => Application.Current.Dispatcher.Invoke(async () => {
                 //this._dynamicData.IHat.X
-                double iHatStepX = /*Math.Abs*/(iHat.X - this._dynamicData.IHat.X ) / duration / fps;
-                double iHatStepY = /*Math.Abs*/(iHat.Y - this._dynamicData.IHat.Y ) / duration / fps;
-                double jHatStepX = /*Math.Abs*/(jHat.X - this._dynamicData.JHat.X ) / duration / fps;
-                double jHatStepY = /*Math.Abs*/(jHat.Y - this._dynamicData.JHat.Y ) / duration / fps;
+                //double iHatStepX = /*Math.Abs*/(iHat.X - this._dynamicData.IHat.X ) / duration / fps;
+                //double iHatStepY = /*Math.Abs*/(iHat.Y - this._dynamicData.IHat.Y ) / duration / fps;
+                //double jHatStepX = /*Math.Abs*/(jHat.X - this._dynamicData.JHat.X ) / duration / fps;
+                //double jHatStepY = /*Math.Abs*/(jHat.Y - this._dynamicData.JHat.Y ) / duration / fps;
+                int max = 100/*duration / 1000 * fps*/;
+                for (int i = 0; i <= max; i++) {
+                    double by = ((double) i) / ((double) max);
+                    this._dynamicData.IHat = Utility.Lerp(this._dynamicData.IHat, iHat, by);
+                    this._dynamicData.JHat = Utility.Lerp(this._dynamicData.JHat, jHat, by);
 
-
-                //while (iHat != this._dynamicData.IHat && jHat != this._dynamicData.JHat) {
-                for (int i = 0; i < (duration * 1000) - (1000 / fps); i += (1000) / fps) {
-                    // Set iHat and jHat accordingly
-                    this._dynamicData.IHat.X = this._dynamicData.IHat.X + iHatStepX /*this.MoveTowards(iHat.X, this._dynamicData.IHat.X, iHatStepX)*/;
-                    this._dynamicData.IHat.Y = this._dynamicData.IHat.Y + iHatStepY /*this.MoveTowards(iHat.Y, this._dynamicData.IHat.Y, iHatStepY)*/;
-                    this._dynamicData.JHat.X = this._dynamicData.JHat.X + jHatStepX /*this.MoveTowards(jHat.X, this._dynamicData.JHat.X, jHatStepX)*/;
-                    this._dynamicData.JHat.Y = this._dynamicData.JHat.Y + jHatStepY /*this.MoveTowards(jHat.Y, this._dynamicData.JHat.Y, jHatStepY)*/;
-
-                    // Wait
-                    await Task.Delay((1000 / fps));
-                    // Update UI
+                    await Task.Delay(1000 / fps);
                     this.Update();
                     Application.Current.Dispatcher.Invoke(delegate { }, System.Windows.Threading.DispatcherPriority.Render);
-
                 }
 
-                // Just set them directly afterwards to compensate for small differences
-                this._dynamicData.IHat = iHat;
-                this._dynamicData.JHat = jHat;
+                //while (iHat != this._dynamicData.IHat && jHat != this._dynamicData.JHat) {
+                //for (int i = 0; i < (duration * 1000) - (1000 / fps); i += (1000) / fps) {
+                //    // Set iHat and jHat accordingly
+                //    //this._dynamicData.IHat.X = this._dynamicData.IHat.X + iHatStepX;
+                //    //this._dynamicData.IHat.Y = this._dynamicData.IHat.Y + iHatStepY;
+                //    //this._dynamicData.JHat.X = this._dynamicData.JHat.X + jHatStepX;
+                //    //this._dynamicData.JHat.Y = this._dynamicData.JHat.Y + jHatStepY;
+
+                //    this._dynamicData.IHat = Utility.Lerp(this._dynamicData.IHat, iHat, i / (duration * 1000));
+                //    this._dynamicData.JHat = Utility.Lerp(this._dynamicData.JHat, jHat, i / (duration * 1000));
+
+                //    // Wait
+                //    await Task.Delay((1000 / fps));
+                //    // Update UI
+                //    this.Update();
+                //    Application.Current.Dispatcher.Invoke(delegate { }, System.Windows.Threading.DispatcherPriority.Render);
+
+                //}
+
+                //// Just set them directly afterwards to compensate for small differences
+                //this._dynamicData.IHat = iHat;
+                //this._dynamicData.JHat = jHat;
 
 
                 // Wait
                 //await Task.Delay((1000 / fps));
 
-                // Update UI
-                this.Update();
-                Application.Current.Dispatcher.Invoke(delegate { }, System.Windows.Threading.DispatcherPriority.Render);
+                //// Update UI
+                //this.Update();
+                //Application.Current.Dispatcher.Invoke(delegate { }, System.Windows.Threading.DispatcherPriority.Render);
             }));
         }
 

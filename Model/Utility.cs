@@ -54,5 +54,13 @@ namespace LinearTransformation.Model {
             // Return the size
             return new Size(label.ActualWidth, label.ActualHeight);
         }
+
+        public static double Lerp(double from, double to, double by) {
+            return from + (to - from) * by;
+        }
+        public static Vector Lerp(Vector from, Vector to, double by) {
+            return new Vector(Utility.Lerp(from.X, to.X, by),
+                              Utility.Lerp(from.Y, to.Y, by));
+        }
     }
 }
