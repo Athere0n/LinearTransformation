@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LinearTransformation.Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -256,6 +257,19 @@ namespace LinearTransformation.Model {
                 x += data.UnitX;
             }
         }
+
+        internal static void DrawBasisVectors(Canvas canvas, CoordinateSystemData data) {
+
+            CanvasVector canvasVectorI = new CanvasVector(new Size(canvas.ActualWidth, canvas.ActualHeight),
+                                                         Brushes.LimeGreen, data, new Vector(1, 0), new Vector(0, 0));
+            canvasVectorI.VectorContextMenu.Visibility = Visibility.Collapsed;
+            CanvasVector canvasVectorJ = new CanvasVector(new Size(canvas.ActualWidth, canvas.ActualHeight),
+                                                         Brushes.Red, data, new Vector(0, 1), new Vector(0, 0));
+            canvasVectorJ.VectorContextMenu.Visibility = Visibility.Collapsed;
+            canvas.Children.Add(canvasVectorI);
+            canvas.Children.Add(canvasVectorJ);
+        }
+
         private static void DrawYAxisUnitLabels(Canvas canvas, CoordinateSystemData data) {
             Size canvasSize = new Size(canvas.ActualWidth, canvas.ActualHeight);
 

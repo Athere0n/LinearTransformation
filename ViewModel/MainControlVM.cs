@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -56,6 +57,29 @@ namespace LinearTransformation.ViewModel {
                 throw new Exception("Invalid Y Value");
 
             Brush b = this._mainControl.InputVectorColour.Background;
+
+            CanvasVector canvasVector = ((CoordinateSystem) this._coordinateSystemControl).AddVector(x, y, b);
+            this.Vectors.Add(new VectorListItem(this, canvasVector));
+
+            this._mainControl.InputVectorX.Text = "";
+            this._mainControl.InputVectorY.Text = "";
+        }
+
+        public void Button_Click_AddRandomVector(object sender, RoutedEventArgs e) {
+
+
+            CoordinateSystemVM cs = ((CoordinateSystem) this._coordinateSystemControl)._coordinateSystemVM;
+            CoordinateSystemData data = cs._dynamicData;
+            double x = 0;
+            double y = 0;
+            while (x == 0) {
+                x = Utility.GetRandomDoubleWithinRange(data.MinX, data.MaxX);
+            }
+            while (y == 0) {
+                y = Utility.GetRandomDoubleWithinRange(data.MinY, data.MaxY);
+            }
+
+            Brush b = Utility.GetRandomBrush();
 
             CanvasVector canvasVector = ((CoordinateSystem) this._coordinateSystemControl).AddVector(x, y, b);
             this.Vectors.Add(new VectorListItem(this, canvasVector));

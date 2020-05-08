@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -40,7 +42,7 @@ namespace LinearTransformation.Model {
         }
         #endregion
 
-        public static Size GetTextSize(string text, double fontSize) {
+        public static System.Windows.Size GetTextSize(string text, double fontSize) {
             // Create a temporary label with the given content
             Label label = new Label {
                 Content = text,
@@ -48,11 +50,11 @@ namespace LinearTransformation.Model {
             };
 
             // Resize the label based on its content
-            label.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            label.Measure(new System.Windows.Size(double.PositiveInfinity, double.PositiveInfinity));
             label.Arrange(new Rect(label.DesiredSize));
 
             // Return the size
-            return new Size(label.ActualWidth, label.ActualHeight);
+            return new System.Windows.Size(label.ActualWidth, label.ActualHeight);
         }
 
         public static double Lerp(double from, double to, double by) {
@@ -61,6 +63,15 @@ namespace LinearTransformation.Model {
         public static Vector Lerp(Vector from, Vector to, double by) {
             return new Vector(Utility.Lerp(from.X, to.X, by),
                               Utility.Lerp(from.Y, to.Y, by));
+        }
+
+        public static Random Random = new Random();
+        public static double GetRandomDoubleWithinRange(double min, double max) {
+            return Utility.Random.NextDouble() * (max - min) + min;
+        }
+        public static System.Windows.Media.Brush GetRandomBrush() {
+            PropertyInfo[] properties = (typeof(System.Windows.Media.Brushes)).GetProperties();
+            return (System.Windows.Media.Brush) properties[Utility.Random.Next(properties.Length)].GetValue(null,null);
         }
     }
 }

@@ -98,6 +98,8 @@
                               Checked="ToggleButtons_StateChanged" Unchecked="ToggleButtons_StateChanged" Content="Static Grid" IsChecked="True"/>
                 <ToggleButton x:Name="ToggleButton_Vectors"
                               Checked="ToggleButtons_StateChanged" Unchecked="ToggleButtons_StateChanged" Content="Vectors" IsChecked="True"/>
+                <ToggleButton x:Name="ToggleButton_BasisVectors"
+                              Checked="ToggleButtons_StateChanged" Unchecked="ToggleButtons_StateChanged" Content="Basis Vectors" IsChecked="True"/>
             </StackPanel>
         </GroupBox>
 

@@ -195,6 +195,7 @@ namespace LinearTransformation.ViewModel {
             bool showStaticGrid = (bool) this._mainControlVM._mainControl.ToggleButton_StaticGrid.IsChecked;
             bool showVectors = (bool) this._mainControlVM._mainControl.ToggleButton_Vectors.IsChecked;
             bool showDynamicGrid = (bool) this._mainControlVM._mainControl.ToggleButton_DynamicGrid.IsChecked;
+            bool showBasisVectors = (bool) this._mainControlVM._mainControl.ToggleButton_BasisVectors.IsChecked;
 
 
             this._canvas.Children.Clear();
@@ -205,13 +206,14 @@ namespace LinearTransformation.ViewModel {
                 CoordinateSystemDrawer.Draw(this._canvas, this._dynamicData);
             if (showVectors)
                 this.InstantiateVectors(this._dynamicData, this.Vectors);
-
+            if (showBasisVectors)
+                CoordinateSystemDrawer.DrawBasisVectors(this._canvas, this._dynamicData);
 
         }
 
         public CanvasVector AddVector(double x, double y, Brush b) {
             CanvasVector canvasVector = new CanvasVector(new Size(this._canvas.ActualWidth, this._canvas.ActualHeight),
-                                              b, this._data, new Vector(x, y), new Vector(0, 0));
+                                                         b, this._data, new Vector(x, y), new Vector(0, 0));
             this.Vectors.Add(canvasVector);
             this.Update();
             return canvasVector;

@@ -40,6 +40,10 @@ namespace LinearTransformation.View {
             this._vm.Button_Click_AddVector(sender, e);
         }
 
+        private void Button_Click_AddRandomVector(object sender, RoutedEventArgs e) {
+            this._vm.Button_Click_AddRandomVector(sender, e);
+        }
+
         private void Button_Click_Transform(object sender, RoutedEventArgs e) {
             this._vm.Button_Click_Transform(sender, e);
         }
