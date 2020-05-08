@@ -113,24 +113,24 @@
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <Label Content="îᵪ :"/>
-                            <TextBox x:Name="InputIHatX"/>
+                            <TextBox x:Name="InputIHatX" Text="1"/>
 
                             <Label Content="îᵧ :"/>
-                            <TextBox x:Name="InputIHatY"/>
+                            <TextBox x:Name="InputIHatY" Text="0"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <Label Content="ĵᵪ :"/>
-                            <TextBox x:Name="InputJHatX"/>
+                            <TextBox x:Name="InputJHatX" Text="0"/>
 
                             <Label Content="ĵᵧ :"/>
-                            <TextBox x:Name="InputJHatY"/>
+                            <TextBox x:Name="InputJHatY" Text="1"/>
                         </StackPanel>
 
                     </StackPanel>
                     
                     <Button Content="Transform" Click="Button_Click_Transform"/>
-                    <Button Content="Undo"/>
+                    <Button Content="Undo" Click="Button_Click_UndoTransform"/>
 
                 </StackPanel>
                 
@@ -258,7 +258,7 @@
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="0 10 0 0">
 
                             <Button Content="Add Vector" Click="Button_Click_AddVector"/>
-                            <Button Content="Add Random Vector"/>
+                            <Button Content="Add Random Vector" Click="Button_Click_AddRandomVector"/>
 
                         </StackPanel>
 
