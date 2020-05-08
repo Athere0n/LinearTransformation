@@ -18,7 +18,7 @@
             <Setter Property="FontFamily"   Value="Courier New"/>
             <Setter Property="FontSize"     Value="14"/>
             <Setter Property="FontWeight"   Value="Bold"/>
-            <Setter Property="Foreground"   Value="White"/>
+            <Setter Property="Foreground"   Value="Wheat"/>
         </Style>
 
         <Style TargetType="Label">
