@@ -10,7 +10,7 @@
         <Canvas MinWidth="1" MinHeight="1"
                 Margin="0"
                 x:Name="CoordinateCanvas"
-                Background="#19374B"
+                Background="#19374b"
                 ClipToBounds="True"
                 Focusable="True"
                 />
