@@ -44,6 +44,10 @@ namespace LinearTransformation.View {
             this._vm.Button_Click_Transform(sender, e);
         }
 
+        private void Button_Click_UndoTransform(object sender, RoutedEventArgs e) {
+            this._vm.Button_Click_UndoTransform(sender, e);
+        }
+
         private void ToggleButtons_StateChanged(object sender, RoutedEventArgs e) {
             this._vm?.ToggleButtons_StateChanged(sender, e);
         }

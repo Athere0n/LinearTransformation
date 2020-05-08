@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,6 +21,8 @@ namespace LinearTransformation.ViewModel {
         private readonly Canvas _canvas;
         public CoordinateSystemData _data;
         public CoordinateSystemData _dynamicData;
+
+        private readonly List<Tuple<Vector, Vector>> _previousTransformations = new List<Tuple<Vector, Vector>>();
 
         // movement Variables
         private bool _isDragging;
@@ -101,6 +104,7 @@ namespace LinearTransformation.ViewModel {
                 this.Update();
             }
         }
+
         public void Control_KeyboardMove(object sender, KeyEventArgs e) {
             Key key = (Key) e.Key;
 
@@ -223,12 +227,26 @@ namespace LinearTransformation.ViewModel {
             //this._dynamicData.IHat = iHat;
             //this._dynamicData.JHat = jHat;
 
+            // Store the current Basis Vectors
+            this._previousTransformations.Add(new Tuple<Vector, Vector>(this._dynamicData.IHat, this._dynamicData.JHat));
+
             // Start the transformation
             this.StartAnimation(new Vector(this._data.IHat.X * iHat.X + this._data.JHat.X * iHat.Y,
                                            this._data.IHat.X * jHat.X + this._data.JHat.X * jHat.Y),
                                 new Vector(this._data.IHat.Y * iHat.X + this._data.JHat.Y * iHat.Y,
                                            this._data.IHat.Y * jHat.X + this._data.JHat.Y * jHat.Y));
+
             //this.Update();
+        }
+
+        public void UndoTransformation(object sender, RoutedEventArgs e) {
+            if (this._previousTransformations.Count > 0) {
+                Vector iHat = this._previousTransformations[this._previousTransformations.Count - 1].Item1;
+                Vector jHat = this._previousTransformations[this._previousTransformations.Count - 1].Item2;
+
+                this.StartAnimation(iHat, jHat);
+                this._previousTransformations.RemoveAt(this._previousTransformations.Count - 1);
+            }
         }
 
         private Task StartAnimation(Vector iHat, Vector jHat, int fps = 60) {

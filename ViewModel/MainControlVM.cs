@@ -65,10 +65,10 @@ namespace LinearTransformation.ViewModel {
         }
 
         internal void UpdateWindowSettings(CoordinateSystemData data) {
-            this._mainControl.InputMinX.Text  = $"{data.MinX}";
-            this._mainControl.InputMaxX.Text  = $"{data.MaxX}";
-            this._mainControl.InputMinY.Text  = $"{data.MinY}";
-            this._mainControl.InputMaxY.Text  = $"{data.MaxY}";
+            this._mainControl.InputMinX.Text = $"{data.MinX}";
+            this._mainControl.InputMaxX.Text = $"{data.MaxX}";
+            this._mainControl.InputMinY.Text = $"{data.MinY}";
+            this._mainControl.InputMaxY.Text = $"{data.MaxY}";
             this._mainControl.InputUnitX.Text = $"{data.UnitX}";
             this._mainControl.InputUnitY.Text = $"{data.UnitY}";
             this._mainControl.InputStepX.Text = $"{data.StepY}";
@@ -91,9 +91,11 @@ namespace LinearTransformation.ViewModel {
 
             Vector iHat = new Vector(ix, iy);
             Vector jHat = new Vector(jx, jy);
-
             ((CoordinateSystem) this.CoordinateSystemControl)._coordinateSystemVM.NewTransformation(iHat, jHat);
 
+        }
+        public void Button_Click_UndoTransform(object sender, RoutedEventArgs e) {
+            ((CoordinateSystem) this.CoordinateSystemControl)._coordinateSystemVM.UndoTransformation(sender, e);
         }
 
         public void ToggleButtons_StateChanged(object sender, RoutedEventArgs e) {
@@ -145,7 +147,7 @@ namespace LinearTransformation.ViewModel {
 
             var temp = (CoordinateSystem) this.CoordinateSystemControl;
             temp._coordinateSystemVM._data = new CoordinateSystemData(minX, maxX, minY, maxY, unitX, unitY, stepX, stepY);
-            temp._coordinateSystemVM._dynamicData = new CoordinateSystemData(minX, maxX, minY, maxY, unitX, unitY, stepX, stepY) { 
+            temp._coordinateSystemVM._dynamicData = new CoordinateSystemData(minX, maxX, minY, maxY, unitX, unitY, stepX, stepY) {
                 IHat = temp._coordinateSystemVM._dynamicData.IHat,
                 JHat = temp._coordinateSystemVM._dynamicData.JHat,
             };
