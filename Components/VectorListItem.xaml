@@ -6,17 +6,20 @@
              xmlns:local="clr-namespace:LinearTransformation.Components"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    
     <StackPanel Orientation="Horizontal">
         <Label VerticalAlignment="Center" Foreground="White" Content="X:"/>
         <TextBox VerticalAlignment="Center" x:Name="InputVectorX" TextChanged="InputVectorX_TextChanged"/>
         <Label VerticalAlignment="Center" Foreground="White" Content="Y:"/>
         <TextBox VerticalAlignment="Center" x:Name="InputVectorY" TextChanged="InputVectorY_TextChanged"/>
+        
         <Border  Width="50"
-                             Height="50"
-                             BorderBrush="White"
-                             BorderThickness="2">
+                 Height="50"
+                 BorderBrush="White"
+                 BorderThickness="2">
             <Canvas x:Name="InputVectorColour" Background="PaleVioletRed" MouseLeftButtonDown="Canvas_MouseLeftButtonDown_SelectVectorColour"/>
         </Border>
+        
         <Button Content="Delete Vector" Click="Button_Click_DeleteVector"/>
     </StackPanel>
 </UserControl>

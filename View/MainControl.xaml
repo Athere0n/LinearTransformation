@@ -7,175 +7,291 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <Grid Background="DarkSlateGray">
+    <UserControl.Resources>
+
+        <Style TargetType="GroupBox">
+            <Setter Property="BorderBrush"      Value="White"/>
+            <Setter Property="BorderThickness"  Value="1"/>
+        </Style>
+        
+        <Style TargetType="Label" x:Key="GroupBoxHeaderLabel">
+            <Setter Property="FontFamily"   Value="Courier New"/>
+            <Setter Property="FontSize"     Value="14"/>
+            <Setter Property="FontWeight"   Value="Bold"/>
+            <Setter Property="Foreground"   Value="White"/>
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="VerticalAlignment"    Value="Center"/>
+            <Setter Property="FontSize"             Value="14"/>
+            <Setter Property="Foreground"           Value="White"/>
+            <Setter Property="Margin"               Value="10 0 2 0"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="VerticalAlignment"    Value="Center"/>
+            <Setter Property="Width"                Value="75"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="VerticalAlignment"    Value="Center"/>
+            <Setter Property="FontFamily"           Value="Courier New"/>
+            <Setter Property="FontWeight"           Value="Bold"/>
+            <Setter Property="Padding"              Value="5 2 5 2"/>
+            <Setter Property="Margin"              Value="10 0 0 0"/>
+        </Style>
+
+        <Style TargetType="ToggleButton">
+            <Setter Property="FontFamily"   Value="Courier New"/>
+            <Setter Property="Margin"       Value="2.5 0 2.5 0"/>
+            <Setter Property="Padding"      Value="5 3 5 3"/>
+            <Setter Property="MinWidth"     Value="100"/>
+            <Setter Property="Background"   Value="#838a90"/>
+            <Setter Property="Foreground"   Value="Black"/>
+            <Setter Property="BorderBrush"  Value="Black"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3"
+                                Background="{TemplateBinding Background}" Margin="{TemplateBinding Margin}" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="FontWeight" Value="Bold"></Setter>
+                    <Setter Property="Background" Value="#edeeef"></Setter>
+                    <Setter Property="Foreground" Value="Black"></Setter>
+                    <Setter Property="BorderBrush" Value="LimeGreen"></Setter>
+                    <Setter Property="BorderThickness" Value="2"></Setter>
+                </Trigger>
+
+                <Trigger Property="IsChecked" Value="False">
+                    <Setter Property="FontWeight" Value="Normal"></Setter>
+                    <Setter Property="Background" Value="#838a90"></Setter>
+                    <Setter Property="Foreground" Value="White"></Setter>
+                    <Setter Property="BorderBrush" Value="#cc0000"></Setter>
+                </Trigger>
+
+            </Style.Triggers>
+
+        </Style>
+
+    </UserControl.Resources>
+
+
+    <Grid Background="#4E5961">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="400"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="170"/>
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         <!--add new stuff-->
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition/>
+                <RowDefinition MinHeight="100"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <!--new vector-->
-            <GroupBox Grid.Row="0">
-                <GroupBox.Header>
-                    <Border BorderBrush="White" BorderThickness="1" Background="Black">
-                        <Label Foreground="White"  Content="New Vector"/>
-                    </Border>
-                </GroupBox.Header>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                    <!--x label-->
-                    <Label VerticalAlignment="Center" Foreground="White" Content="x:"/>
-                    <TextBox x:Name="InputVectorX" VerticalAlignment="Center" Width="100"/>
-                    <!--y label-->
-                    <Label VerticalAlignment="Center" Foreground="White" Content="y:"/>
-                    <TextBox x:Name="InputVectorY" VerticalAlignment="Center" Width="100"/>
-                    <Border  Width="50"
-                             Height="50"
-                             BorderBrush="White"
-                             BorderThickness="2">
-                        <Canvas x:Name="InputVectorColour" Background="PaleVioletRed" MouseLeftButtonDown="Canvas_MouseLeftButtonDown_SelectVectorColour"/>
-                    </Border>
-                    <Button VerticalAlignment="Center" Content="Add Vector" Click="Button_Click_AddVector"/>
-                </StackPanel>
-            </GroupBox>
-
             <!--new transformation-->
-            <GroupBox Grid.Row="1">
+            <GroupBox Grid.Row="0" Margin="5 0 5 0">
+                
                 <GroupBox.Header>
-                    <Border BorderBrush="White" BorderThickness="1" Background="Black">
-                        <Label Foreground="White" Content="New Transformation"/>
-                    </Border>
+                    <Label Style="{StaticResource GroupBoxHeaderLabel}" Content="New Transformation"/>
                 </GroupBox.Header>
-                <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Stretch">
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Stretch">
 
                     <StackPanel Orientation="Vertical" VerticalAlignment="Stretch">
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                            <!--îx label-->
-                            <Label VerticalAlignment="Center" Foreground="White" Content="&#xCE;x:"/>
-                            <TextBox Text="1" x:Name="InputIHatX" VerticalAlignment="Center" Width="100"/>
-                            <!--Îy label-->
-                            <Label VerticalAlignment="Center" Foreground="White" Content="&#xCE;y:"/>
-                            <TextBox Text="0" x:Name="InputIHatY" VerticalAlignment="Center" Width="100"/>
+                            <Label Content="îᵪ :"/>
+                            <TextBox x:Name="InputIHatX"/>
+
+                            <Label Content="îᵧ :"/>
+                            <TextBox x:Name="InputIHatY"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                            <!--^jx label-->
-                            <Label VerticalAlignment="Center" Foreground="White" Content="&#x135;x:"/>
-                            <TextBox Text="0" x:Name="InputJHatX" VerticalAlignment="Center" Width="100"/>
-                            <!--^jy label-->
-                            <Label VerticalAlignment="Center" Foreground="White" Content="&#x135;y:"/>
-                            <TextBox Text="1" x:Name="InputJHatY" VerticalAlignment="Center" Width="100"/>
+                            <Label Content="ĵᵪ :"/>
+                            <TextBox x:Name="InputJHatX"/>
+
+                            <Label Content="ĵᵧ :"/>
+                            <TextBox x:Name="InputJHatY"/>
                         </StackPanel>
 
                     </StackPanel>
-                    <Button VerticalAlignment="Center" Content="Transform" Click="Button_Click_Transform"/>
-                </StackPanel>
-            </GroupBox>
-        </Grid>
+                    
+                    <Button Content="Transform" Click="Button_Click_Transform"/>
+                    <Button Content="Undo"/>
 
-        <!--Render stuff-->
-        <GroupBox Grid.Column="1"
-                  Grid.Row="0">
+                </StackPanel>
+                
+            </GroupBox>
+
+            <!--Display-->
+            <GroupBox Grid.Row="1" Margin="5 0 5 0">
+            
+                <GroupBox.Header>
+                    <Label Style="{StaticResource GroupBoxHeaderLabel}" Content="Display"/>
+                </GroupBox.Header>
+            
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+
+                    <ToggleButton x:Name="ToggleButton_StaticGrid" 
+                                  Content="Static Grid"
+                                  Checked="ToggleButtons_StateChanged" Unchecked="ToggleButtons_StateChanged" IsChecked="True"/>
+                    <ToggleButton x:Name="ToggleButton_DynamicGrid" 
+                                  Content="Dynamic Grid"
+                                  Checked="ToggleButtons_StateChanged" Unchecked="ToggleButtons_StateChanged" IsChecked="True"/>
+                    <ToggleButton x:Name="ToggleButton_Vectors" 
+                                  Content="Vectors"
+                                  Checked="ToggleButtons_StateChanged" Unchecked="ToggleButtons_StateChanged" IsChecked="True"/>
+                    <ToggleButton x:Name="ToggleButton_BasisVectors" 
+                                  Content="Basis Vectors" 
+                                  Checked="ToggleButtons_StateChanged" Unchecked="ToggleButtons_StateChanged" IsChecked="True"/>
+               
+                </StackPanel>
+            
+            </GroupBox>
+
+        </Grid>
+        
+        <!--window settings-->
+        <GroupBox Grid.Column="1" Margin="0 0 5 0">
+            
             <GroupBox.Header>
-                <Border BorderBrush="White" BorderThickness="1" Background="Black">
-                    <Label Foreground="White" Content="Display"/>
-                </Border>
+                <Label Style="{StaticResource GroupBoxHeaderLabel}" Content="Settings"/>
             </GroupBox.Header>
-            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <ToggleButton x:Name="ToggleButton_DynamicGrid"
-                              Checked="ToggleButtons_StateChanged" Unchecked="ToggleButtons_StateChanged" Content="Dynamic Grid" IsChecked="True"/>
-                <ToggleButton x:Name="ToggleButton_StaticGrid"
-                              Checked="ToggleButtons_StateChanged" Unchecked="ToggleButtons_StateChanged" Content="Static Grid" IsChecked="True"/>
-                <ToggleButton x:Name="ToggleButton_Vectors"
-                              Checked="ToggleButtons_StateChanged" Unchecked="ToggleButtons_StateChanged" Content="Vectors" IsChecked="True"/>
-                <ToggleButton x:Name="ToggleButton_BasisVectors"
-                              Checked="ToggleButtons_StateChanged" Unchecked="ToggleButtons_StateChanged" Content="Basis Vectors" IsChecked="True"/>
+            
+            <StackPanel Orientation="Vertical" VerticalAlignment="Stretch">
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                    <Label Content="Min X:"/>
+                    <TextBox x:Name="InputMinX"/>
+                    
+                    <Label Content="Min Y:"/>
+                    <TextBox x:Name="InputMinY"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                    <Label Content="Max X:"/>
+                    <TextBox x:Name="InputMaxX"/>
+                    
+                    <Label Content="Max Y:"/>
+                    <TextBox x:Name="InputMaxY"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                    <Label Content="Unit X:"/>
+                    <TextBox x:Name="InputUnitX"/>
+                    
+                    <Label Content="Unit Y:"/>
+                    <TextBox x:Name="InputUnitY"/>
+                </StackPanel>
+                
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                    <Label Content="Step X:"/>
+                    <TextBox x:Name="InputStepX"/>
+                    
+                    <Label Content="Step Y:"/>
+                    <TextBox x:Name="InputStepY"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    
+                    <Button Content="Apply Changes" Click="Button_Click_ApplyChanges"/>
+                    <Button Content="Revert Changes" Click="Button_Click_RevertChanges"/>
+                    
+                </StackPanel>
+                
             </StackPanel>
+            
+        </GroupBox>
+        
+        <!--Vectors-->
+        <GroupBox Grid.Column="1" Grid.Row="1" Margin="0 0 5 5">
+            
+            <GroupBox.Header>
+                <Label Style="{StaticResource GroupBoxHeaderLabel}" Content="Vectors"/>
+            </GroupBox.Header>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <!--new vector-->
+                <GroupBox>
+
+                    <GroupBox.Header>
+                        <Label FontFamily="Courier New" FontSize="14" Content="New Vector"/>
+                    </GroupBox.Header>
+
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                            <Label Content="x:"/>
+                            <TextBox x:Name="InputVectorX"/>
+
+                            <Label Content="y:"/>
+                            <TextBox x:Name="InputVectorY"/>
+
+                            <Border  Margin="30 0 0 0"
+                             Width="30"
+                             Height="30"
+                             BorderBrush="White"
+                             BorderThickness="2">
+                                <Canvas x:Name="InputVectorColour" Background="PaleVioletRed" MouseLeftButtonDown="Canvas_MouseLeftButtonDown_SelectVectorColour"/>
+                            </Border>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="0 10 0 0">
+
+                            <Button Content="Add Vector" Click="Button_Click_AddVector"/>
+                            <Button Content="Add Random Vector"/>
+
+                        </StackPanel>
+
+                    </StackPanel>
+
+                </GroupBox>
+
+                <!--Vectorlist-->
+                <GroupBox Grid.Row="1">
+
+                    <GroupBox.Header>
+                        <Label FontFamily="Courier New" FontSize="14" Content="Vectorlist"/>
+                    </GroupBox.Header>
+                    
+                    <ListView  Background="DarkSlateGray" ItemsSource="{Binding Vectors}"></ListView>
+                    
+                </GroupBox>
+                
+            </Grid>
+            
         </GroupBox>
 
-
-        <Grid Grid.Column="1" Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            
-            <!--window settings-->
-            <GroupBox Grid.Row="0">
-                <GroupBox.Header>
-                    <Border BorderBrush="White" BorderThickness="1" Background="Black">
-                        <Label Foreground="White" Content="Settings"/>
-                    </Border>
-                </GroupBox.Header>
-                <StackPanel Orientation="Vertical" VerticalAlignment="Stretch">
-
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                        <Label VerticalAlignment="Center" Foreground="White" Content="Min X:"/>
-                        <TextBox x:Name="InputMinX" VerticalAlignment="Center" Width="100"/>
-                        <Label VerticalAlignment="Center" Foreground="White" Content="Min Y:"/>
-                        <TextBox x:Name="InputMinY" VerticalAlignment="Center" Width="100"/>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                        <Label VerticalAlignment="Center" Foreground="White" Content="Max X:"/>
-                        <TextBox x:Name="InputMaxX" VerticalAlignment="Center" Width="100"/>
-                        <Label VerticalAlignment="Center" Foreground="White" Content="Max Y:"/>
-                        <TextBox x:Name="InputMaxY" VerticalAlignment="Center" Width="100"/>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                        <Label VerticalAlignment="Center" Foreground="White" Content="Unit X:"/>
-                        <TextBox x:Name="InputUnitX" VerticalAlignment="Center" Width="100"/>
-                        <Label VerticalAlignment="Center" Foreground="White" Content="Unit Y:"/>
-                        <TextBox x:Name="InputUnitY" VerticalAlignment="Center" Width="100"/>
-                    </StackPanel>
-                    
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                        <Label VerticalAlignment="Center" Foreground="White" Content="Step X:"/>
-                        <TextBox x:Name="InputStepX" VerticalAlignment="Center" Width="100"/>
-                        <Label VerticalAlignment="Center" Foreground="White" Content="Step Y:"/>
-                        <TextBox x:Name="InputStepY" VerticalAlignment="Center" Width="100"/>
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button Content="Apply Changes" Click="Button_Click_ApplyChanges"/>
-                        <Button Content="Revert Changes" Click="Button_Click_RevertChanges"/>
-                    </StackPanel>
-                </StackPanel>
-            </GroupBox>
-            
-            <!--Vector list-->
-            <GroupBox Grid.Row="1">
-                <GroupBox.Header>
-                    <Border BorderBrush="White" BorderThickness="1" Background="Black">
-                        <Label Foreground="White" Content="Vectors"/>
-                    </Border>
-                </GroupBox.Header>
-                <ListView Background="DarkSlateGray" ItemsSource="{Binding Vectors}"></ListView>
-            </GroupBox>
-        </Grid>
-
         <!--Coordinate System-->
-        <GroupBox Grid.Column="0"
-                  Grid.Row="1">
+        <GroupBox Grid.Column="0" Grid.Row="1" Margin="5 0 5 5">
+            
             <GroupBox.Header>
-                <Border BorderBrush="White" BorderThickness="1" Background="Black">
-                    <Label Foreground="White"  Content="Coordinate System"/>
-                </Border>
+                <Label Style="{StaticResource GroupBoxHeaderLabel}" Content="Coordinate System"/>
             </GroupBox.Header>
-            <ContentControl Background="Black" 
-                            Content="{Binding CoordinateSystemControl}"/>
+            
+            <ContentControl Background="Black" Content="{Binding CoordinateSystemControl}"/>
+            
         </GroupBox>
 
     </Grid>
+    
 </UserControl>
