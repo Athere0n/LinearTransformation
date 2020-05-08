@@ -73,5 +73,9 @@ namespace LinearTransformation.Model {
             PropertyInfo[] properties = (typeof(System.Windows.Media.Brushes)).GetProperties();
             return (System.Windows.Media.Brush) properties[Utility.Random.Next(properties.Length)].GetValue(null,null);
         }
+
+        internal static void ShowError(Exception e) {
+            MessageBox.Show(e.Message, "Storch", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 }
