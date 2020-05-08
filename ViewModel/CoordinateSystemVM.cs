@@ -232,6 +232,8 @@ namespace LinearTransformation.ViewModel {
             // Store the current Basis Vectors
             this._previousTransformations.Add(new Tuple<Vector, Vector>(this._dynamicData.IHat, this._dynamicData.JHat));
 
+            this._mainControlVM._mainControl.Button_Undo.IsEnabled = true;
+
             // Start the transformation
             this.StartAnimation(new Vector(this._data.IHat.X * iHat.X + this._data.JHat.X * iHat.Y,
                                            this._data.IHat.X * jHat.X + this._data.JHat.X * jHat.Y),
@@ -248,6 +250,8 @@ namespace LinearTransformation.ViewModel {
 
                 this.StartAnimation(iHat, jHat);
                 this._previousTransformations.RemoveAt(this._previousTransformations.Count - 1);
+                if (this._previousTransformations.Count == 0)
+                    this._mainControlVM._mainControl.Button_Undo.IsEnabled = false;
             }
         }
 

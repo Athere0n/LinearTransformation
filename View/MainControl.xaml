@@ -130,7 +130,7 @@
                     </StackPanel>
                     
                     <Button Content="Transform" Click="Button_Click_Transform"/>
-                    <Button Content="Undo" Click="Button_Click_UndoTransform"/>
+                    <Button x:Name="Button_Undo" IsEnabled="False" Content="Undo" Click="Button_Click_UndoTransform"/>
 
                 </StackPanel>
                 
