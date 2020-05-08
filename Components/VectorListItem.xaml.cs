@@ -30,9 +30,21 @@ namespace LinearTransformation.Components {
             this._mainControlVM = mainControlVM;
             this._canvasVector = canvasVector;
 
+
+            MenuItem temp = new MenuItem {
+                Header = "Delete Vector",
+            };
+            temp.Click += new RoutedEventHandler(this.Temp_Click);
+            this._canvasVector.VectorContextMenu.Items.Add(temp);
+
+
             this.InputVectorColour.Background = this._canvasVector.VectorBrush;
             this.InputVectorX.Text = $"{this._canvasVector.X}";
             this.InputVectorY.Text = $"{this._canvasVector.Y}";
+        }
+
+        private void Temp_Click(object sender, RoutedEventArgs e) {
+            this.Button_Click_DeleteVector(null, null);
         }
 
         private void Canvas_MouseLeftButtonDown_SelectVectorColour(object sender, MouseButtonEventArgs e) {

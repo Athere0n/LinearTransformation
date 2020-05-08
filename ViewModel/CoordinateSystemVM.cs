@@ -224,11 +224,14 @@ namespace LinearTransformation.ViewModel {
             //this._dynamicData.JHat = jHat;
 
             // Start the transformation
-            this.StartAnimation(/*this._data.IHat + */iHat, /*this._data.JHat + */jHat, 5);
+            this.StartAnimation(new Vector(this._data.IHat.X * iHat.X + this._data.JHat.X * iHat.Y,
+                                           this._data.IHat.X * jHat.X + this._data.JHat.X * jHat.Y),
+                                new Vector(this._data.IHat.Y * iHat.X + this._data.JHat.Y * iHat.Y,
+                                           this._data.IHat.Y * jHat.X + this._data.JHat.Y * jHat.Y));
             //this.Update();
         }
 
-        private Task StartAnimation(Vector iHat, Vector jHat, int duration, int fps = 60) {
+        private Task StartAnimation(Vector iHat, Vector jHat, int fps = 60) {
             return Task.Run(() => Application.Current.Dispatcher.Invoke(async () => {
                 //this._dynamicData.IHat.X
                 //double iHatStepX = /*Math.Abs*/(iHat.X - this._dynamicData.IHat.X ) / duration / fps;

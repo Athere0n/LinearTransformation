@@ -11,11 +11,11 @@
         <Grid.ToolTip>
             <ToolTip x:Name="VectorToolTip"/>
         </Grid.ToolTip>
+        
         <Grid.ContextMenu>
-            <ContextMenu Name="ConnectionContextMenu">
-
-            </ContextMenu>
+            <ContextMenu Name="VectorContextMenu"/>
         </Grid.ContextMenu>
+        
         <!--Main Line-->
         <Line Name="MainLine"/>
 
