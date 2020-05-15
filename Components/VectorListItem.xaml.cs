@@ -33,6 +33,9 @@ namespace LinearTransformation.Components {
 
             MenuItem temp = new MenuItem {
                 Header = "Delete Vector",
+                Icon = new Image {
+                    Source = new BitmapImage(new Uri("/Icons/RedCross.png", UriKind.Relative)),
+                }
             };
             temp.Click += new RoutedEventHandler(this.Temp_Click);
             this._canvasVector.VectorContextMenu.Items.Add(temp);
