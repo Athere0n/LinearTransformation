@@ -108,5 +108,10 @@ namespace LinearTransformation.Components {
             this._mainControlVM.Vectors.Remove(this);
             this._mainControlVM.DeleteVector(this._canvasVector);
         }
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e) {
+            if (sender is TextBox textBox)
+                Utility.TextBox_SelectAll(textBox);
+        }
     }
 }

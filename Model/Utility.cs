@@ -138,5 +138,11 @@ namespace LinearTransformation.Model {
             Properties.Settings.Default.Save();
         }
         #endregion
+
+        #region TextBoxTextSelection
+        public static void TextBox_SelectAll(TextBox textBox) {
+            textBox.Dispatcher.BeginInvoke(new Action(() => textBox.SelectAll()));
+        }
+        #endregion
     }
 }

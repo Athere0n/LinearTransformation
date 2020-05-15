@@ -35,10 +35,10 @@
         </Border>
         
         <Label      Content="x:"/>
-        <TextBox    x:Name="InputVectorX" TextChanged="InputVectorX_TextChanged"/>
+        <TextBox    GotFocus="TextBox_GotFocus" x:Name="InputVectorX" TextChanged="InputVectorX_TextChanged"/>
         
         <Label      Content="y:"/>
-        <TextBox    x:Name="InputVectorY" TextChanged="InputVectorY_TextChanged"/>
+        <TextBox    GotFocus="TextBox_GotFocus" x:Name="InputVectorY" TextChanged="InputVectorY_TextChanged"/>
         
         <Button     Content="Delete" Click="Button_Click_DeleteVector"/>
         
