@@ -6,20 +6,42 @@
              xmlns:local="clr-namespace:LinearTransformation.Components"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+
+        <Style TargetType="Label">
+            <Setter Property="VerticalAlignment"    Value="Center"/>
+            <Setter Property="FontSize"             Value="14"/>
+            <Setter Property="Foreground"           Value="White"/>
+            <Setter Property="Margin"               Value="10 0 2 0"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="VerticalAlignment"    Value="Center"/>
+            <Setter Property="Width"                Value="75"/>
+        </Style>
+
+    </UserControl.Resources>
     
-    <StackPanel Orientation="Horizontal">
-        <Label VerticalAlignment="Center" Foreground="White" Content="X:"/>
-        <TextBox VerticalAlignment="Center" x:Name="InputVectorX" TextChanged="InputVectorX_TextChanged"/>
-        <Label VerticalAlignment="Center" Foreground="White" Content="Y:"/>
-        <TextBox VerticalAlignment="Center" x:Name="InputVectorY" TextChanged="InputVectorY_TextChanged"/>
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
         
-        <Border  Width="50"
-                 Height="50"
-                 BorderBrush="White"
-                 BorderThickness="2">
+        <Border     Margin=" 0 1 0 1"
+                    Width="25"
+                    Height="25"
+                    CornerRadius="3"
+                    BorderBrush="White"
+                    BorderThickness="2">
             <Canvas x:Name="InputVectorColour" Background="PaleVioletRed" MouseLeftButtonDown="Canvas_MouseLeftButtonDown_SelectVectorColour"/>
         </Border>
         
-        <Button Content="Delete Vector" Click="Button_Click_DeleteVector"/>
+        <Label      Content="x:"/>
+        <TextBox    x:Name="InputVectorX" TextChanged="InputVectorX_TextChanged"/>
+        
+        <Label      Content="y:"/>
+        <TextBox    x:Name="InputVectorY" TextChanged="InputVectorY_TextChanged"/>
+        
+        <Button     Content="Delete" Click="Button_Click_DeleteVector"/>
+        
     </StackPanel>
+    
 </UserControl>

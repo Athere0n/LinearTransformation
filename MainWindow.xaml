@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LinearTransformation"
         mc:Ignorable="d"
-        Title="Linear Transformation" Height="670" Width="900">
+        Title="MainWindow" Height="780" Width="1000">
    
     <Grid>
         <ContentControl Grid.Column="0"
