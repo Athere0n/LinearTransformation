@@ -217,7 +217,7 @@ namespace LinearTransformation.ViewModel {
             bool showVectors = (bool) this._mainControlVM._mainControl.ToggleButton_Vectors.IsChecked;
             bool showDynamicGrid = (bool) this._mainControlVM._mainControl.ToggleButton_DynamicGrid.IsChecked;
             bool showBasisVectors = (bool) this._mainControlVM._mainControl.ToggleButton_BasisVectors.IsChecked;
-
+            bool showMousePosition = (bool) this._mainControlVM._mainControl.ToggleButton_MousePosition.IsChecked;
 
             this._canvas.Children.Clear();
 
@@ -230,11 +230,11 @@ namespace LinearTransformation.ViewModel {
             if (showBasisVectors)
                 CoordinateSystemDrawer.DrawBasisVectors(this._canvas, this._dynamicData);
 
-            // TODO: 
-            // Add Toggle Button for this
-            this._mousePositionDisplay = new MousePositionDisplay(25, MousePositionDisplay.Position.TopRight);
-            this._mousePositionDisplay.Visibility = Visibility.Collapsed;
-            this._canvas.Children.Add(this._mousePositionDisplay);
+            if (showMousePosition) {
+                this._mousePositionDisplay = new MousePositionDisplay(25, MousePositionDisplay.Position.TopRight);
+                this._mousePositionDisplay.Visibility = Visibility.Collapsed;
+                this._canvas.Children.Add(this._mousePositionDisplay);
+            }
 
 
         }
