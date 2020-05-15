@@ -50,9 +50,6 @@ namespace LinearTransformation.ViewModel {
                                                                                    this._data,
                                                                                    m);
 
-            this._mousePositionDisplay?.SetLabelContent(toMousePosition, this._dynamicData);
-
-
             if (this._isDragging) {
 
                 Vector fromMousePosition = CoordinateConverter.FromPointToCoordinate(canvasSize,
@@ -79,6 +76,8 @@ namespace LinearTransformation.ViewModel {
 
                 this.Update();
             }
+         
+            this._mousePositionDisplay?.SetLabelContent(toMousePosition, this._dynamicData);
         }
         private void Control_MouseWheel(object sender, MouseWheelEventArgs e) {
             if (e.Delta > 0) {
@@ -111,7 +110,7 @@ namespace LinearTransformation.ViewModel {
         }
 
         private void Control_MouseEnter(object sender, MouseEventArgs e) {
-            if (this._mousePositionDisplay != null)
+            if (this._mousePositionDisplay != null && ((bool) this._mainControlVM._mainControl.ToggleButton_MousePosition.IsChecked))
                 this._mousePositionDisplay.Visibility = Visibility.Visible;
         }
         private void Control_MouseLeave(object sender, MouseEventArgs e) {
@@ -195,6 +194,9 @@ namespace LinearTransformation.ViewModel {
         }
 
         private void AddPositionLabelFunctionality() {
+            this._mousePositionDisplay = new MousePositionDisplay(MousePositionDisplay.Position.TopRight);
+            this._mousePositionDisplay.Visibility = Visibility.Collapsed;
+
             this._canvas.MouseEnter += new MouseEventHandler(this.Control_MouseEnter);
             this._canvas.MouseLeave += new MouseEventHandler(this.Control_MouseLeave);
         }
@@ -231,7 +233,10 @@ namespace LinearTransformation.ViewModel {
                 CoordinateSystemDrawer.DrawBasisVectors(this._canvas, this._dynamicData);
 
             if (showMousePosition) {
-                this._mousePositionDisplay = new MousePositionDisplay(MousePositionDisplay.Position.TopRight);
+                //this._mousePositionDisplay = new MousePositionDisplay(MousePositionDisplay.Position.TopRight);
+                this._mousePositionDisplay.Visibility = Visibility.Visible;
+                this._canvas.Children.Add(this._mousePositionDisplay);
+            } else {
                 this._mousePositionDisplay.Visibility = Visibility.Collapsed;
                 this._canvas.Children.Add(this._mousePositionDisplay);
             }
