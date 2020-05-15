@@ -29,7 +29,7 @@ namespace LinearTransformation.Components {
             Vector dynamicPosition = Utility.FromStaticToDynamic(dynamicData.IHat, dynamicData.JHat, staticPosition);
 
             this.Label_StaticX.Content  = $"{Math.Round(staticPosition.X, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
-            this.Label_StaticY.Content  = $"{Math.Round(staticPosition.Y,(int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
+            this.Label_StaticY.Content  = $"{Math.Round(staticPosition.Y, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
             this.Label_DynamicX.Content = $"{Math.Round(dynamicPosition.X, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
             this.Label_DynamicY.Content = $"{Math.Round(dynamicPosition.Y, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
         }
