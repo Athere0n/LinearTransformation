@@ -28,10 +28,10 @@ namespace LinearTransformation.Components {
         public void SetLabelContent(Vector staticPosition, CoordinateSystemData dynamicData) {
             Vector dynamicPosition = Utility.FromStaticToDynamic(dynamicData.IHat, dynamicData.JHat, staticPosition);
 
-            this.Label_StaticX.Content  = $"{staticPosition.X}";
-            this.Label_StaticY.Content  = $"{staticPosition.Y}";
-            this.Label_DynamicX.Content = $"{dynamicPosition.X}";
-            this.Label_DynamicY.Content = $"{dynamicPosition.Y}";
+            this.Label_StaticX.Content  = $"{Math.Round(staticPosition.X, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
+            this.Label_StaticY.Content  = $"{Math.Round(staticPosition.Y,(int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
+            this.Label_DynamicX.Content = $"{Math.Round(dynamicPosition.X, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
+            this.Label_DynamicY.Content = $"{Math.Round(dynamicPosition.Y, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
         }
 
         private void SetPosition(Position position) {

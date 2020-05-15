@@ -90,7 +90,9 @@ namespace LinearTransformation.Components {
         }
 
         private void UpdateToolTip() {
-            this.VectorToolTip.Content = $"X: {this._destination.X}\nY: {this._destination.Y}";
+            double x = Math.Round(this._destination.X, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero);
+            double y = Math.Round(this._destination.Y, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero);
+            this.VectorToolTip.Content = $"X: {x}\nY: {y}";
         }
 
         private void UpdateArrowCoordinates() {

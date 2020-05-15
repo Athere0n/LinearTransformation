@@ -43,8 +43,8 @@ namespace LinearTransformation.Components {
 
 
             this.InputVectorColour.Background = this._canvasVector.VectorBrush;
-            this.InputVectorX.Text = $"{this._canvasVector.X}";
-            this.InputVectorY.Text = $"{this._canvasVector.Y}";
+            this.InputVectorX.Text = $"{Math.Round(this._canvasVector.X, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
+            this.InputVectorY.Text = $"{Math.Round(this._canvasVector.Y, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
         }
 
         private void Temp_Click(object sender, RoutedEventArgs e) {
@@ -86,6 +86,7 @@ namespace LinearTransformation.Components {
                 //throw new Exception("Invalid X Value");
 
             this._canvasVector.X = x;
+            //this.InputVectorX.Text = $"{Math.Round(this._canvasVector.X, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
             this._canvasVector.UpdateCoordinates();
         }
 
@@ -98,6 +99,7 @@ namespace LinearTransformation.Components {
                 //throw new Exception("Invalid Y Value");
 
             this._canvasVector.Y = y;
+            //this.InputVectorY.Text = $"{Math.Round(this._canvasVector.Y, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
             this._canvasVector.UpdateCoordinates();
         }
 

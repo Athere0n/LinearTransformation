@@ -214,5 +214,17 @@ namespace LinearTransformation.Properties {
                 this["CustomColour16"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int AmountOfDecimals {
+            get {
+                return ((int)(this["AmountOfDecimals"]));
+            }
+            set {
+                this["AmountOfDecimals"] = value;
+            }
+        }
     }
 }
