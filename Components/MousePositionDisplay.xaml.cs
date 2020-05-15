@@ -20,11 +20,8 @@ namespace LinearTransformation.Components {
     /// </summary>
     public partial class MousePositionDisplay: UserControl {
 
-        private readonly double _margin;
-
-        public MousePositionDisplay(double margin, Position position) {
+        public MousePositionDisplay(Position position) {
             this.InitializeComponent();
-            this._margin = margin;
             this.SetPosition(position);
         }
 
@@ -46,20 +43,20 @@ namespace LinearTransformation.Components {
 
             switch (position) {
                 case Position.TopLeft:
-                    Canvas.SetLeft(this, this._margin);
-                    Canvas.SetTop(this, this._margin);
+                    Canvas.SetLeft(this, 0);
+                    Canvas.SetTop(this, 0);
                     break;
                 case Position.TopRight:
-                    Canvas.SetRight(this, this._margin);
-                    Canvas.SetTop(this, this._margin);
+                    Canvas.SetRight(this, 0);
+                    Canvas.SetTop(this, 0);
                     break;
                 case Position.BottomLeft:
-                    Canvas.SetLeft(this, this._margin);
-                    Canvas.SetBottom(this, this._margin);
+                    Canvas.SetLeft(this, 0);
+                    Canvas.SetBottom(this, 0);
                     break;
                 case Position.BottomRight:
-                    Canvas.SetRight(this, this._margin);
-                    Canvas.SetBottom(this, this._margin);
+                    Canvas.SetRight(this, 0);
+                    Canvas.SetBottom(this, 0);
                     break;
                 default:
                     throw new Exception("Invalid position");
