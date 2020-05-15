@@ -33,10 +33,13 @@ namespace LinearTransformation.ViewModel {
 
         public ObservableCollection<VectorListItem> Vectors { get; set; } = new ObservableCollection<VectorListItem>();
 
+        public System.Windows.Forms.ColorDialog ColourDialog;
+
         public MainControl _mainControl;
 
         public MainControlVM(MainControl mainControl) {
             this._mainControl = mainControl;
+            this.ColourDialog = new System.Windows.Forms.ColorDialog();
 
             CoordinateSystemData data = new CoordinateSystemData(-3, 3, -3, 3, 1, .5);
             this._coordinateSystemControl = new CoordinateSystem(this, data);
@@ -147,14 +150,12 @@ namespace LinearTransformation.ViewModel {
             //double g = drawingSolidBrush.Color.G;
             //double b = drawingSolidBrush.Color.B;
 
-            System.Windows.Forms.ColorDialog colorDialog = new System.Windows.Forms.ColorDialog {
-                Color = drawingSolidBrush.Color,
-            };
-            if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
-                ((Canvas) sender).Background = new SolidColorBrush(Color.FromArgb(colorDialog.Color.A,
-                                                                                  colorDialog.Color.R,
-                                                                                  colorDialog.Color.G,
-                                                                                  colorDialog.Color.B));
+            this.ColourDialog.Color = drawingSolidBrush.Color;
+            if (this.ColourDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+                ((Canvas) sender).Background = new SolidColorBrush(Color.FromArgb(this.ColourDialog.Color.A,
+                                                                                  this.ColourDialog.Color.R,
+                                                                                  this.ColourDialog.Color.G,
+                                                                                  this.ColourDialog.Color.B));
             }
         }
 
