@@ -71,11 +71,23 @@ namespace LinearTransformation.Model {
         }
         public static System.Windows.Media.Brush GetRandomBrush() {
             PropertyInfo[] properties = (typeof(System.Windows.Media.Brushes)).GetProperties();
-            return (System.Windows.Media.Brush) properties[Utility.Random.Next(properties.Length)].GetValue(null,null);
+            return (System.Windows.Media.Brush) properties[Utility.Random.Next(properties.Length)].GetValue(null, null);
         }
 
         internal static void ShowError(Exception e) {
             MessageBox.Show(e.Message, "Storch", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        public static Vector FromStaticToDynamic(Vector iHat, Vector jHat, Vector coordinate) {
+            if ((iHat.X * jHat.Y - iHat.Y * jHat.X) == 0)
+                throw new DivideByZeroException();
+            if ((iHat.X * jHat.Y - iHat.Y * jHat.X) == 0)
+                throw new DivideByZeroException();
+
+            return new Vector((coordinate.X * jHat.Y - coordinate.Y * jHat.X) /
+                              (iHat.X * jHat.Y - iHat.Y * jHat.X),
+                              -((coordinate.X * iHat.Y - coordinate.Y * iHat.X) /
+                                (iHat.X * jHat.Y - iHat.Y * jHat.X)));
         }
     }
 }

@@ -78,6 +78,9 @@
     <Compile Include="Components\CanvasVector.xaml.cs">
       <DependentUpon>CanvasVector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\MousePositionDisplay.xaml.cs">
+      <DependentUpon>MousePositionDisplay.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Components\VectorListItem.xaml.cs">
       <DependentUpon>VectorListItem.xaml</DependentUpon>
     </Compile>
@@ -95,6 +98,10 @@
       <DependentUpon>MainControl.xaml</DependentUpon>
     </Compile>
     <Page Include="Components\CanvasVector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\MousePositionDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

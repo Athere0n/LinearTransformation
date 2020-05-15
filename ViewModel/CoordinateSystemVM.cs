@@ -22,6 +22,7 @@ namespace LinearTransformation.ViewModel {
         public CoordinateSystemData _data;
         public CoordinateSystemData _dynamicData;
 
+        private MousePositionDisplay _mousePositionDisplay;
         private readonly List<Tuple<Vector, Vector>> _previousTransformations = new List<Tuple<Vector, Vector>>();
 
         // movement Variables
@@ -40,15 +41,19 @@ namespace LinearTransformation.ViewModel {
             this._canvas.ReleaseMouseCapture();
         }
         private void Control_MouseMove(object sender, MouseEventArgs e) {
-            if (this._isDragging) {
-                Size canvasSize = new Size(this._canvas.ActualWidth, this._canvas.ActualHeight);
+            Size canvasSize = new Size(this._canvas.ActualWidth, this._canvas.ActualHeight);
 
-                Point p = e.GetPosition(this._canvas);
-                Vector m = new Vector(p.X, p.Y);
+            Point p = e.GetPosition(this._canvas);
+            Vector m = new Vector(p.X, p.Y);
 
-                Vector toMousePosition = CoordinateConverter.FromPointToCoordinate(canvasSize,
+            Vector toMousePosition = CoordinateConverter.FromPointToCoordinate(canvasSize,
                                                                                    this._data,
                                                                                    m);
+
+            this._mousePositionDisplay?.SetLabelContent(toMousePosition, this._dynamicData);
+
+
+            if (this._isDragging) {
 
                 Vector fromMousePosition = CoordinateConverter.FromPointToCoordinate(canvasSize,
                                                                                    this._data,
@@ -103,6 +108,15 @@ namespace LinearTransformation.ViewModel {
                 this._mainControlVM.UpdateWindowSettings(this._data);
                 this.Update();
             }
+        }
+
+        private void Control_MouseEnter(object sender, MouseEventArgs e) {
+            if (this._mousePositionDisplay != null)
+                this._mousePositionDisplay.Visibility = Visibility.Visible;
+        }
+        private void Control_MouseLeave(object sender, MouseEventArgs e) {
+            if (this._mousePositionDisplay != null)
+                this._mousePositionDisplay.Visibility = Visibility.Collapsed;
         }
 
         public void Control_KeyboardMove(object sender, KeyEventArgs e) {
@@ -162,6 +176,7 @@ namespace LinearTransformation.ViewModel {
             this._canvas = canvas;
             this.InstantiateViewSettings();
             this.AddMovementFunctionality();
+            this.AddPositionLabelFunctionality();
             this.Vectors = new List<CanvasVector>();
         }
 
@@ -171,11 +186,17 @@ namespace LinearTransformation.ViewModel {
             this._data = data;
             this._dynamicData = data;
             this.AddMovementFunctionality();
+            this.AddPositionLabelFunctionality();
             if (vectors == null) {
                 this.Vectors = new List<CanvasVector>();
             } else {
                 this.Vectors = vectors;
             }
+        }
+
+        private void AddPositionLabelFunctionality() {
+            this._canvas.MouseEnter += new MouseEventHandler(this.Control_MouseEnter);
+            this._canvas.MouseLeave += new MouseEventHandler(this.Control_MouseLeave);
         }
 
         private void AddMovementFunctionality() {
@@ -208,6 +229,13 @@ namespace LinearTransformation.ViewModel {
                 this.InstantiateVectors(this._dynamicData, this.Vectors);
             if (showBasisVectors)
                 CoordinateSystemDrawer.DrawBasisVectors(this._canvas, this._dynamicData);
+
+            // TODO: 
+            // Add Toggle Button for this
+            this._mousePositionDisplay = new MousePositionDisplay(25, MousePositionDisplay.Position.TopRight);
+            this._mousePositionDisplay.Visibility = Visibility.Collapsed;
+            this._canvas.Children.Add(this._mousePositionDisplay);
+
 
         }
 
