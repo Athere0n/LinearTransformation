@@ -109,9 +109,7 @@ namespace LinearTransformation.Model {
             for (int i = 0; i < colorDialog.CustomColors.Length; i++) {
                 Properties.Settings.Default[$"CustomColour{i + 1}"] = colorDialog.CustomColors[i];
             }
-            int a = (int) Properties.Settings.Default[$"CustomColour1"];
             Properties.Settings.Default.Save();
-            Properties.Settings.Default.Reload();
         }
     }
 }
