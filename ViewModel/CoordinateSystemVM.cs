@@ -232,7 +232,7 @@ namespace LinearTransformation.ViewModel {
             if (showBasisVectors)
                 CoordinateSystemDrawer.DrawBasisVectors(this._canvas, this._dynamicData);
 
-            if (showMousePosition) {
+            if (showMousePosition && this._mousePositionDisplay?.Visibility == Visibility.Visible) {
                 //this._mousePositionDisplay = new MousePositionDisplay(MousePositionDisplay.Position.TopRight);
                 this._mousePositionDisplay.Visibility = Visibility.Visible;
                 this._canvas.Children.Add(this._mousePositionDisplay);
