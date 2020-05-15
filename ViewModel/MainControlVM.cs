@@ -98,14 +98,14 @@ namespace LinearTransformation.ViewModel {
         }
 
         internal void UpdateWindowSettings(CoordinateSystemData data) {
-            this._mainControl.InputMinX.Text = $"{Math.Round(data.MinX, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
-            this._mainControl.InputMaxX.Text = $"{Math.Round(data.MaxX, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
-            this._mainControl.InputMinY.Text = $"{Math.Round(data.MinY, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
-            this._mainControl.InputMaxY.Text = $"{Math.Round(data.MaxY,(int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
-            this._mainControl.InputUnitX.Text = $"{Math.Round(data.UnitX, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
-            this._mainControl.InputUnitY.Text = $"{Math.Round(data.UnitY, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
-            this._mainControl.InputStepX.Text = $"{Math.Round(data.StepY, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
-            this._mainControl.InputStepY.Text = $"{Math.Round(data.StepY, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
+            this._mainControl.InputMinX.Text = $"{Utility.GetDoubleAsStringWithDecimals(data.MinX, (int) Properties.Settings.Default["AmountOfDecimals"])}";
+            this._mainControl.InputMaxX.Text = $"{Utility.GetDoubleAsStringWithDecimals(data.MaxX, (int) Properties.Settings.Default["AmountOfDecimals"])}";
+            this._mainControl.InputMinY.Text = $"{Utility.GetDoubleAsStringWithDecimals(data.MinY, (int) Properties.Settings.Default["AmountOfDecimals"])}";
+            this._mainControl.InputMaxY.Text = $"{Utility.GetDoubleAsStringWithDecimals(data.MaxY,(int) Properties.Settings.Default["AmountOfDecimals"])}";
+            this._mainControl.InputUnitX.Text = $"{Utility.GetDoubleAsStringWithDecimals(data.UnitX, (int) Properties.Settings.Default["AmountOfDecimals"])}";
+            this._mainControl.InputUnitY.Text = $"{Utility.GetDoubleAsStringWithDecimals(data.UnitY, (int) Properties.Settings.Default["AmountOfDecimals"])}";
+            this._mainControl.InputStepX.Text = $"{Utility.GetDoubleAsStringWithDecimals(data.StepY, (int) Properties.Settings.Default["AmountOfDecimals"])}";
+            this._mainControl.InputStepY.Text = $"{Utility.GetDoubleAsStringWithDecimals(data.StepY, (int) Properties.Settings.Default["AmountOfDecimals"])}";
         }
 
         public void Button_Click_Transform(object sender, RoutedEventArgs e) {

@@ -43,8 +43,8 @@ namespace LinearTransformation.Components {
 
 
             this.InputVectorColour.Background = this._canvasVector.VectorBrush;
-            this.InputVectorX.Text = $"{Math.Round(this._canvasVector.X, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
-            this.InputVectorY.Text = $"{Math.Round(this._canvasVector.Y, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
+            this.InputVectorX.Text = $"{Utility.GetDoubleAsStringWithDecimals(this._canvasVector.X, (int) Properties.Settings.Default["AmountOfDecimals"])}";
+            this.InputVectorY.Text = $"{Utility.GetDoubleAsStringWithDecimals(this._canvasVector.Y, (int) Properties.Settings.Default["AmountOfDecimals"])}";
         }
 
         private void Temp_Click(object sender, RoutedEventArgs e) {

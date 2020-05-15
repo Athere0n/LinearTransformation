@@ -90,8 +90,8 @@ namespace LinearTransformation.Components {
         }
 
         private void UpdateToolTip() {
-            double x = Math.Round(this._destination.X, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero);
-            double y = Math.Round(this._destination.Y, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero);
+            string x = Utility.GetDoubleAsStringWithDecimals(this._destination.X, (int) Properties.Settings.Default["AmountOfDecimals"]);
+            string y = Utility.GetDoubleAsStringWithDecimals(this._destination.Y, (int) Properties.Settings.Default["AmountOfDecimals"]);
             this.VectorToolTip.Content = $"X: {x}\nY: {y}";
         }
 

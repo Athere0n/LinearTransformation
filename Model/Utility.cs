@@ -40,8 +40,39 @@ namespace LinearTransformation.Model {
         public static double RoundDown(double value, double step) {
             return value - value % step;
         }
+
+        public static string GetDoubleAsStringWithDecimals(double value, int decimals) {
+            value = Math.Round(value, decimals, MidpointRounding.AwayFromZero);
+
+            string temp = $"{value}";
+
+            if (temp.Contains(',')) {
+                var a = temp.Split(',');
+                int l = a[1].Length;
+
+                if (l < decimals) {
+                    // Add more decimals in the form of 0s
+                    for (int i = l; i < decimals; i++) {
+                        temp += '0';
+                    }
+                } else if (l > decimals) {
+                    // Cut away excess decimals
+                    throw new Exception("We should never reach this one");
+                }
+
+            } else if (decimals > 0) {
+                // Add more decimals in the form of 0s
+                temp += ',';
+                for (int i = 0; i < decimals; i++) {
+                    temp += '0';
+                }
+            }
+
+            return temp;
+        }
         #endregion
 
+        #region TextSize
         public static System.Windows.Size GetTextSize(string text, double fontSize) {
             // Create a temporary label with the given content
             Label label = new Label {
@@ -56,7 +87,9 @@ namespace LinearTransformation.Model {
             // Return the size
             return new System.Windows.Size(label.ActualWidth, label.ActualHeight);
         }
+        #endregion
 
+        #region Lerp
         public static double Lerp(double from, double to, double by) {
             return from + (to - from) * by;
         }
@@ -64,7 +97,9 @@ namespace LinearTransformation.Model {
             return new Vector(Utility.Lerp(from.X, to.X, by),
                               Utility.Lerp(from.Y, to.Y, by));
         }
+        #endregion
 
+        #region Random
         public static Random Random = new Random();
         public static double GetRandomDoubleWithinRange(double min, double max) {
             return Utility.Random.NextDouble() * (max - min) + min;
@@ -73,23 +108,15 @@ namespace LinearTransformation.Model {
             PropertyInfo[] properties = (typeof(System.Windows.Media.Brushes)).GetProperties();
             return (System.Windows.Media.Brush) properties[Utility.Random.Next(properties.Length)].GetValue(null, null);
         }
+        #endregion
 
-        internal static void ShowError(Exception e) {
+        #region MessageBoxes
+        public static void ShowError(Exception e) {
             MessageBox.Show(e.Message, "Storch", MessageBoxButton.OK, MessageBoxImage.Error);
         }
+        #endregion
 
-        public static Vector FromStaticToDynamic(Vector iHat, Vector jHat, Vector coordinate) {
-            if ((iHat.X * jHat.Y - iHat.Y * jHat.X) == 0)
-                throw new DivideByZeroException();
-            if ((iHat.X * jHat.Y - iHat.Y * jHat.X) == 0)
-                throw new DivideByZeroException();
-
-            return new Vector((coordinate.X * jHat.Y - coordinate.Y * jHat.X) /
-                              (iHat.X * jHat.Y - iHat.Y * jHat.X),
-                              -((coordinate.X * iHat.Y - coordinate.Y * iHat.X) /
-                                (iHat.X * jHat.Y - iHat.Y * jHat.X)));
-        }
-
+        #region CustomColours within ColorDialog
         public static void SetCustomColours(System.Windows.Forms.ColorDialog colorDialog) {
             int[] tempColorArray = new int[colorDialog.CustomColors.Length];
 
@@ -104,12 +131,12 @@ namespace LinearTransformation.Model {
             //    colorDialog.CustomColors[i] = ((int) Properties.Settings.Default[$"CustomColour{i + 1}"]);
             //}
         }
-
         public static void SaveCustomColours(System.Windows.Forms.ColorDialog colorDialog) {
             for (int i = 0; i < colorDialog.CustomColors.Length; i++) {
                 Properties.Settings.Default[$"CustomColour{i + 1}"] = colorDialog.CustomColors[i];
             }
             Properties.Settings.Default.Save();
         }
+        #endregion
     }
 }
