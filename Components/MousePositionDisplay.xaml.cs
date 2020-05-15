@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -41,22 +42,27 @@ namespace LinearTransformation.Components {
             //   take priority over Canvas.Bottom or Canvas.Right properties."
             // Instead of allowing to call this method from outside just create a new instance every time
 
+            Size headerSize = Utility.GetTextSize(this.HeaderLabel.Content.ToString(), this.HeaderLabel.FontSize, this.HeaderLabel.FontFamily);
+
+            double halfHeight = headerSize.Height * .5;
+
+
             switch (position) {
                 case Position.TopLeft:
-                    Canvas.SetLeft(this, 0);
+                    Canvas.SetLeft(this, halfHeight);
                     Canvas.SetTop(this, 0);
                     break;
                 case Position.TopRight:
-                    Canvas.SetRight(this, 0);
+                    Canvas.SetRight(this, halfHeight);
                     Canvas.SetTop(this, 0);
                     break;
                 case Position.BottomLeft:
-                    Canvas.SetLeft(this, 0);
-                    Canvas.SetBottom(this, 0);
+                    Canvas.SetLeft(this, halfHeight);
+                    Canvas.SetBottom(this, halfHeight);
                     break;
                 case Position.BottomRight:
-                    Canvas.SetRight(this, 0);
-                    Canvas.SetBottom(this, 0);
+                    Canvas.SetRight(this, halfHeight);
+                    Canvas.SetBottom(this, halfHeight);
                     break;
                 default:
                     throw new Exception("Invalid position");

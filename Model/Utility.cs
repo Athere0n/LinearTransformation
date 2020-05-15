@@ -73,11 +73,12 @@ namespace LinearTransformation.Model {
         #endregion
 
         #region TextSize
-        public static System.Windows.Size GetTextSize(string text, double fontSize) {
+        public static System.Windows.Size GetTextSize(string text, double fontSize, System.Windows.Media.FontFamily fontFamily) {
             // Create a temporary label with the given content
             Label label = new Label {
                 Content = text,
                 FontSize = fontSize,
+                FontFamily = fontFamily,
             };
 
             // Resize the label based on its content

@@ -18,7 +18,7 @@
 
     <GroupBox>
         <GroupBox.Header>
-            <Label Style="{StaticResource GroupBoxHeaderLabel}" Content="Mouse Position"/>
+            <Label x:Name="HeaderLabel" Style="{StaticResource GroupBoxHeaderLabel}" Content="Mouse Position"/>
         </GroupBox.Header>
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal">

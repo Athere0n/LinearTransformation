@@ -221,7 +221,7 @@ namespace LinearTransformation.Model {
                     FontSize = 20,
                 };
                 // Calculate label dimensions
-                Size labelSize = Utility.GetTextSize(label.Content.ToString(), label.FontSize);
+                Size labelSize = Utility.GetTextSize(label.Content.ToString(), label.FontSize, label.FontFamily);
 
                 Vector labelPosition = CoordinateConverter.FromCoordinateToPoint(canvasSize,
                                                                                  data,
@@ -362,7 +362,7 @@ namespace LinearTransformation.Model {
                     FontSize = 20,
                 };
                 // Calculate label dimensions
-                Size labelSize = Utility.GetTextSize(label.Content.ToString(), label.FontSize);
+                Size labelSize = Utility.GetTextSize(label.Content.ToString(), label.FontSize, label.FontFamily);
 
                 Vector labelPosition = CoordinateConverter.FromCoordinateToPoint(canvasSize,
                                                                                  data,
