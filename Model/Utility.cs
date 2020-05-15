@@ -89,5 +89,29 @@ namespace LinearTransformation.Model {
                               -((coordinate.X * iHat.Y - coordinate.Y * iHat.X) /
                                 (iHat.X * jHat.Y - iHat.Y * jHat.X)));
         }
+
+        public static void SetCustomColours(System.Windows.Forms.ColorDialog colorDialog) {
+            int[] tempColorArray = new int[colorDialog.CustomColors.Length];
+
+            for (int i = 0; i < colorDialog.CustomColors.Length; i++) {
+                tempColorArray[i] = ((int) Properties.Settings.Default[$"CustomColour{i + 1}"]);
+            }
+
+            colorDialog.CustomColors = tempColorArray;
+
+            //colorDialog.CustomColors = tempColorArray;
+            //for (int i = 0; i < colorDialog.CustomColors.Length; i++) {
+            //    colorDialog.CustomColors[i] = ((int) Properties.Settings.Default[$"CustomColour{i + 1}"]);
+            //}
+        }
+
+        public static void SaveCustomColours(System.Windows.Forms.ColorDialog colorDialog) {
+            for (int i = 0; i < colorDialog.CustomColors.Length; i++) {
+                Properties.Settings.Default[$"CustomColour{i + 1}"] = colorDialog.CustomColors[i];
+            }
+            int a = (int) Properties.Settings.Default[$"CustomColour1"];
+            Properties.Settings.Default.Save();
+            Properties.Settings.Default.Reload();
+        }
     }
 }

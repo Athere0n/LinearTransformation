@@ -40,6 +40,7 @@ namespace LinearTransformation.ViewModel {
         public MainControlVM(MainControl mainControl) {
             this._mainControl = mainControl;
             this.ColourDialog = new System.Windows.Forms.ColorDialog();
+            Utility.SetCustomColours(this.ColourDialog);
 
             CoordinateSystemData data = new CoordinateSystemData(-3, 3, -3, 3, 1, .5);
             this._coordinateSystemControl = new CoordinateSystem(this, data);
@@ -157,6 +158,7 @@ namespace LinearTransformation.ViewModel {
                                                                                   this.ColourDialog.Color.G,
                                                                                   this.ColourDialog.Color.B));
             }
+            Utility.SaveCustomColours(this.ColourDialog);
         }
 
         public void Button_Click_ApplyChanges(object sender, RoutedEventArgs e) {
