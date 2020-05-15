@@ -1,4 +1,5 @@
-﻿using LinearTransformation.View;
+﻿using LinearTransformation.Model;
+using LinearTransformation.View;
 using LinearTransformation.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -72,6 +73,7 @@ namespace LinearTransformation.Components {
                 this._canvasVector.UpdateBrush();
 
             }
+            Utility.SaveCustomColours(this._mainControlVM.ColourDialog);
         }
 
         private void InputVectorX_TextChanged(object sender, TextChangedEventArgs e) {
