@@ -106,8 +106,31 @@ namespace LinearTransformation.Model {
             return Utility.Random.NextDouble() * (max - min) + min;
         }
         public static System.Windows.Media.Brush GetRandomBrush() {
+            //return Utility.GetRandomBrushFromBrushes();
+            return Utility.GetRandomAntonBrush();
+        }
+        public static System.Windows.Media.Brush GetRandomBrushFromBrushes() {
             PropertyInfo[] properties = (typeof(System.Windows.Media.Brushes)).GetProperties();
             return (System.Windows.Media.Brush) properties[Utility.Random.Next(properties.Length)].GetValue(null, null);
+        }
+        public static System.Windows.Media.Brush GetRandomAntonBrush() {
+            string[] antonColours = {
+                                        "#374b19",
+                                        "#4b2d19",
+                                        "#758793",
+                                        "#4c0000",
+                                        "#ff7f7f",
+                                        "#ff8000",
+                                        "#00ffff",
+                                        "#00ff00",
+                                        "#7fbf7f",
+                                        "#004000",
+                                        "#4c4c00",
+                                        "#666600",
+                                        "#660066",
+            };
+            string chosenColour = antonColours[Utility.Random.Next(0, antonColours.Length - 1)];
+            return new System.Windows.Media.SolidColorBrush((System.Windows.Media.Color) System.Windows.Media.ColorConverter.ConvertFromString(chosenColour));
         }
         #endregion
 
