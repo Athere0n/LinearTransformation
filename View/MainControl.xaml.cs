@@ -68,5 +68,10 @@ namespace LinearTransformation.View {
         private void Button_Click_RevertChanges(object sender, RoutedEventArgs e) {
             this._vm.Button_Click_RevertChanges(sender, e);
         }
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e) {
+            if (sender is TextBox textBox)
+                Utility.TextBox_SelectAll(textBox);
+        }
     }
 }

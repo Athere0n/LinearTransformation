@@ -17,8 +17,10 @@
         </Style>
 
         <Style TargetType="TextBox">
-            <Setter Property="VerticalAlignment"    Value="Center"/>
-            <Setter Property="Width"                Value="75"/>
+            <Setter Property="VerticalAlignment"            Value="Center"/>
+            <Setter Property="Width"                        Value="75"/>
+            <Setter Property="HorizontalContentAlignment"   Value="Right"/>
+            <Setter Property="FontFamily"                   Value="Courier New"/>
         </Style>
 
     </UserControl.Resources>
@@ -35,10 +37,10 @@
         </Border>
         
         <Label      Content="x:"/>
-        <TextBox    x:Name="InputVectorX" TextChanged="InputVectorX_TextChanged"/>
+        <TextBox    GotFocus="TextBox_GotFocus" x:Name="InputVectorX" TextChanged="InputVectorX_TextChanged"/>
         
         <Label      Content="y:"/>
-        <TextBox    x:Name="InputVectorY" TextChanged="InputVectorY_TextChanged"/>
+        <TextBox    GotFocus="TextBox_GotFocus" x:Name="InputVectorY" TextChanged="InputVectorY_TextChanged"/>
         
         <Button     Content="Delete" Click="Button_Click_DeleteVector"/>
         

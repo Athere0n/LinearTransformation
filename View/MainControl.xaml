@@ -29,8 +29,11 @@
         </Style>
 
         <Style TargetType="TextBox">
-            <Setter Property="VerticalAlignment"    Value="Center"/>
-            <Setter Property="Width"                Value="75"/>
+            <Setter Property="VerticalAlignment"            Value="Center"/>
+            <Setter Property="Width"                        Value="75"/>
+            <Setter Property="HorizontalContentAlignment"   Value="Right"/>
+            <Setter Property="FontFamily"                   Value="Courier New"/>
+
         </Style>
 
         <Style TargetType="Button">
@@ -100,6 +103,7 @@
                     <Setter Property="Background" Value="#838a90"></Setter>
                     <Setter Property="Foreground" Value="White"></Setter>
                     <Setter Property="BorderBrush" Value="#cc0000"></Setter>
+                    <Setter Property="BorderThickness" Value="2"></Setter>
                 </Trigger>
 
             </Style.Triggers>
@@ -139,18 +143,18 @@
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <Label Content="îᵪ :"/>
-                            <TextBox x:Name="InputIHatX" Text="1"/>
+                            <TextBox GotFocus="TextBox_GotFocus" x:Name="InputIHatX" Text="1"/>
 
                             <Label Content="ĵᵪ :"/>
-                            <TextBox x:Name="InputIHatY" Text="0"/>
+                            <TextBox GotFocus="TextBox_GotFocus" x:Name="InputIHatY" Text="0"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <Label Content="îᵧ :"/>
-                            <TextBox x:Name="InputJHatX" Text="0"/>
+                            <TextBox GotFocus="TextBox_GotFocus" x:Name="InputJHatX" Text="0"/>
 
                             <Label Content="ĵᵧ :"/>
-                            <TextBox x:Name="InputJHatY" Text="1"/>
+                            <TextBox GotFocus="TextBox_GotFocus" x:Name="InputJHatY" Text="1"/>
                         </StackPanel>
 
                     </StackPanel>
@@ -219,31 +223,31 @@
             
                 <!--row 0-->
                 <Label      Grid.Row="0" Grid.Column="0" Content="Min x:"/>
-                <TextBox    Grid.Row="0" Grid.Column="1" x:Name="InputMinX"/>
+                <TextBox    Grid.Row="0" Grid.Column="1" GotFocus="TextBox_GotFocus" x:Name="InputMinX"/>
                     
                 <Label      Grid.Row="0" Grid.Column="3" Content="Min y:"/>
-                <TextBox    Grid.Row="0" Grid.Column="4" x:Name="InputMinY"/>
+                <TextBox    Grid.Row="0" Grid.Column="4" GotFocus="TextBox_GotFocus" x:Name="InputMinY"/>
 
                 <!--row 1-->
                 <Label      Grid.Row="1" Grid.Column="0" Content="Max x:"/>
-                <TextBox    Grid.Row="1" Grid.Column="1" x:Name="InputMaxX"/>
+                <TextBox    Grid.Row="1" Grid.Column="1" GotFocus="TextBox_GotFocus" x:Name="InputMaxX"/>
                                       
                 <Label      Grid.Row="1" Grid.Column="3" Content="Max y:"/>
-                <TextBox    Grid.Row="1" Grid.Column="4" x:Name="InputMaxY"/>
+                <TextBox    Grid.Row="1" Grid.Column="4" GotFocus="TextBox_GotFocus" x:Name="InputMaxY"/>
 
                 <!--row 2-->
                 <Label      Grid.Row="2" Grid.Column="0" Content="Unit x:"/>
-                <TextBox    Grid.Row="2" Grid.Column="1" x:Name="InputUnitX"/>
+                <TextBox    Grid.Row="2" Grid.Column="1" GotFocus="TextBox_GotFocus" x:Name="InputUnitX"/>
                                       
                 <Label      Grid.Row="2" Grid.Column="3" Content="Unit y:"/>
-                <TextBox    Grid.Row="2" Grid.Column="4" x:Name="InputUnitY"/>
+                <TextBox    Grid.Row="2" Grid.Column="4" GotFocus="TextBox_GotFocus" x:Name="InputUnitY"/>
 
                 <!--row 3-->
                 <Label      Grid.Row="3" Grid.Column="0" Content="Step x:"/>
-                <TextBox    Grid.Row="3" Grid.Column="1" x:Name="InputStepX"/>
+                <TextBox    Grid.Row="3" Grid.Column="1" GotFocus="TextBox_GotFocus" x:Name="InputStepX"/>
                                       
                 <Label      Grid.Row="3" Grid.Column="3" Content="Step y:"/>
-                <TextBox    Grid.Row="3" Grid.Column="4" x:Name="InputStepY"/>
+                <TextBox    Grid.Row="3" Grid.Column="4" GotFocus="TextBox_GotFocus" x:Name="InputStepY"/>
 
 
                 <StackPanel Grid.Row="4" Grid.ColumnSpan="5" Orientation="Horizontal" HorizontalAlignment="Center">
@@ -288,10 +292,10 @@
                         </Border>
 
                         <Label      Content="x:"/>
-                        <TextBox    x:Name="InputVectorX"/>
+                        <TextBox    GotFocus="TextBox_GotFocus" x:Name="InputVectorX"/>
 
                         <Label      Content="y:"/>
-                        <TextBox    x:Name="InputVectorY"/>
+                        <TextBox    GotFocus="TextBox_GotFocus" x:Name="InputVectorY"/>
                    
                         <Button     Content="Add Vector" Click="Button_Click_AddVector"/>
                         

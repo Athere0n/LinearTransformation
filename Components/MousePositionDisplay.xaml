@@ -8,39 +8,46 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
-        <Style TargetType="Label" x:Key="GroupBoxHeaderLabel">
-            <Setter Property="FontFamily"   Value="Courier New"/>
-            <Setter Property="FontSize"     Value="14"/>
-            <Setter Property="FontWeight"   Value="Bold"/>
-            <Setter Property="Foreground"   Value="Wheat"/>
+        
+        <Style TargetType="Label">
+            <Setter Property="FontFamily"                   Value="Courier New"/>
+            <Setter Property="FontSize"                     Value="12"/>
+            <Setter Property="Foreground"                   Value="White"/>
+            <Setter Property="HorizontalContentAlignment"   Value="Right"/>
         </Style>
+    
     </UserControl.Resources>
 
-    <GroupBox>
-        <GroupBox.Header>
-            <Label Style="{StaticResource GroupBoxHeaderLabel}" Content="Mouse Position"/>
-        </GroupBox.Header>
-        <StackPanel Orientation="Vertical">
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Static X:"/>
-                <Label x:Name="Label_StaticX"/>
-            </StackPanel>
+    <Grid>
 
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Static Y:"/>
-                <Label x:Name="Label_StaticY"/>
-            </StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Dynamic X:"/>
-                <Label x:Name="Label_DynamicX"/>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Dynamic Y:"/>
-                <Label x:Name="Label_DynamicY"/>
-            </StackPanel>
-
+        <Label Grid.Row="0" Grid.Column="0" Content="Static |"/>
+            
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+            <Label Content="x:"/>
+            <Label x:Name="Label_StaticX"/>
+            <Label Content="y:"/>
+            <Label x:Name="Label_StaticY"/>
         </StackPanel>
-    </GroupBox>
+
+        <Label Grid.Row="1" Grid.Column="0" Content="Dynamic |"/>
+        
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+            <Label Content="x:"/>
+            <Label x:Name="Label_DynamicX"/>
+            <Label Content="y:"/>
+            <Label x:Name="Label_DynamicY"/>
+        </StackPanel>
+       
+    </Grid>
+    
 </UserControl>

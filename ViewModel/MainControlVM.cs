@@ -98,14 +98,14 @@ namespace LinearTransformation.ViewModel {
         }
 
         internal void UpdateWindowSettings(CoordinateSystemData data) {
-            this._mainControl.InputMinX.Text = $"{data.MinX}";
-            this._mainControl.InputMaxX.Text = $"{data.MaxX}";
-            this._mainControl.InputMinY.Text = $"{data.MinY}";
-            this._mainControl.InputMaxY.Text = $"{data.MaxY}";
-            this._mainControl.InputUnitX.Text = $"{data.UnitX}";
-            this._mainControl.InputUnitY.Text = $"{data.UnitY}";
-            this._mainControl.InputStepX.Text = $"{data.StepY}";
-            this._mainControl.InputStepY.Text = $"{data.StepY}";
+            this._mainControl.InputMinX.Text = $"{Utility.GetDoubleAsStringWithDecimals(data.MinX, (int) Properties.Settings.Default["AmountOfDecimals"])}";
+            this._mainControl.InputMaxX.Text = $"{Utility.GetDoubleAsStringWithDecimals(data.MaxX, (int) Properties.Settings.Default["AmountOfDecimals"])}";
+            this._mainControl.InputMinY.Text = $"{Utility.GetDoubleAsStringWithDecimals(data.MinY, (int) Properties.Settings.Default["AmountOfDecimals"])}";
+            this._mainControl.InputMaxY.Text = $"{Utility.GetDoubleAsStringWithDecimals(data.MaxY,(int) Properties.Settings.Default["AmountOfDecimals"])}";
+            this._mainControl.InputUnitX.Text = $"{Utility.GetDoubleAsStringWithDecimals(data.UnitX, (int) Properties.Settings.Default["AmountOfDecimals"])}";
+            this._mainControl.InputUnitY.Text = $"{Utility.GetDoubleAsStringWithDecimals(data.UnitY, (int) Properties.Settings.Default["AmountOfDecimals"])}";
+            this._mainControl.InputStepX.Text = $"{Utility.GetDoubleAsStringWithDecimals(data.StepY, (int) Properties.Settings.Default["AmountOfDecimals"])}";
+            this._mainControl.InputStepY.Text = $"{Utility.GetDoubleAsStringWithDecimals(data.StepY, (int) Properties.Settings.Default["AmountOfDecimals"])}";
         }
 
         public void Button_Click_Transform(object sender, RoutedEventArgs e) {

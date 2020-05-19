@@ -11,7 +11,7 @@
         <Grid.ToolTip>
             <ToolTip x:Name="VectorToolTip"/>
         </Grid.ToolTip>
-        
+
         <Grid.ContextMenu>
             <ContextMenu Name="VectorContextMenu"/>
         </Grid.ContextMenu>
