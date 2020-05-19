@@ -42,33 +42,35 @@ namespace LinearTransformation.Model {
         }
 
         public static string GetDoubleAsStringWithDecimals(double value, int decimals) {
-            value = Math.Round(value, decimals, MidpointRounding.AwayFromZero);
+            // TODO:
+            return $"{value}";
+            //value = Math.Round(value, decimals, MidpointRounding.AwayFromZero);
 
-            string temp = $"{value}";
+            //string temp = $"{value}";
 
-            if (temp.Contains(',')) {
-                var a = temp.Split(',');
-                int l = a[1].Length;
+            //if (temp.Contains(',')) {
+            //    var a = temp.Split(',');
+            //    int l = a[1].Length;
 
-                if (l < decimals) {
-                    // Add more decimals in the form of 0s
-                    for (int i = l; i < decimals; i++) {
-                        temp += '0';
-                    }
-                } else if (l > decimals) {
-                    // Cut away excess decimals
-                    throw new Exception("We should never reach this one");
-                }
+            //    if (l < decimals) {
+            //        // Add more decimals in the form of 0s
+            //        for (int i = l; i < decimals; i++) {
+            //            temp += '0';
+            //        }
+            //    } else if (l > decimals) {
+            //        // Cut away excess decimals
+            //        throw new Exception("We should never reach this one");
+            //    }
 
-            } else if (decimals > 0) {
-                // Add more decimals in the form of 0s
-                temp += ',';
-                for (int i = 0; i < decimals; i++) {
-                    temp += '0';
-                }
-            }
+            //} else if (decimals > 0) {
+            //    // Add more decimals in the form of 0s
+            //    temp += ',';
+            //    for (int i = 0; i < decimals; i++) {
+            //        temp += '0';
+            //    }
+            //}
 
-            return temp;
+            //return temp;
         }
         #endregion
 
