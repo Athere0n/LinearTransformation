@@ -29,8 +29,11 @@
         </Style>
 
         <Style TargetType="TextBox">
-            <Setter Property="VerticalAlignment"    Value="Center"/>
-            <Setter Property="Width"                Value="75"/>
+            <Setter Property="VerticalAlignment"            Value="Center"/>
+            <Setter Property="Width"                        Value="75"/>
+            <Setter Property="HorizontalContentAlignment"   Value="Right"/>
+            <Setter Property="FontFamily"                   Value="Courier New"/>
+
         </Style>
 
         <Style TargetType="Button">
@@ -100,6 +103,7 @@
                     <Setter Property="Background" Value="#838a90"></Setter>
                     <Setter Property="Foreground" Value="White"></Setter>
                     <Setter Property="BorderBrush" Value="#cc0000"></Setter>
+                    <Setter Property="BorderThickness" Value="2"></Setter>
                 </Trigger>
 
             </Style.Triggers>
