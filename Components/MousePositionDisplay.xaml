@@ -30,19 +30,19 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Content="Static |"/>
+        <Label Grid.Row="0" Grid.Column="0" Content="Static" HorizontalContentAlignment="Left"/>
             
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-            <Label Content="x:"/>
+            <Label Content="| x:"/>
             <Label x:Name="Label_StaticX"/>
             <Label Content="y:"/>
             <Label x:Name="Label_StaticY"/>
         </StackPanel>
 
-        <Label Grid.Row="1" Grid.Column="0" Content="Dynamic |"/>
+        <Label Grid.Row="1" Grid.Column="0" Content="Dynamic"/>
         
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-            <Label Content="x:"/>
+            <Label Content="| x:"/>
             <Label x:Name="Label_DynamicX"/>
             <Label Content="y:"/>
             <Label x:Name="Label_DynamicY"/>
