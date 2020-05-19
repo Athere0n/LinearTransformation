@@ -42,9 +42,9 @@ namespace LinearTransformation.Components {
             //   take priority over Canvas.Bottom or Canvas.Right properties."
             // Instead of allowing to call this method from outside just create a new instance every time
 
-            Size headerSize = Utility.GetTextSize(this.HeaderLabel.Content.ToString(), this.HeaderLabel.FontSize, this.HeaderLabel.FontFamily);
+            //Size headerSize = Utility.GetTextSize(this.HeaderLabel.Content.ToString(), this.HeaderLabel.FontSize, this.HeaderLabel.FontFamily);
 
-            double halfHeight = headerSize.Height * .5;
+            double halfHeight = 0/*headerSize.Height * .5*/;
 
 
             switch (position) {
