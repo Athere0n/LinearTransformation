@@ -288,14 +288,25 @@ namespace LinearTransformation.ViewModel {
             }
         }
 
-        private Task StartAnimation(Vector iHat, Vector jHat, int fps = 60) {
-            return Task.Run(() => Application.Current.Dispatcher.Invoke(async () => {
+
+        private async Task StartAnimation(Vector iHat, Vector jHat, int fps = 60) {
+            await Task.WhenAll(this.animationTasks);
+            //this.animationTasks.Clear();
+            this.StartAnimation2(iHat, jHat, fps);
+        }
+        private List<Task> animationTasks = new List<Task>();
+        private void StartAnimation2(Vector iHat, Vector jHat, int fps = 60) {
+            //int i = this.animationTasks.Count - 1;
+            //Task temp = Task.WhenAll(this.animationTasks);
+            //await Task.WhenAll(this.animationTasks);
+            //Task.WaitAll(this.animationTasks);
+            this.animationTasks.Add(Task.Run(() => Application.Current.Dispatcher.Invoke(async () => {
                 //this._dynamicData.IHat.X
                 //double iHatStepX = /*Math.Abs*/(iHat.X - this._dynamicData.IHat.X ) / duration / fps;
                 //double iHatStepY = /*Math.Abs*/(iHat.Y - this._dynamicData.IHat.Y ) / duration / fps;
                 //double jHatStepX = /*Math.Abs*/(jHat.X - this._dynamicData.JHat.X ) / duration / fps;
                 //double jHatStepY = /*Math.Abs*/(jHat.Y - this._dynamicData.JHat.Y ) / duration / fps;
-                int max = 100/*duration / 1000 * fps*/;
+                int max = 50/*duration / 1000 * fps*/;
                 for (int i = 0; i <= max; i++) {
                     double by = ((double) i) / ((double) max);
                     this._dynamicData.IHat = Utility.Lerp(this._dynamicData.IHat, iHat, by);
@@ -336,7 +347,7 @@ namespace LinearTransformation.ViewModel {
                 //// Update UI
                 //this.Update();
                 //Application.Current.Dispatcher.Invoke(delegate { }, System.Windows.Threading.DispatcherPriority.Render);
-            }));
+            })));
         }
 
 
