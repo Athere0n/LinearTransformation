@@ -50,32 +50,32 @@ namespace LinearTransformation.ViewModel {
                                                                                    this._data,
                                                                                    m);
 
-            if (this._isDragging) {
+            //if (this._isDragging) {
 
-                Vector fromMousePosition = CoordinateConverter.FromPointToCoordinate(canvasSize,
-                                                                                   this._data,
-                                                                                   this._mouseLocationWithinCanvas);
+            //    Vector fromMousePosition = CoordinateConverter.FromPointToCoordinate(canvasSize,
+            //                                                                       this._data,
+            //                                                                       this._mouseLocationWithinCanvas);
 
-                double scrollspeed = (this._data.UnitX + this._data.UnitY) / 2;
-                Vector distance = (fromMousePosition - toMousePosition) * scrollspeed;
+            //    double scrollspeed = (this._data.UnitX + this._data.UnitY) / 2;
+            //    Vector distance = (fromMousePosition - toMousePosition) * scrollspeed;
 
 
-                this._data.MinX += distance.X;
-                this._data.MaxX += distance.X;
-                this._data.MinY += distance.Y;
-                this._data.MaxY += distance.Y;
+            //    this._data.MinX += distance.X;
+            //    this._data.MaxX += distance.X;
+            //    this._data.MinY += distance.Y;
+            //    this._data.MaxY += distance.Y;
 
-                this._dynamicData.MinX += distance.X;
-                this._dynamicData.MaxX += distance.X;
-                this._dynamicData.MinY += distance.Y;
-                this._dynamicData.MaxY += distance.Y;
+            //    this._dynamicData.MinX += distance.X;
+            //    this._dynamicData.MaxX += distance.X;
+            //    this._dynamicData.MinY += distance.Y;
+            //    this._dynamicData.MaxY += distance.Y;
 
-                this._mouseLocationWithinCanvas = m;
+            //    this._mouseLocationWithinCanvas = m;
 
-                this._mainControlVM.UpdateWindowSettings(this._data);
+            //    this._mainControlVM.UpdateWindowSettings(this._data);
 
-                this.Update();
-            }
+            //    this.Update();
+            //}
          
             this._mousePositionDisplay?.SetLabelContent(toMousePosition, this._dynamicData);
         }
@@ -203,12 +203,12 @@ namespace LinearTransformation.ViewModel {
 
         private void AddMovementFunctionality() {
             // Adding mouse movement
-            this._canvas.MouseLeftButtonDown += new MouseButtonEventHandler(this.Control_MouseLeftButtonDown);
-            this._canvas.MouseLeftButtonUp += new MouseButtonEventHandler(this.Control_MouseLeftButtonUp);
+            //this._canvas.MouseLeftButtonDown += new MouseButtonEventHandler(this.Control_MouseLeftButtonDown);
+            //this._canvas.MouseLeftButtonUp += new MouseButtonEventHandler(this.Control_MouseLeftButtonUp);
             this._canvas.MouseMove += new MouseEventHandler(this.Control_MouseMove);
 
             // Adding keyboard movement
-            this._canvas.KeyDown += new KeyEventHandler(this.Control_KeyboardMove);
+            //this._canvas.KeyDown += new KeyEventHandler(this.Control_KeyboardMove);
 
             // Adding scroll wheel zoom
             this._canvas.MouseWheel += new MouseWheelEventHandler(this.Control_MouseWheel);
