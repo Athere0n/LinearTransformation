@@ -50,32 +50,32 @@ namespace LinearTransformation.ViewModel {
                                                                                    this._data,
                                                                                    m);
 
-            if (this._isDragging) {
+            //if (this._isDragging) {
 
-                Vector fromMousePosition = CoordinateConverter.FromPointToCoordinate(canvasSize,
-                                                                                   this._data,
-                                                                                   this._mouseLocationWithinCanvas);
+            //    Vector fromMousePosition = CoordinateConverter.FromPointToCoordinate(canvasSize,
+            //                                                                       this._data,
+            //                                                                       this._mouseLocationWithinCanvas);
 
-                double scrollspeed = (this._data.UnitX + this._data.UnitY) / 2;
-                Vector distance = (fromMousePosition - toMousePosition) * scrollspeed;
+            //    double scrollspeed = (this._data.UnitX + this._data.UnitY) / 2;
+            //    Vector distance = (fromMousePosition - toMousePosition) * scrollspeed;
 
 
-                this._data.MinX += distance.X;
-                this._data.MaxX += distance.X;
-                this._data.MinY += distance.Y;
-                this._data.MaxY += distance.Y;
+            //    this._data.MinX += distance.X;
+            //    this._data.MaxX += distance.X;
+            //    this._data.MinY += distance.Y;
+            //    this._data.MaxY += distance.Y;
 
-                this._dynamicData.MinX += distance.X;
-                this._dynamicData.MaxX += distance.X;
-                this._dynamicData.MinY += distance.Y;
-                this._dynamicData.MaxY += distance.Y;
+            //    this._dynamicData.MinX += distance.X;
+            //    this._dynamicData.MaxX += distance.X;
+            //    this._dynamicData.MinY += distance.Y;
+            //    this._dynamicData.MaxY += distance.Y;
 
-                this._mouseLocationWithinCanvas = m;
+            //    this._mouseLocationWithinCanvas = m;
 
-                this._mainControlVM.UpdateWindowSettings(this._data);
+            //    this._mainControlVM.UpdateWindowSettings(this._data);
 
-                this.Update();
-            }
+            //    this.Update();
+            //}
          
             this._mousePositionDisplay?.SetLabelContent(toMousePosition, this._dynamicData);
         }
@@ -203,12 +203,12 @@ namespace LinearTransformation.ViewModel {
 
         private void AddMovementFunctionality() {
             // Adding mouse movement
-            this._canvas.MouseLeftButtonDown += new MouseButtonEventHandler(this.Control_MouseLeftButtonDown);
-            this._canvas.MouseLeftButtonUp += new MouseButtonEventHandler(this.Control_MouseLeftButtonUp);
+            //this._canvas.MouseLeftButtonDown += new MouseButtonEventHandler(this.Control_MouseLeftButtonDown);
+            //this._canvas.MouseLeftButtonUp += new MouseButtonEventHandler(this.Control_MouseLeftButtonUp);
             this._canvas.MouseMove += new MouseEventHandler(this.Control_MouseMove);
 
             // Adding keyboard movement
-            this._canvas.KeyDown += new KeyEventHandler(this.Control_KeyboardMove);
+            //this._canvas.KeyDown += new KeyEventHandler(this.Control_KeyboardMove);
 
             // Adding scroll wheel zoom
             this._canvas.MouseWheel += new MouseWheelEventHandler(this.Control_MouseWheel);
@@ -288,14 +288,25 @@ namespace LinearTransformation.ViewModel {
             }
         }
 
-        private Task StartAnimation(Vector iHat, Vector jHat, int fps = 60) {
-            return Task.Run(() => Application.Current.Dispatcher.Invoke(async () => {
+
+        private async Task StartAnimation(Vector iHat, Vector jHat, int fps = 60) {
+            await Task.WhenAll(this.animationTasks);
+            //this.animationTasks.Clear();
+            this.StartAnimation2(iHat, jHat, fps);
+        }
+        private List<Task> animationTasks = new List<Task>();
+        private void StartAnimation2(Vector iHat, Vector jHat, int fps = 60) {
+            //int i = this.animationTasks.Count - 1;
+            //Task temp = Task.WhenAll(this.animationTasks);
+            //await Task.WhenAll(this.animationTasks);
+            //Task.WaitAll(this.animationTasks);
+            this.animationTasks.Add(Task.Run(() => Application.Current.Dispatcher.Invoke(async () => {
                 //this._dynamicData.IHat.X
                 //double iHatStepX = /*Math.Abs*/(iHat.X - this._dynamicData.IHat.X ) / duration / fps;
                 //double iHatStepY = /*Math.Abs*/(iHat.Y - this._dynamicData.IHat.Y ) / duration / fps;
                 //double jHatStepX = /*Math.Abs*/(jHat.X - this._dynamicData.JHat.X ) / duration / fps;
                 //double jHatStepY = /*Math.Abs*/(jHat.Y - this._dynamicData.JHat.Y ) / duration / fps;
-                int max = 100/*duration / 1000 * fps*/;
+                int max = 50/*duration / 1000 * fps*/;
                 for (int i = 0; i <= max; i++) {
                     double by = ((double) i) / ((double) max);
                     this._dynamicData.IHat = Utility.Lerp(this._dynamicData.IHat, iHat, by);
@@ -336,7 +347,7 @@ namespace LinearTransformation.ViewModel {
                 //// Update UI
                 //this.Update();
                 //Application.Current.Dispatcher.Invoke(delegate { }, System.Windows.Threading.DispatcherPriority.Render);
-            }));
+            })));
         }
 
 

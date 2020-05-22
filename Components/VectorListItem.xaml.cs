@@ -113,5 +113,10 @@ namespace LinearTransformation.Components {
             if (sender is TextBox textBox)
                 Utility.TextBox_SelectAll(textBox);
         }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e) {
+            this.InputVectorX.Text = $"{Math.Round(this._canvasVector.X, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
+            this.InputVectorY.Text = $"{Math.Round(this._canvasVector.Y, (int) Properties.Settings.Default["AmountOfDecimals"], MidpointRounding.AwayFromZero)}";
+        }
     }
 }
